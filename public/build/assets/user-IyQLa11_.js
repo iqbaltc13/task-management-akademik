@@ -1,0 +1,1 @@
+const r=s=>{if(!s.includes(" "))return s.slice(0,2).toUpperCase();const[e,t]=s.split(" ");return t?(e[0]+t[0]).toUpperCase():e.slice(0,2).toUpperCase()},n=s=>{if(!s.includes(" "))return s;const[e,t]=s.split(" ");return e+" "+t[0]+"."},i=(s,e)=>s.roles.find(t=>e.includes(t.name))!==void 0;export{r as g,i as h,n as s};

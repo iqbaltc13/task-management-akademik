@@ -1,0 +1,1 @@
+import{x as r}from"./app-D4LeRcz-.js";const m=t=>r(t).format("D. MMM YYYY"),s=t=>r(t).format("H:mm")+"h",e=t=>r(t).format("dddd"),n=t=>r(t).format("D. MMM YYYY H:mm")+"h",d=(t,a=!1)=>r(t).fromNow(a);export{d as a,m as b,n as c,e as d,s as t};
