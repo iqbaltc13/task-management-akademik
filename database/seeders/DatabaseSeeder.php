@@ -24,9 +24,7 @@ class DatabaseSeeder extends Seeder
         if ($this->command->confirm('Seed development data?', false)) {
             $this->call([
                 UserSeeder::class,
-                OwnerCompanySeeder::class,
-                ClientSeeder::class,
-                ClientCompanySeeder::class,
+                
             ]);
 
             auth()->setUser(User::role('admin')->first());
@@ -34,7 +32,7 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 ProjectSeeder::class,
                 TaskGroupSeeder::class,
-                TasksSeeder::class,
+                
             ]);
         } else {
             $this->call([ProductionSeeder::class]);

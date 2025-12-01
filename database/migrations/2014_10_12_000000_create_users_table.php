@@ -20,6 +20,7 @@ return new class extends Migration
         $this->schema->create($this->table_name, function (Blueprint $table) {
             $table->string('id',255)->primary();
             $table->string('name')->nullable();
+            $table->string('username')->unique()->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('avatar')->nullable();
