@@ -1,0 +1,13 @@
+Catatan revisi :
+
+-  List task of project 
+ * task group hilangkan QA , dan deployed
+ * Labels hilangkan Bug
+- menu project beri range tanggal project, hapus default pricing type dan hourly rate
+ - Menu Clients jadi dosen, tendik dan mahasiswa
+ - menu clients hapus companies ganti intstitution
+
+ - menu users hapus hourly rate
+ - hapus menu invoices
+ - report hapus fixed price sum
+ - settings > company hapus kotak details dan finance
