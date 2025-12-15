@@ -86,13 +86,7 @@ export default function Sidebar() {
         active: route().current("users.*"),
         visible: can("view users"),
       },
-      {
-        label: "Invoices",
-        icon: IconFileDollar,
-        link: route("invoices.index"),
-        active: route().current("invoices.*"),
-        visible: can("view invoices"),
-      },
+      
       {
         label: "Reports",
         icon: IconReportAnalytics,
@@ -112,12 +106,7 @@ export default function Sidebar() {
             active: route().current("reports.logged-time.daily"),
             visible: can("view daily logged time report"),
           },
-          {
-            label: "Fixed price sum",
-            link: route("reports.fixed-price.sum"),
-            active: route().current("reports.fixed-price.sum"),
-            visible: can("view fixed price sum report"),
-          },
+          
         ],
       },
       {

@@ -19,9 +19,9 @@ class TaskGroupSeeder extends Seeder
                 ['name' => 'Backlog'],
                 ['name' => 'Todo'],
                 ['name' => 'In progress'],
-                ['name' => 'QA'],
+                //['name' => 'QA'],
                 ['name' => 'Done'],
-                ['name' => 'Deployed'],
+                //['name' => 'Deployed'],
             ]);
         }
     }

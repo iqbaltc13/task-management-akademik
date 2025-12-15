@@ -4,6 +4,7 @@ import useForm from '@/hooks/useForm';
 import ContainerBox from '@/layouts/ContainerBox';
 import Layout from '@/layouts/MainLayout';
 import { redirectTo } from '@/utils/route';
+import { DateRangePicker } from 'react-date-range';
 import {
   Anchor,
   Breadcrumbs,
@@ -35,7 +36,15 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     { value: PricingType.HOURLY, label: 'Hourly' },
     { value: PricingType.FIXED, label: 'Fixed' },
   ];
-
+  handleSelectDateRangePicker(ranges){
+    console.log(ranges);
+    // {
+    //   selection: {
+    //     startDate: [native Date Object],
+    //     endDate: [native Date Object],
+    //   }
+    // }
+  }
   useEffect(() => {
     let symbol = currencies.find(i =>
       i.client_companies.find(c => c.id.toString() === form.data.client_company_id)
@@ -98,8 +107,8 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
           />
 
           <Select
-            label='Company requesting work'
-            placeholder='Select company'
+            label='Institusi'
+            placeholder='Pilih institusi'
             required
             mt='md'
             value={form.data.client_company_id}
@@ -107,6 +116,15 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             data={companies}
             error={form.errors.client_company_id}
           />
+
+          <DateRangePicker
+            ranges={[{
+              startDate: new Date(),
+              endDate: new Date(),
+              key: 'selection',
+            }]} 
+            onChange={this.handleSelectDateRangePicker}
+          />  
 
           <MultiSelect
             label='Grant access to users'
@@ -119,29 +137,9 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             error={form.errors.users}
           />
 
-          <Select
-            label='Default pricing type'
-            placeholder='Select pricing type'
-            required
-            mt='md'
-            value={form.data.default_pricing_type}
-            onChange={value => updateValue('default_pricing_type', value)}
-            data={pricingTypes}
-            error={form.errors.default_pricing_type}
-          />
+          
 
-          <NumberInput
-            label='Hourly rate'
-            mt='md'
-            allowNegative={false}
-            clampBehavior='strict'
-            decimalScale={2}
-            fixedDecimalScale={true}
-            prefix={currencySymbol}
-            value={form.data.rate}
-            onChange={value => updateValue('rate', value)}
-            error={form.errors.rate}
-          />
+          
 
           <Group
             justify='space-between'

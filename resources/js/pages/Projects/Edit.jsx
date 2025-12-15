@@ -5,6 +5,7 @@ import ContainerBox from '@/layouts/ContainerBox';
 import Layout from '@/layouts/MainLayout';
 import { redirectTo } from '@/utils/route';
 import { usePage } from '@inertiajs/react';
+import { DateRangePicker } from 'react-date-range';
 import {
   Anchor,
   Breadcrumbs,
@@ -33,7 +34,15 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
     rate: item.rate / 100 || 0,
     users: item.users.map(i => i.id.toString()),
   });
-
+  handleSelectDateRangePicker(ranges){
+    console.log(ranges);
+    // {
+    //   selection: {
+    //     startDate: [native Date Object],
+    //     endDate: [native Date Object],
+    //   }
+    // }
+  }
   useEffect(() => {
     let symbol = currencies.find(i =>
       i.client_companies.find(c => c.id.toString() === form.data.client_company_id.toString())
@@ -101,8 +110,8 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
           />
 
           <Select
-            label='Company requesting work'
-            placeholder='Select company'
+            label='Institusi'
+            placeholder='Pilih institusi'
             required
             mt='md'
             value={form.data.client_company_id?.toString()}
@@ -110,7 +119,14 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             data={companies}
             error={form.errors.client_company_id}
           />
-
+          <DateRangePicker
+            ranges={[{
+              startDate: new Date(),
+              endDate: new Date(),
+              key: 'selection',
+            }]} 
+            onChange={this.handleSelectDateRangePicker}
+          />  
           <MultiSelect
             label='Grant access to users'
             placeholder='Select users'
@@ -122,7 +138,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             error={form.errors.users}
           />
 
-          <Select
+          {/* <Select
             label='Default pricing type'
             placeholder='Select pricing type'
             required
@@ -131,9 +147,9 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             onChange={value => updateValue('default_pricing_type', value)}
             data={pricingTypes}
             error={form.errors.default_pricing_type}
-          />
+          /> */}
 
-          <NumberInput
+          {/* <NumberInput
             label='Hourly rate'
             mt='md'
             allowNegative={false}
@@ -144,7 +160,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             value={form.data.rate}
             onChange={value => updateValue('rate', value)}
             error={form.errors.rate}
-          />
+          /> */}
 
           <Group
             justify='space-between'
