@@ -36,7 +36,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     { value: PricingType.HOURLY, label: 'Hourly' },
     { value: PricingType.FIXED, label: 'Fixed' },
   ];
-  handleSelectDateRangePicker(ranges){
+  handleSelectDateRangePicker((ranges) => {
     console.log(ranges);
     // {
     //   selection: {
@@ -44,7 +44,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     //     endDate: [native Date Object],
     //   }
     // }
-  }
+  });
   useEffect(() => {
     let symbol = currencies.find(i =>
       i.client_companies.find(c => c.id.toString() === form.data.client_company_id)
