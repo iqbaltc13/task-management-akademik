@@ -115,9 +115,7 @@ class UserSeeder extends Seeder
         foreach ($dataUsers as $user) {
             $user = User::create($user)->assignRole($this->jobTitleToRole[$user['job_title']]);
         }
-        // User::factory(20)
-        //     ->create()
-        //     ->each(fn (User $user) => $user->assignRole($this->jobTitleToRole[$user->job_title]));
+        
     }
 
     private function getJobTitle(string $role): string

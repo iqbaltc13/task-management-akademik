@@ -18,13 +18,13 @@ class ProjectSeeder extends Seeder
         $projects[] = Project::create([
             'name' => 'Demo Project',
             'description' => fake()->sentence(),
-            'client_company_id' => ClientCompany::first()->id,
+            //'client_company_id' => ClientCompany::first()->id,
         ]);
 
         $projects[] = Project::create([
             'name' => 'Demo Project 2',
             'description' => fake()->sentence(),
-            'client_company_id' => ClientCompany::oldest()->first()->id,
+            //'client_company_id' => ClientCompany::oldest()->first()->id,
         ]);
     }
 }
