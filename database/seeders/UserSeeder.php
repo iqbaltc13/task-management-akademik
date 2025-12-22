@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -27,6 +28,16 @@ class UserSeeder extends Seeder
         //         ->create(['email' => "$role@mail.com", 'job_title' => $this->getJobTitle($role)])
         //         ->assignRole($role);
         // }
+        User::create([
+            'email' => config('auth.admin.email'),
+            'name' => config('auth.admin.name'),
+            'phone' => '',
+            'rate' => 0,
+            'job_title' => 'Owner',
+            'avatar' => null,
+            'password' => bcrypt(config('auth.admin.password')),
+            'remember_token' => null,
+        ])->assignRole(Role::firstWhere('name', 'admin'));
         $dataUsers = [
             [
                 'name'=> 'Moch. Taufiq Yahya',
