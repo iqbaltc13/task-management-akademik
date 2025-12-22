@@ -99,12 +99,16 @@ class PermissionService
             ->with('roles:id,name')
             ->get(['id', 'name', 'avatar'])
             ->map(fn ($user) => [...$user->toArray(), 'reason' => 'admin']);
+        
+        $owners = collect([]);
 
-        $owners = $project
-            ->clientCompany
-            ->clients
-            ->load('roles:id,name')
-            ->map(fn ($user) => [...$user->toArray(), 'reason' => 'company owner']);
+        if($project->clientCompany) {
+            $owners = $project
+                ->clientCompany
+                ->clients
+                ->load('roles:id,name')
+                ->map(fn ($user) => [...$user->toArray(), 'reason' => 'company owner']);
+        }
 
         $givenAccess = $project
             ->users
