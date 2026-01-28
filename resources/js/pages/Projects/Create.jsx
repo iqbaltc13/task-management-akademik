@@ -117,14 +117,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             error={form.errors.client_company_id}
           />
 
-          <DateRangePicker
-            ranges={[{
-              startDate: new Date(),
-              endDate: new Date(),
-              key: 'selection',
-            }]} 
-            onChange={this.handleSelectDateRangePicker}
-          />  
+         
 
           <MultiSelect
             label='Grant access to users'
