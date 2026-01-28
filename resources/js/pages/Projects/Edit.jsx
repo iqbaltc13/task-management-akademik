@@ -35,15 +35,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
     users: item.users.map(i => i.id.toString()),
   });
 
-  handleSelectDateRangePicker((ranges) => {
-    console.log(ranges);
-    // {
-    //   selection: {
-    //     startDate: [native Date Object],
-    //     endDate: [native Date Object],
-    //   }
-    // }
-  });
+  
   useEffect(() => {
     let symbol = currencies.find(i =>
       i.client_companies.find(c => c.id.toString() === form.data.client_company_id.toString())
