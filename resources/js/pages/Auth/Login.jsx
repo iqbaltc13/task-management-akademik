@@ -49,21 +49,7 @@ const Login = ({ notify }) => {
 
       <form onSubmit={submit}>
         <ContainerBox shadow="md" p={30} mt={30} radius="md">
-          <Group grow mb="md" mt="md">
-            <Button
-              leftSection={<GoogleIcon />}
-              variant="default"
-              radius="xl"
-              component="a"
-              href={route("auth.login.social.google")}
-              loading={socialLoginPending}
-              onClick={() => setSocialLoginPending(true)}
-            >
-              Google
-            </Button>
-          </Group>
-
-          <Divider label="Or continue with email" labelPosition="center" my="lg" />
+          
 
           <TextInput
             label="Email"
