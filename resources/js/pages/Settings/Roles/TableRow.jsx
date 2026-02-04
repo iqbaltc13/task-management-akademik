@@ -10,11 +10,11 @@ export default function TableRow({ item }) {
     <Table.Tr key={item.id}>
       <Table.Td>
         <Text fz="sm" tt="capitalize" c={isLocked(item.name) ? "blue" : ""}>
-          {item.name}
+          {item ? item.name : ""}
         </Text>
       </Table.Td>
       <Table.Td w={165}>
-        <Text fz="sm">{item.permissions_count}</Text>
+        <Text fz="sm">{item ? item.permissions_count : ""}</Text>
       </Table.Td>
       {(can("edit role") || can("archive role") || can("restore role")) &&
         item.name !== "admin" && (

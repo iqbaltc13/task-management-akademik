@@ -109,7 +109,7 @@ const CompanyEdit = () => {
             placeholder='Company name'
             required
             mt='md'
-            value={form.data.name}
+            value={form.data ? form.data.name : item.name}
             onChange={e => updateValue('name', e.target.value)}
             error={form.errors.name}
             disabled={!can('edit owner company')}
