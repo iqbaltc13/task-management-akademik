@@ -18,17 +18,17 @@ class DatabaseSeeder extends Seeder
         DB::beginTransaction();
         try {
             $this->call([
-                //RoleSeeder::class,
-                //PermissionSeeder::class,
-                //LabelSeeder::class,
-                //CurrencySeeder::class,
-                //CountrySeeder::class,
+                RoleSeeder::class,
+                PermissionSeeder::class,
+                LabelSeeder::class,
+                CurrencySeeder::class,
+                CountrySeeder::class,
             ]);
         
 
             if ($this->command->confirm('Seed development data?', false)) {
                 $this->call([
-                    //UserSeeder::class,
+                    UserSeeder::class,
                     OwnerCompanySeeder::class,
 
                 ]);
@@ -36,8 +36,8 @@ class DatabaseSeeder extends Seeder
                 auth()->setUser(User::role('admin')->first());
 
                 $this->call([
-                    //ProjectSeeder::class,
-                    //TaskGroupSeeder::class,
+                    ProjectSeeder::class,
+                    TaskGroupSeeder::class,
                     
                 ]);
             } else {
