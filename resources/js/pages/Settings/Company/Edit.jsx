@@ -26,7 +26,7 @@ const CompanyEdit = () => {
   const [form, submit, updateValue] = useForm('post', route('settings.company.update'), {
     _method: 'put',
     logo: null,
-    name: item.name || '',
+    name: item ? item.name || '' : '',
     address: item.address || '',
     postal_code: item.postal_code || '',
     city: item.city || '',
