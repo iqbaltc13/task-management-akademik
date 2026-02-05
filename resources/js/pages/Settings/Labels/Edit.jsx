@@ -12,7 +12,7 @@ const LabelEdit = () => {
 
   const [form, submit, updateValue] = useForm("post", route("settings.labels.update", item.id), {
     _method: "put",
-    name: item.name,
+    name: item.name ? item.name : "",
     color: item.color || "",
   });
 
@@ -38,7 +38,7 @@ const LabelEdit = () => {
             label="Name"
             placeholder="Label name"
             required
-            value={form.data.name}
+            value={form.data ? form.data.name : ""}
             onChange={(e) => updateValue("name", e.target.value)}
             error={form.errors.name}
           />

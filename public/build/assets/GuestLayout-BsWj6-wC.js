@@ -1,1 +1,0 @@
-import{j as s,Y as r}from"./app-yOW8y_MT.js";import{F as i}from"./FlashNotification-CcdP3ukb.js";import{C as a}from"./Container-Cz2Cc2Xy.js";function x({title:t,children:o}){return s.jsxs(s.Fragment,{children:[s.jsx(r,{title:t}),s.jsx(i,{}),s.jsx(a,{size:440,my:80,children:o})]})}export{x as G};

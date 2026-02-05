@@ -58,27 +58,27 @@ export default function Sidebar() {
           },
         ],
       },
-      {
-        label: "Clients",
-        icon: IconBuildingSkyscraper,
-        active: route().current("clients.*"),
-        opened: route().current("clients.*"),
-        visible: can("view client users") || can("view client companies"),
-        links: [
-          {
-            label: "Users",
-            link: route("clients.users.index"),
-            active: route().current("clients.users.*"),
-            visible: can("view client users"),
-          },
-          {
-            label: "Companies",
-            link: route("clients.companies.index"),
-            active: route().current("clients.companies.*"),
-            visible: can("view client companies"),
-          },
-        ],
-      },
+      // {
+      //   label: "Clients",
+      //   icon: IconBuildingSkyscraper,
+      //   active: route().current("clients.*"),
+      //   opened: route().current("clients.*"),
+      //   visible: can("view client users") || can("view client companies"),
+      //   links: [
+      //     {
+      //       label: "Users",
+      //       link: route("clients.users.index"),
+      //       active: route().current("clients.users.*"),
+      //       visible: can("view client users"),
+      //     },
+      //     {
+      //       label: "Companies",
+      //       link: route("clients.companies.index"),
+      //       active: route().current("clients.companies.*"),
+      //       visible: can("view client companies"),
+      //     },
+      //   ],
+      // },
       {
         label: "Users",
         icon: IconUsers,
