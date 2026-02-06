@@ -102,7 +102,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             onChange={e => updateValue('description', e.target.value)}
           />
 
-          <Select
+          {/* <Select
             label='Institusi'
             placeholder='Pilih institusi'
             required
@@ -111,7 +111,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             onChange={value => updateValue('client_company_id', value)}
             data={companies}
             error={form.errors.client_company_id}
-          />
+          /> */}
          
           <MultiSelect
             label='Grant access to users'

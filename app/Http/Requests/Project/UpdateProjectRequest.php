@@ -26,8 +26,8 @@ class UpdateProjectRequest extends FormRequest
         return [
             'name' => ['required', 'string', Rule::unique('projects', 'name')->ignore($this->route('project')->id)],
             'description' => 'string|nullable',
-            'default_pricing_type' => ['required', 'string', Rule::enum(PricingType::class)],
-            'client_company_id' => 'required|exists:client_companies,id',
+            'default_pricing_type' => ['nullable', 'string', Rule::enum(PricingType::class)],
+            'client_company_id' => 'nullable|exists:client_companies,id',
             'rate' => 'numeric|min:0|nullable',
             'users' => 'array',
         ];
