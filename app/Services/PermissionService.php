@@ -9,6 +9,11 @@ use Illuminate\Support\Collection;
 
 class PermissionService
 {
+    public static $masterPermissions = [
+        'User' => ['view users', 'view user rates', 'create users', 'update users', 'restore users'],
+        'Label' => ['view labels', 'create labels', 'update labels', 'restore labels'],
+        'Role' => ['view roles', 'create roles', 'update roles', 'restore roles'],
+    ];
     public static $permissionsByRole = [
         'admin' => [
             'User' => ['lihat pengguna', 'lihat rate pengguna', 'buat pengguna', 'edit pengguna', 'pengguna terhapus', 'kembalikan pengguna'],
@@ -27,7 +32,7 @@ class PermissionService
             //'Reports' => ['lihat laporan  ringkasan waktu total ', 'lihat laporan  waktu harian', 'lihat laporan  total harga fix'],
             'Reports' => ['lihat laporan  ringkasan waktu total ', 'lihat laporan  waktu harian', 'lihat laporan  total harga fix'],
             
-            'Activities' => ['lihat aktifitas'],
+            'Activities' => ['lihat aktivitas'],
         ],
         'helpdesk' => [
             //'User' => ['lihat pengguna', 'lihat rate pengguna', 'buat pengguna', 'edit pengguna', 'pengguna terhapus', 'kembalikan pengguna'],
@@ -44,7 +49,7 @@ class PermissionService
             ],
             'Invoices' => ['lihat invoice', 'buat invoice', 'edit invoice', 'hapus invoice', 'kembalikan invoice', 'ubah status invoice', 'unduh invoice', 'cetak invoice'],
             'Reports' => ['lihat laporan  ringkasan waktu total ', 'lihat laporan  waktu harian', 'lihat laporan  total harga fix'],
-            'Activities' => ['lihat aktifitas'],
+            'Activities' => ['lihat aktivitas'],
         ],
         // 'manager' => [
         //     'User' => ['view users'],
