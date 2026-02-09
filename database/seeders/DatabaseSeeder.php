@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         DB::beginTransaction();
         try {
             $this->call([
-                RoleSeeder::class,
+                //RoleSeeder::class,
                 PermissionSeeder::class,
                 //LabelSeeder::class,
                 //CurrencySeeder::class,
