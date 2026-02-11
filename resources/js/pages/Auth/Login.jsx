@@ -39,10 +39,10 @@ const Login = ({ notify }) => {
   return (
     <>
       <Title ta="center" className={classes.title}>
-        Welcome back!
+        Selamat Datang, Silakan Masuk
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
-        You may login to your account below
+        Masukkan Username/email dan password anda
       </Text>
 
       <LoginNotification notify={notify} />
@@ -53,7 +53,7 @@ const Login = ({ notify }) => {
 
           <TextInput
             label="Email"
-            placeholder="Your email"
+            placeholder="Email"
             required
             value={form.data.email}
             onChange={(e) => form.setData("email", e.target.value)}
@@ -63,24 +63,24 @@ const Login = ({ notify }) => {
           <PasswordInput
             ref={passwordRef}
             label="Password"
-            placeholder="Your password"
+            placeholder="Password"
             required
             mt="md"
             value={form.data.password}
             onChange={(e) => form.setData("password", e.target.value)}
           />
           <Group justify="space-between" mt="lg">
-            <Checkbox label="Remember me" />
+            <Checkbox label="Ingat Saya" />
             <Anchor
               type="button"
               size="sm"
               onClick={() => router.get(route("auth.forgotPassword.form"))}
             >
-              Forgot password?
+              Lupa Password?
             </Anchor>
           </Group>
           <Button type="submit" fullWidth mt="xl" disabled={form.processing}>
-            Sign in
+            Masuk
           </Button>
         </ContainerBox>
       </form>

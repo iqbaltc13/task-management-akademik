@@ -21,7 +21,7 @@ export default function OverdueTasks({ tasks }) {
   return (
     <Card bg="none">
       <Title order={3} ml={15}>
-        Overdue tasks
+        Tugas Lewat Tenggat Waktu
       </Title>
 
       <Divider my={14} />

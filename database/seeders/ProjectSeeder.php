@@ -16,7 +16,7 @@ class ProjectSeeder extends Seeder
         $projects = [];
 
         $projects[] = Project::create([
-            'name' => 'Demo Project',
+            'name' => '',
             'description' => fake()->sentence(),
             //'client_company_id' => ClientCompany::first()->id,
         ]);

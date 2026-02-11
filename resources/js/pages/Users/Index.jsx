@@ -40,7 +40,7 @@ const UsersIndex = () => {
       <Grid justify="space-between" align="center">
         <Grid.Col span="content">
           <Group>
-            <SearchInput placeholder="Search users" search={search} />
+            <SearchInput placeholder="Cari Pengguna" search={search} />
             <ArchivedFilterButton />
           </Group>
         </Grid.Col>
@@ -51,7 +51,7 @@ const UsersIndex = () => {
               radius="xl"
               onClick={() => redirectTo("users.create")}
             >
-              Create
+              Tambah Pengguna
             </Button>
           )}
         </Grid.Col>
