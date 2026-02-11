@@ -16,7 +16,7 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        dd(collect(PermissionService::$permissionsByRole['admin']));
+        dd(collect(PermissionService::$permissionsByRole['admin']))->flatten();
         $insertPermissions = fn ($role) => collect(PermissionService::$permissionsByRole[$role])
                 ->flatten(2)
                 ->map(function ($item) {
