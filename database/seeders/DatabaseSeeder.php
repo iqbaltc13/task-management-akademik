@@ -20,24 +20,24 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 RoleSeeder::class,
                 PermissionSeeder::class,
-                LabelSeeder::class,
-                CurrencySeeder::class,
-                CountrySeeder::class,
+                // LabelSeeder::class,
+                // CurrencySeeder::class,
+                // CountrySeeder::class,
             ]);
         
 
             if ($this->command->confirm('Seed development data?', false)) {
                 $this->call([
-                    UserSeeder::class,
-                    OwnerCompanySeeder::class,
+                    // UserSeeder::class,
+                    // OwnerCompanySeeder::class,
 
                 ]);
 
-                auth()->setUser(User::role('admin')->first());
+                //auth()->setUser(User::role('admin')->first());
 
                 $this->call([
-                    ProjectSeeder::class,
-                    TaskGroupSeeder::class,
+                    // ProjectSeeder::class,
+                    // TaskGroupSeeder::class,
                     
                 ]);
             } else {
