@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder
                     if (isset($item['title'])) {
                         $title = $item['title'];
                     }
-                //dd($item['name']);
+                    dd($name, $title);
 
                     $permission = DB::table('permissions')->where('name', $name)->first();
 
