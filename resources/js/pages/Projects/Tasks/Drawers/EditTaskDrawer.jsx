@@ -287,7 +287,7 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-              {isFixedPrice && (can('view time logs') || can('add time log')) && (
+              {/* {isFixedPrice && (can('view time logs') || can('add time log')) && (
                 <NumberInput
                   label='Fixed price'
                   mt='md'
@@ -301,7 +301,7 @@ export function EditTaskDrawer() {
                   prefix={currencySymbol}
                   readOnly={!can('edit task')}
                 />
-              )}
+              )} */}
 
               {!isFixedPrice && (can('view time logs') || can('add time log')) && (
                 <Timer
@@ -310,13 +310,13 @@ export function EditTaskDrawer() {
                 />
               )}
 
-              <Checkbox
+              {/* <Checkbox
                 label='Billable'
                 mt='xl'
                 checked={data.billable}
                 onChange={event => updateValue('billable', event.currentTarget.checked)}
                 disabled={!can('edit task')}
-              />
+              /> */}
 
               {!hasRoles(user, ['client']) && (
                 <Checkbox

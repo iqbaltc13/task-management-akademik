@@ -29,6 +29,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('due_on')->nullable();
             $table->decimal('estimation', 6, 2)->unsigned()->nullable();
+            $table->unsignedInteger('fixed_price')->nullable();
             $table->boolean('hidden_from_clients')->default(false);
             $table->boolean('billable')->default(true);
             $table->unsignedInteger('order_column');
