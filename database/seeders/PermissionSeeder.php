@@ -20,19 +20,28 @@ class PermissionSeeder extends Seeder
         $insertPermissions = fn ($role) => collect(PermissionService::$permissionsByRole[$role])
                 ->collapse()
                 ->map(function ($item) {
-                dd($item['name']);
-                $permission = DB::table('permissions')->where('name', $item['name'])->first();
+                    $name =  NULL;
+                    $title = NULL;
+                    if (isset($item['name'])) {
+                        $name = $item['name'];
+                    }
+                    if (isset($item['title'])) {
+                        $title = $item['title'];
+                    }
+                //dd($item['name']);
 
-                return $permission
-                    ? $permission->id
-                    : DB::table('permissions')
-                        ->insertGetId([
-                            'name' => $item['name'],
-                            'title' => $item['title'],
-                            'guard_name' => 'web',
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ]);
+                    $permission = DB::table('permissions')->where('name', $name)->first();
+
+                    return $permission
+                        ? $permission->id
+                        : DB::table('permissions')
+                            ->insertGetId([
+                                'name' => $name,
+                                'title' => $title,
+                                'guard_name' => 'web',
+                                'created_at' => now(),
+                                'updated_at' => now(),
+                            ]);
             })
             ->toArray();
 
