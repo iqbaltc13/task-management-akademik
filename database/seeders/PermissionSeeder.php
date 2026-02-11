@@ -35,7 +35,7 @@ class PermissionSeeder extends Seeder
                     return $permission
                         ? $permission->id
                         : (is_null($name) || is_null($title)
-                            ? null
+                            ? 0
                             : DB::table('permissions')
                                 ->insertGetId([
                                     'name' => $name,
