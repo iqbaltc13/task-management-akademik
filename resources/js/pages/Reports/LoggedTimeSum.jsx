@@ -53,15 +53,15 @@ const LoggedTimeSum = () => {
         fz={14}
         mb={30}
       >
-        <div>Reports</div>
-        <div>Logged time sum</div>
+        <div>Laporan</div>
+        <div>Laporan Ringkasan Waktu Total </div>
       </Breadcrumbs>
 
       <Title
         order={1}
         mb={20}
       >
-        Logged time sum
+        Laporan Ringkasan Waktu Total 
       </Title>
 
       <ContainerBox
@@ -72,7 +72,7 @@ const LoggedTimeSum = () => {
           <Group justify='space-between'>
             <Group gap='xl'>
               <MultiSelect
-                placeholder={form.data.projects.length ? null : 'Select projects'}
+                placeholder={form.data.projects.length ? null : 'Pilih Proyek'}
                 required
                 w={220}
                 value={form.data.projects}
@@ -121,7 +121,7 @@ const LoggedTimeSum = () => {
               type='submit'
               disabled={form.processing}
             >
-              Submit
+              Unduh Laporan
             </Button>
           </Group>
         </form>
@@ -182,8 +182,8 @@ const LoggedTimeSum = () => {
         ) : (
           <Center mih={300}>
             <EmptyWithIcon
-              title='No logged time found'
-              subtitle='Try changing selected filters'
+              title='Data tidak ditemukan'
+              subtitle='Coba ubah filter yang dipilih'
               icon={IconClock}
             />
           </Center>
