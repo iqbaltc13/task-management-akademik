@@ -28,20 +28,22 @@ class PermissionSeeder extends Seeder
                     if (isset($item['title'])) {
                         $title = $item['title'];
                     }
-                    dd($name, $title);
+                   
 
                     $permission = DB::table('permissions')->where('name', $name)->first();
 
                     return $permission
                         ? $permission->id
-                        : DB::table('permissions')
-                            ->insertGetId([
-                                'name' => $name,
-                                'title' => $title,
-                                'guard_name' => 'web',
-                                'created_at' => now(),
-                                'updated_at' => now(),
-                            ]);
+                        : (is_null($name) || is_null($title)
+                            ? null
+                            : DB::table('permissions')
+                                ->insertGetId([
+                                    'name' => $name,
+                                    'title' => $title,
+                                    'guard_name' => 'web',
+                                    'created_at' => now(),
+                                    'updated_at' => now(),
+                                ]));
             })
             ->toArray();
 
