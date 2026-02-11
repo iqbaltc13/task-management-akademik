@@ -52,7 +52,7 @@ const CompanyEdit = () => {
         mb={35}
       >
         <Grid.Col span='auto'>
-          <Title order={1}>My company</Title>
+          <Title order={1}>r</Title>
         </Grid.Col>
         <Grid.Col span='content'></Grid.Col>
       </Grid>
@@ -87,7 +87,7 @@ const CompanyEdit = () => {
             <Grid.Col span='auto'>
               <FileInput
                 label='Logo'
-                placeholder='Choose image'
+                placeholder='Pilih Gambar'
                 accept='image/png,image/jpeg'
                 onChange={image => updateValue('logo', image)}
                 clearable

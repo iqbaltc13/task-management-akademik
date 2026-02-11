@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Title mb="xl">Dashboard</Title>
+      <Title mb="xl">Dasbor</Title>
       <Masonry
         breakpointCols={breakpointColumns}
         className={classes.myMasonryGrid}

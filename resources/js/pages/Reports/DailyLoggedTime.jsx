@@ -40,11 +40,11 @@ const DailyLoggedTime = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <div>Reports</div>
-        <div>Daily logged time</div>
+        <div>Laporan Waktu Tercatat Harian</div>
       </Breadcrumbs>
 
       <Title order={1} mb={20}>
-        Daily logged time
+        Laporan Waktu Tercatat Harian
       </Title>
 
       <ContainerBox px={35} py={25}>
