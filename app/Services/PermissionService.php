@@ -338,8 +338,10 @@ class PermissionService
                 ],
             ],
             'Activities' => [
-                'name' => 'view activities',
-                'title' => 'Lihat aktivitas',
+                [
+                    'name' => 'view activities',
+                    'title' => 'Lihat aktivitas',
+                ],
             ],
         ],
         
@@ -624,8 +626,10 @@ class PermissionService
                 ],
             ],
             'Activities' => [
-                'name' => 'view activities',
-                'title' => 'Lihat aktivitas',
+                [
+                    'name' => 'view activities',
+                    'title' => 'Lihat aktivitas',
+                ],
             ],
         ],
         // 'manager' => [
