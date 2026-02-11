@@ -20,8 +20,10 @@ class PermissionSeeder extends Seeder
         $insertPermissions = fn ($role) => collect(PermissionService::$permissionsByRole[$role])
                 ->collapse()
                 ->map(function ($item) {
+                    print_r($item);
                     $name = $item['name'];
                     $title = $item['title'];
+
                     $permission = DB::table('permissions')->where('name', $name)->first();
 
                     return $permission
