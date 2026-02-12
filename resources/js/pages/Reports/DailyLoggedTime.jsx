@@ -39,7 +39,7 @@ const DailyLoggedTime = () => {
   return (
     <>
       <Breadcrumbs fz={14} mb={30}>
-        <div>Reports</div>
+        <div>Laporan</div>
         <div>Laporan Waktu Tercatat Harian</div>
       </Breadcrumbs>
 
@@ -52,7 +52,7 @@ const DailyLoggedTime = () => {
           <Group justify="space-between">
             <Group gap="xl">
               <MultiSelect
-                placeholder={form.data.projects.length ? null : "Select projects"}
+                placeholder={form.data.projects.length ? null : "Pilih Proyek"}
                 required
                 w={220}
                 value={form.data.projects}
@@ -62,7 +62,7 @@ const DailyLoggedTime = () => {
               />
 
               <MultiSelect
-                placeholder={form.data.users.length ? null : "Select users"}
+                placeholder={form.data.users.length ? null : "Pilih Pengguna"}
                 required
                 w={220}
                 value={form.data.users}
@@ -98,7 +98,7 @@ const DailyLoggedTime = () => {
             </Group>
 
             <Button type="submit" disabled={form.processing}>
-              Submit
+              Unduh Laporan
             </Button>
           </Group>
         </form>
@@ -147,8 +147,8 @@ const DailyLoggedTime = () => {
         ) : (
           <Center mih={300}>
             <EmptyWithIcon
-              title="No logged time found"
-              subtitle="Try changing selected filters"
+              title="Data tidak ditemukan"
+              subtitle="Coba ubah filter yang dipilih"
               icon={IconClock}
             />
           </Center>
@@ -158,6 +158,6 @@ const DailyLoggedTime = () => {
   );
 };
 
-DailyLoggedTime.layout = (page) => <Layout title="Logged time sum">{page}</Layout>;
+DailyLoggedTime.layout = (page) => <Layout title="Laporan Waktu Tercatat Harian">{page}</Layout>;
 
 export default DailyLoggedTime;
