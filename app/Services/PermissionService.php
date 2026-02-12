@@ -22,19 +22,19 @@ class PermissionService
                     'title' => 'Lihat semua rate pengguna',
                 ],
                 [
-                    'name' => 'create users',
+                    'name' => 'create user',
                     'title' => 'Buat pengguna',
                 ],
                 [
-                    'name' => 'update users',
+                    'name' => 'edit user',
                     'title' => 'Edit pengguna',
                 ],
                 [
-                    'name' => 'archive users',
+                    'name' => 'archive user',
                     'title' => 'Arsipkan pengguna',
                 ],
                 [
-                    'name' => 'restore users',
+                    'name' => 'restore user',
                     'title' => 'Kembalikan pengguna',
                 ],
             ],
@@ -44,19 +44,19 @@ class PermissionService
                     'title' => 'Lihat semua label',
                 ],
                 [
-                    'name' => 'create labels',
+                    'name' => 'create label',
                     'title' => 'Buat label',
                 ],
                 [
-                    'name' => 'update labels',
+                    'name' => 'edit label',
                     'title' => 'Edit label',
                 ],
                 [
-                    'name' => 'archive labels',
+                    'name' => 'archive label',
                     'title' => 'Arsipkan label',
                 ],
                 [
-                    'name' => 'restore labels',
+                    'name' => 'restore label',
                     'title' => 'Kembalikan label',
                 ],
             ],
@@ -66,19 +66,19 @@ class PermissionService
                     'title' => 'Lihat semua peran',
                 ],
                 [
-                    'name' => 'create roles',
+                    'name' => 'create role',
                     'title' => 'Buat peran',
                 ],
                 [
-                    'name' => 'update roles',
+                    'name' => 'edit role',
                     'title' => 'Edit peran',
                 ],
                 [
-                    'name' => 'archive roles',
+                    'name' => 'archive role',
                     'title' => 'Arsipkan peran',
                 ],
                 [
-                    'name' => 'restore roles',
+                    'name' => 'restore role',
                     'title' => 'Kembalikan peran',
                 ],
             ],
@@ -353,19 +353,19 @@ class PermissionService
                     'title' => 'Lihat semua label',
                 ],
                 [
-                    'name' => 'create labels',
+                    'name' => 'create label',
                     'title' => 'Buat label',
                 ],
                 [
-                    'name' => 'update labels',
+                    'name' => 'edit label',
                     'title' => 'Edit label',
                 ],
                 [
-                    'name' => 'archive labels',
+                    'name' => 'archive label',
                     'title' => 'Arsipkan label',
                 ],
                 [
-                    'name' => 'restore labels',
+                    'name' => 'restore label',
                     'title' => 'Kembalikan label',
                 ],
             ],
