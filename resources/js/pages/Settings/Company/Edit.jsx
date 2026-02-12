@@ -52,7 +52,7 @@ const CompanyEdit = () => {
         mb={35}
       >
         <Grid.Col span='auto'>
-          <Title order={1}>r</Title>
+          <Title order={1}>Institusi</Title>
         </Grid.Col>
         <Grid.Col span='content'></Grid.Col>
       </Grid>
@@ -99,14 +99,14 @@ const CompanyEdit = () => {
                 c='dimmed'
                 mt='sm'
               >
-                240px &times; 64px (aspect 15:4)
+                240px &times; 64px (resolusi 15:4)
               </Text>
             </Grid.Col>
           </Grid>
 
           <TextInput
-            label='Name'
-            placeholder='Company name'
+            label='Nama'
+            placeholder='Nama Institusi'
             required
             mt='md'
             value={form.data ? form.data.name : item.name}
@@ -116,12 +116,12 @@ const CompanyEdit = () => {
           />
 
           <Fieldset
-            legend='Location'
+            legend='Lokasi'
             mt='xl'
           >
             <TextInput
-              label='Address'
-              placeholder='Address'
+              label='Alamat'
+              placeholder='Alamat'
               value={form.data.address}
               onChange={e => updateValue('address', e.target.value)}
               error={form.errors.address}
@@ -130,8 +130,8 @@ const CompanyEdit = () => {
 
             <Group grow>
               <TextInput
-                label='Postal code'
-                placeholder='Postal code'
+                label='Kode Pos'
+                placeholder='Kode Pos'
                 mt='md'
                 value={form.data.postal_code}
                 onChange={e => updateValue('postal_code', e.target.value)}
@@ -140,8 +140,8 @@ const CompanyEdit = () => {
               />
 
               <TextInput
-                label='City'
-                placeholder='City'
+                label='Kota'
+                placeholder='Kota'
                 mt='md'
                 value={form.data.city}
                 onChange={e => updateValue('city', e.target.value)}
@@ -151,8 +151,8 @@ const CompanyEdit = () => {
             </Group>
 
             <Select
-              label='Country'
-              placeholder='Select country'
+              label='Negara'
+              placeholder='Pilih Negara'
               mt='md'
               searchable={true}
               value={form.data.country_id?.toString()}
@@ -168,7 +168,7 @@ const CompanyEdit = () => {
           
 
           <Fieldset
-            legend='Contact'
+            legend='Kontak'
             mt='xl'
           >
             <Group grow>
@@ -182,8 +182,8 @@ const CompanyEdit = () => {
               />
 
               <TextInput
-                label='Phone'
-                placeholder='Phone'
+                label='Telepon'
+                placeholder='Telepon'
                 value={form.data.phone}
                 onChange={e => updateValue('phone', e.target.value)}
                 error={form.errors.phone}
@@ -192,8 +192,8 @@ const CompanyEdit = () => {
             </Group>
 
             <TextInput
-              label='Web'
-              placeholder='Web'
+              label='Alamat URL'
+              placeholder='Alamat URL'
               mt='md'
               value={form.data.web}
               onChange={e => updateValue('web', e.target.value)}
@@ -207,7 +207,7 @@ const CompanyEdit = () => {
             mt='xl'
           >
             {can('edit owner company') && (
-              <ActionButton loading={form.processing}>Save</ActionButton>
+              <ActionButton loading={form.processing}>Simpan</ActionButton>
             )}
           </Group>
         </form>

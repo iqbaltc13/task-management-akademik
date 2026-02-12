@@ -27,9 +27,9 @@ export default function TableRow({ item }) {
               restorePermission="restore role"
               archive={{
                 route: "settings.roles.destroy",
-                title: "Archive role",
-                content: "Are you sure you want to archive this role?",
-                confirmLabel: "Archive",
+                title: "Hapus Peran",
+                content: "Apakah anda yakin menghapus data ini?",
+                confirmLabel: "Ya, Hapus",
               }}
               restore={{
                 route: "settings.roles.restore",

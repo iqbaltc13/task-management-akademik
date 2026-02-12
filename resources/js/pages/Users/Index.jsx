@@ -15,12 +15,12 @@ const UsersIndex = () => {
   const { items } = usePage().props;
 
   const columns = prepareColumns([
-    { label: "User", column: "name" },
-    { label: "Role", sortable: false },
+    { label: "Pengguna", column: "name" },
+    { label: "Peran", sortable: false },
     { label: "Email", column: "email" },
     
     {
-      label: "Actions",
+      label: "Aksi",
       sortable: false,
       visible: actionColumnVisibility("user"),
     },
@@ -72,6 +72,6 @@ const UsersIndex = () => {
   );
 };
 
-UsersIndex.layout = (page) => <Layout title="Users">{page}</Layout>;
+UsersIndex.layout = (page) => <Layout title="Pengguna">{page}</Layout>;
 
 export default UsersIndex;

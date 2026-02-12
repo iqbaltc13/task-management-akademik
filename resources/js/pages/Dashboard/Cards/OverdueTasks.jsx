@@ -62,7 +62,7 @@ export default function OverdueTasks({ tasks }) {
         </ScrollArea>
       ) : (
         <Center my={30}>
-          <EmptyWithIcon title="All done!" subtitle="You have no overdue tasks" icon={IconRocket} />
+          <EmptyWithIcon title="Semua selesai!" subtitle="Tidak ada permintaan terlambat" icon={IconRocket} />
         </Center>
       )}
     </Card>

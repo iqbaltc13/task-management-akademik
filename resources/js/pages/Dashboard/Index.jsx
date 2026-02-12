@@ -36,6 +36,6 @@ const Dashboard = () => {
   );
 };
 
-Dashboard.layout = (page) => <Layout title="Dashboard">{page}</Layout>;
+Dashboard.layout = (page) => <Layout title="Dasbor">{page}</Layout>;
 
 export default Dashboard;
