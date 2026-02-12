@@ -24,14 +24,14 @@ export default function Sidebar() {
   useEffect(() => {
     setItems([
       {
-        label: "Dashboard",
+        label: "Dasbor",
         icon: IconGauge,
         link: route("dashboard"),
         active: route().current("dashboard"),
         visible: true,
       },
       {
-        label: "Projects",
+        label: "Proyek",
         icon: IconListDetails,
         link: route("projects.index"),
         active: route().current("projects.*"),
@@ -45,7 +45,7 @@ export default function Sidebar() {
         visible: can("view tasks") || can("view activities"),
         links: [
           {
-            label: "Tasks",
+            label: "Permintaan",
             link: route("my-work.tasks.index"),
             active: route().current("my-work.tasks.*"),
             visible: can("view tasks"),
@@ -80,7 +80,7 @@ export default function Sidebar() {
         ],
       },
       {
-        label: "Users",
+        label: "Pengguna",
         icon: IconUsers,
         link: route("users.index"),
         active: route().current("users.*"),
@@ -94,20 +94,20 @@ export default function Sidebar() {
         visible: can("view invoices"),
       },
       {
-        label: "Reports",
+        label: "Laporan",
         icon: IconReportAnalytics,
         active: route().current("reports.*"),
         opened: route().current("reports.*"),
         visible: can("view logged time sum report") || can("view daily logged time report") || can("view fixed price sum report"),
         links: [
           {
-            label: "Logged time sum",
+            label: "Laporan Ringkasan Waktu Total ",
             link: route("reports.logged-time.sum"),
             active: route().current("reports.logged-time.sum"),
             visible: can("view logged time sum report"),
           },
           {
-            label: "Daily logged time",
+            label: "Laporan Waktu Tercatat Harian",
             link: route("reports.logged-time.daily"),
             active: route().current("reports.logged-time.daily"),
             visible: can("view daily logged time report"),
@@ -121,20 +121,20 @@ export default function Sidebar() {
         ],
       },
       {
-        label: "Settings",
+        label: "Pengaturan",
         icon: IconSettings,
         active: route().current("settings.*"),
         opened: route().current("settings.*"),
         visible: can("view owner company") || can("view roles") || can("view labels"),
         links: [
           {
-            label: "Company",
+            label: "Instansi",
             link: route("settings.company.edit"),
             active: route().current("settings.company.*"),
             visible: can("view owner company"),
           },
           {
-            label: "Roles",
+            label: "Peran",
             link: route("settings.roles.index"),
             active: route().current("settings.roles.*"),
             visible: can("view roles"),

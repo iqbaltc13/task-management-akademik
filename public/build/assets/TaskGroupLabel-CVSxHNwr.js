@@ -1,1 +1,0 @@
-import{b as t,j as s}from"./app-Cz2I6k8K.js";import{u as a}from"./use-computed-color-scheme-DDS6iPII.js";import{P as i}from"./Pill-SWRzr8EO.js";const n=t.forwardRef(function(e,o){const r=a();return s.jsx(i,{ref:o,size:"xs",bg:r==="light"?"blue.6":"blue.8",fw:600,c:"white",...e,children:e.children})});export{n as T};
