@@ -14,7 +14,7 @@ export default function ArchivedFilterButton() {
   }, [selected]);
 
   return (
-    <Tooltip label="Archived" openDelay={500} withArrow>
+    <Tooltip label="Data Terhapus" openDelay={500} withArrow>
       <ActionIcon
         variant={selected ? "filled" : "default"}
         color={selected ? "red" : ""}
