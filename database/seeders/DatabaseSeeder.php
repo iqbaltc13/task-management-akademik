@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 
                 ]);
 
-                auth()->setUser(User::role('admin')->first());
+                //auth()->setUser(User::role('admin')->first());
 
                 $this->call([
                     // ProjectSeeder::class,
