@@ -15,10 +15,10 @@ const LabelsIndex = () => {
   const { items } = usePage().props;
 
   const columns = prepareColumns([
-    { label: "Color", sortable: false },
-    { label: "Name", column: "name" },
+    { label: "Warna", sortable: false },
+    { label: "Nama", column: "name" },
     {
-      label: "Actions",
+      label: "Aksi",
       sortable: false,
       visible: actionColumnVisibility("label"),
     },

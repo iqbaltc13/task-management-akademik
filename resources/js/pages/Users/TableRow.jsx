@@ -56,7 +56,7 @@ export default function TableRow({ item }) {
               content: `Are you sure you want to archive this user? This action will prevent
                 the user from logging in, while all other aspects related to the
                 user's actions will remain unaffected.`,
-              confirmLabel: "Archive",
+              confirmLabel: "Hapus",
             }}
             restore={{
               route: "users.restore",

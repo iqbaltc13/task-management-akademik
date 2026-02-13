@@ -66,7 +66,7 @@ export default function RecentComments({ comments }) {
         </ScrollArea>
       ) : (
         <Center my={30}>
-          <EmptyWithIcon title="No comments" subtitle="On your tasks" icon={IconMessage} />
+          <EmptyWithIcon title="Belum ada komentar" subtitle="pada permintaan Anda" icon={IconMessage} />
         </Center>
       )}
     </Card>

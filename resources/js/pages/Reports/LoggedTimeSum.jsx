@@ -82,7 +82,7 @@ const LoggedTimeSum = () => {
               />
 
               <MultiSelect
-                placeholder={form.data.users.length ? null : 'Select users'}
+                placeholder={form.data.users.length ? null : 'Pilih Pengguna'}
                 required
                 w={220}
                 value={form.data.users}
@@ -193,6 +193,6 @@ const LoggedTimeSum = () => {
   );
 };
 
-LoggedTimeSum.layout = page => <Layout title='Logged time sum'>{page}</Layout>;
+LoggedTimeSum.layout = page => <Layout title='Laporan Ringkasan Waktu Total'>{page}</Layout>;
 
 export default LoggedTimeSum;
