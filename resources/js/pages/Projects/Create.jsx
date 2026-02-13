@@ -19,6 +19,7 @@ import {
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { PricingType } from '@/utils/enums';
+import { DatePickerInput, DatesProvider } from "@mantine/dates";
 
 const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
   const [currencySymbol, setCurrencySymbol] = useState();
@@ -109,7 +110,19 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             error={form.errors.client_company_id}
           /> */}
 
-         
+         <DatesProvider settings={{ timezone: "utc" }}>
+            <DatePickerInput
+              label="Periode Tanggal"
+              type="range"
+              valueFormat="YYYY-MM-DD"
+              placeholder="Pick dates range"
+              clearable
+              allowSingleDateInRange
+              miw={200}
+              value={form.data.dateRange}
+              onChange={(dates) => updateValue("dateRange", dates)}
+            />
+          </DatesProvider>
 
           <MultiSelect
             label='Grant access to users'
