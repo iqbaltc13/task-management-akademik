@@ -114,6 +114,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             <DatePickerInput
               label="Periode Tanggal"
               type="range"
+              mt='md'
               valueFormat="YYYY-MM-DD"
               placeholder="Pick dates range"
               clearable
