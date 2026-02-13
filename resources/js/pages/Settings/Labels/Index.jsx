@@ -16,9 +16,9 @@ const LabelsIndex = () => {
 
   const columns = prepareColumns([
     { label: "Warna", sortable: false },
-    { label: "Name", column: "name" },
+    { label: "Nama", column: "name" },
     {
-      label: "Actions",
+      label: "Aksi",
       sortable: false,
       visible: actionColumnVisibility("label"),
     },
