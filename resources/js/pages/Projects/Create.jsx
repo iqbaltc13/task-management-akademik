@@ -20,18 +20,30 @@ import {
 import { useEffect, useState } from 'react';
 import { PricingType } from '@/utils/enums';
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
+import dayjs from 'dayjs';
+
 
 const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
   const [currencySymbol, setCurrencySymbol] = useState();
 
   const [form, submit, updateValue] = useForm('post', route('projects.store'), {
     name: '',
+    start_date: '',
+    end_date: '',
     description: '',
     default_pricing_type: PricingType.HOURLY,
     rate: 0,
     client_company_id: '',
     users: [],
   });
+
+  const handleDateChange = (value) => {
+    setParams(prev => ({
+      ...prev,
+      start_date: value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : null,
+      end_date: value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : null,
+      }));
+  };
 
   const pricingTypes = [
     { value: PricingType.HOURLY, label: 'Hourly' },
@@ -121,7 +133,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
               allowSingleDateInRange
               miw={200}
               value={form.data.dateRange}
-              onChange={(dates) => updateValue("dateRange", dates)}
+              onChange={handleDateChange}
             />
           </DatesProvider>
 

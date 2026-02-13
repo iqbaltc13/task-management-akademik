@@ -28,6 +28,8 @@ class StoreProjectRequest extends FormRequest
             'description' => 'string|nullable',
             'default_pricing_type' => ['nullable', 'string', Rule::enum(PricingType::class)],
             'client_company_id' => 'nullable|exists:client_companies,id',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
             'rate' => 'numeric|min:0|nullable',
             'users' => 'array',
         ];
