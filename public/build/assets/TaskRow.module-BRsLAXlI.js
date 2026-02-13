@@ -1,1 +1,0 @@
-const s="_checkbox_1hoxs_1",o="_disabledCheckbox_1hoxs_9",e="_user_1hoxs_19",c="_task_1hoxs_53",_="_actions_1hoxs_71",a="_dragHandle_1hoxs_79",t="_name_1hoxs_99",n="_itemDragging_1hoxs_117",x="_completed_1hoxs_133",d={checkbox:s,disabledCheckbox:o,user:e,task:c,actions:_,dragHandle:a,name:t,itemDragging:n,completed:x};export{d as c};
