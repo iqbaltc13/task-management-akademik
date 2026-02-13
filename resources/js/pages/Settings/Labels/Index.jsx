@@ -15,7 +15,7 @@ const LabelsIndex = () => {
   const { items } = usePage().props;
 
   const columns = prepareColumns([
-    { label: "Color", sortable: false },
+    { label: "Warna", sortable: false },
     { label: "Name", column: "name" },
     {
       label: "Actions",
