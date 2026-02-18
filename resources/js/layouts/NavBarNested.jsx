@@ -59,39 +59,11 @@ export default function Sidebar() {
         ],
       },
       {
-        label: "Clients",
-        icon: IconBuildingSkyscraper,
-        active: route().current("clients.*"),
-        opened: route().current("clients.*"),
-        visible: can("view client users") || can("view client companies"),
-        links: [
-          {
-            label: "Users",
-            link: route("clients.users.index"),
-            active: route().current("clients.users.*"),
-            visible: can("view client users"),
-          },
-          {
-            label: "Companies",
-            link: route("clients.companies.index"),
-            active: route().current("clients.companies.*"),
-            visible: can("view client companies"),
-          },
-        ],
-      },
-      {
         label: "Pengguna",
         icon: IconUsers,
         link: route("users.index"),
         active: route().current("users.*"),
         visible: can("view users"),
-      },
-      {
-        label: "Invoices",
-        icon: IconFileDollar,
-        link: route("invoices.index"),
-        active: route().current("invoices.*"),
-        visible: can("view invoices"),
       },
       {
         label: "Laporan",
