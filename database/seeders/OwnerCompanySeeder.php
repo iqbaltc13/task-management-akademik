@@ -13,17 +13,17 @@ class OwnerCompanySeeder extends Seeder
     public function run(): void
     {
         OwnerCompany::create([
-            'name' => fake()->company,
-            'logo' => null,
-            'address' => fake()->streetAddress,
-            'postal_code' => fake()->postcode,
-            'city' => fake()->city,
-            'country_id' => fake()->numberBetween(1, 249),
-            'currency_id' => 97,
-            'phone' => fake()->phoneNumber,
+            'name' => "UIN Syekh Wasil Kediri",
+            'logo' => "https://sia.iainkediri.ac.id/spmb/assets/images/panel/logo-uin-kediri.png",
+            'address' => "Jl. Sunan Ampel No.7, Ngronggo, Kec. Kota, Kota Kediri, Jawa Timur ",
+            'postal_code' => "64127",
+            'city' => "Kota Kediri",
+            'country_id' => 104,
+            'currency_id' => 42,
+            'phone' => "(0354) 689282",
             'web' => 'https://company.com',
             'tax' => 1000, // 10%
-            'email' => fake()->email,
+            'email' => "info@iainkediri.ac.id",
             'iban' => fake()->iban,
             'swift' => fake()->swiftBicNumber,
             'business_id' => '111111111',

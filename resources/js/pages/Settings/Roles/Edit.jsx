@@ -24,7 +24,7 @@ const RoleEdit = () => {
     route("settings.roles.update", item.id),
     {
       _method: "put",
-      name: item.name,
+      name: item ? item.name : "",
       permissions: item.permissions,
     },
   );
@@ -65,13 +65,13 @@ const RoleEdit = () => {
               label="Name"
               placeholder="Role name"
               required
-              value={form.data.name}
+              value={form.data ? form.data.name : ""}
               onChange={(e) => updateValue("name", e.target.value)}
               error={form.errors.name}
             />
           )}
 
-          <Title order={3} mt={form.data.name !== "client" ? "xl" : ""}>
+          <Title order={3} mt={form.data ? (form.data.name !== "client" ? "xl" : "") : ""}>
             Permissions
           </Title>
 
@@ -81,12 +81,12 @@ const RoleEdit = () => {
                 <Group justify="start" gap="sm">
                   {allPermissionsGrouped[group].map((permission) => (
                     <Chip
-                      key={permission}
+                      key={permission.name}
                       radius="sm"
-                      checked={form.data.permissions.includes(permission)}
-                      onClick={() => toggle(permission)}
+                      checked={form.data.permissions.includes(permission.name)}
+                      onClick={() => toggle(permission.name)}
                     >
-                      {permission}
+                      {permission.title}
                     </Chip>
                   ))}
                 </Group>

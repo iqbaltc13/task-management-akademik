@@ -26,7 +26,7 @@ const CompanyEdit = () => {
   const [form, submit, updateValue] = useForm('post', route('settings.company.update'), {
     _method: 'put',
     logo: null,
-    name: item.name || '',
+    name: item ? item.name || '' : '',
     address: item.address || '',
     postal_code: item.postal_code || '',
     city: item.city || '',
@@ -109,7 +109,7 @@ const CompanyEdit = () => {
             placeholder='Nama Institusi'
             required
             mt='md'
-            value={form.data.name}
+            value={form.data ? form.data.name : item.name}
             onChange={e => updateValue('name', e.target.value)}
             error={form.errors.name}
             disabled={!can('edit owner company')}
@@ -163,93 +163,9 @@ const CompanyEdit = () => {
             />
           </Fieldset>
 
-          <Fieldset
-            legend='Details'
-            mt='xl'
-          >
-            <TextInput
-              label='Business ID'
-              placeholder='Business ID'
-              value={form.data.business_id}
-              onChange={e => updateValue('business_id', e.target.value)}
-              error={form.errors.business_id}
-              disabled={!can('edit owner company')}
-            />
+          
 
-            <TextInput
-              label='Tax ID'
-              placeholder='Tax ID'
-              mt='md'
-              value={form.data.tax_id}
-              onChange={e => updateValue('tax_id', e.target.value)}
-              error={form.errors.tax_id}
-              disabled={!can('edit owner company')}
-            />
-
-            <TextInput
-              label='VAT'
-              placeholder='VAT'
-              mt='md'
-              value={form.data.vat}
-              onChange={e => updateValue('vat', e.target.value)}
-              error={form.errors.vat}
-              disabled={!can('edit owner company')}
-            />
-          </Fieldset>
-
-          <Fieldset
-            legend='Finance'
-            mt='xl'
-          >
-            <TextInput
-              label='IBAN'
-              placeholder='IBAN'
-              value={form.data.iban}
-              onChange={e => updateValue('iban', e.target.value)}
-              error={form.errors.iban}
-              disabled={!can('edit owner company')}
-            />
-
-            <TextInput
-              label='SWIFT'
-              placeholder='SWIFT'
-              mt='md'
-              value={form.data.swift}
-              onChange={e => updateValue('swift', e.target.value)}
-              error={form.errors.swift}
-              disabled={!can('edit owner company')}
-            />
-
-            <Group grow>
-              <Select
-                label='Default currency'
-                placeholder='Select currency'
-                required
-                mt='md'
-                searchable={true}
-                value={form.data.currency_id?.toString()}
-                onChange={value => updateValue('currency_id', value)}
-                data={currencies}
-                error={form.errors.currency_id}
-                disabled={!can('edit owner company')}
-              />
-
-              <NumberInput
-                label='Tax'
-                required
-                allowNegative={false}
-                clampBehavior='strict'
-                decimalScale={2}
-                fixedDecimalScale={true}
-                suffix='%'
-                mt='md'
-                value={form.data.tax}
-                onChange={value => updateValue('tax', value)}
-                error={form.errors.tax}
-                disabled={!can('edit owner company')}
-              />
-            </Group>
-          </Fieldset>
+          
 
           <Fieldset
             legend='Kontak'

@@ -82,6 +82,6 @@ Thumbs.db
 *.swp
 *~
 
-# Databaseg
+# Database
 *.sqlite
 *.sqlite-journal

@@ -63,7 +63,7 @@ const RoleCreate = () => {
             label="Name"
             placeholder="Role name"
             required
-            value={form.data.name}
+            value={form.data ? form.data.name : ""}
             onChange={(e) => updateValue("name", e.target.value)}
             error={form.errors.name}
           />
@@ -78,12 +78,12 @@ const RoleCreate = () => {
                 <Group justify="start" gap="sm">
                   {allPermissionsGrouped[group].map((permission) => (
                     <Chip
-                      key={permission}
+                      key={permission.name}
                       radius="sm"
-                      checked={form.data.permissions.includes(permission)}
-                      onClick={() => toggle(permission)}
+                      checked={form.data.permissions.includes(permission.name)}
+                      onClick={() => toggle(permission.name)}
                     >
-                      {permission}
+                      {permission.title}
                     </Chip>
                   ))}
                 </Group>

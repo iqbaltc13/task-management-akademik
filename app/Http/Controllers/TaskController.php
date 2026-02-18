@@ -52,7 +52,7 @@ class TaskController extends Controller
                         ->get(),
                 ];
             });
-
+        $ownerCompany = OwnerCompany::with('currency')->first();
         return Inertia::render('Projects/Tasks/Index', [
             'project' => $project,
             'usersWithAccessToProject' => PermissionService::usersWithAccessToProject($project),
@@ -61,7 +61,7 @@ class TaskController extends Controller
             'groupedTasks' => $groupedTasks,
             'openedTask' => $task ? $task->loadDefault() : null,
             'currency' => [
-                'symbol' => OwnerCompany::with('currency')->first()->currency->symbol,
+                'symbol' => $ownerCompany? $ownerCompany->currency->symbol : "",
             ],
         ]);
     }

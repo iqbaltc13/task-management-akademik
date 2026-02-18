@@ -8,7 +8,7 @@ export default function TableRow({ item }) {
         <ColorSwatch color={item.color} />
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item.name}</Text>
+        <Text fz="sm">{item ? item.name : ""}</Text>
       </Table.Td>
       {(can("edit label") || can("archive label") || can("restore label")) && (
         <Table.Td w={100}>

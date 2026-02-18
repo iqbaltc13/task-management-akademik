@@ -13,11 +13,12 @@ class ClientCompanySeeder extends Seeder
      */
     public function run(): void
     {
-        User::role('client')
-            ->get()
-            ->each(function (User $client) {
-                ClientCompany::factory()->create()->clients()->attach($client);
-            });
+        // User::role('client')
+        //     ->get()
+        //     ->each(function (User $client) {
+        //         ClientCompany::factory()->create()->clients()->attach($client);
+        //     });
+        
 
     }
 }

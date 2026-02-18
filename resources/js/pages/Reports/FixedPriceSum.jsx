@@ -91,7 +91,7 @@ const FixedPriceSum = () => {
               <DatesProvider settings={{ timezone: 'utc' }}>
                 <DatePickerInput
                   type='range'
-                  valueFormat='MMM D'
+                  valueFormat='YYYY-MM-DD'
                   placeholder='Pick dates range'
                   clearable
                   allowSingleDateInRange
@@ -101,11 +101,11 @@ const FixedPriceSum = () => {
                 />
               </DatesProvider>
 
-              <Checkbox
+              {/* <Checkbox
                 label='Billable'
                 checked={form.data.billable}
                 onChange={event => updateValue('billable', event.currentTarget.checked)}
-              />
+              /> */}
 
               <Checkbox
                 label='Completed'

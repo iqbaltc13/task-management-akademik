@@ -45,6 +45,7 @@
         "@tiptap/react": "^2.6.6",
         "@tiptap/starter-kit": "^2.6.6",
         "@tiptap/suggestion": "^2.6.6",
+        "date-fns": "^4.1.0",
         "dayjs": "^1.11.13",
         "embla-carousel-react": "^8.2.0",
         "immer": "^10.1.1",
@@ -52,6 +53,7 @@
         "nprogress": "^0.2.0",
         "print-js": "^1.6.0",
         "query-string": "^9.1.0",
+        "react-date-range": "^2.0.1",
         "react-masonry-css": "^1.0.16",
         "tippy.js": "^6.3.7",
         "zustand": "^4.5.5"

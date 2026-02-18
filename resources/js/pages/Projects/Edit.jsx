@@ -5,6 +5,7 @@ import ContainerBox from '@/layouts/ContainerBox';
 import Layout from '@/layouts/MainLayout';
 import { redirectTo } from '@/utils/route';
 import { usePage } from '@inertiajs/react';
+import { DateRangePicker } from 'react-date-range';
 import {
   Anchor,
   Breadcrumbs,
@@ -19,6 +20,8 @@ import {
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { PricingType } from '@/utils/enums';
+import { DatePickerInput, DatesProvider } from "@mantine/dates";
+import dayjs from 'dayjs';
 
 const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
   const { item } = usePage().props;
@@ -30,10 +33,20 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
     description: item.description || '',
     default_pricing_type: item.default_pricing_type || PricingType.HOURLY,
     client_company_id: item.client_company_id || '',
+    start_date: item.start_date || '',
+    end_date: item.end_date || '',
     rate: item.rate / 100 || 0,
     users: item.users.map(i => i.id.toString()),
   });
 
+  const handleDateChange = (value) => {
+    setParams(prev => ({
+      ...prev,
+      start_date: value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : null,
+      end_date: value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : null,
+      }));
+  };
+  
   useEffect(() => {
     let symbol = currencies.find(i =>
       i.client_companies.find(c => c.id.toString() === form.data.client_company_id.toString())
@@ -99,18 +112,32 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             value={form.data.description}
             onChange={e => updateValue('description', e.target.value)}
           />
+          <DatesProvider settings={{ timezone: "utc" }}>
+            <DatePickerInput
+              label="Periode Tanggal"
+              type="range"
+              mt='md'
+              valueFormat="YYYY-MM-DD"
+              placeholder="Pick dates range"
+              clearable
+              allowSingleDateInRange
+              miw={200}
+              value={[form.data.start_date, form.data.end_date]}
+              onChange={handleDateChange}
+            />
+          </DatesProvider>
 
-          <Select
-            label='Company requesting work'
-            placeholder='Select company'
+          {/* <Select
+            label='Institusi'
+            placeholder='Pilih institusi'
             required
             mt='md'
             value={form.data.client_company_id?.toString()}
             onChange={value => updateValue('client_company_id', value)}
             data={companies}
             error={form.errors.client_company_id}
-          />
-
+          /> */}
+         
           <MultiSelect
             label='Grant access to users'
             placeholder='Select users'
@@ -122,7 +149,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             error={form.errors.users}
           />
 
-          <Select
+          {/* <Select
             label='Default pricing type'
             placeholder='Select pricing type'
             required
@@ -131,9 +158,9 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             onChange={value => updateValue('default_pricing_type', value)}
             data={pricingTypes}
             error={form.errors.default_pricing_type}
-          />
+          /> */}
 
-          <NumberInput
+          {/* <NumberInput
             label='Hourly rate'
             mt='md'
             allowNegative={false}
@@ -144,7 +171,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             value={form.data.rate}
             onChange={value => updateValue('rate', value)}
             error={form.errors.rate}
-          />
+          /> */}
 
           <Group
             justify='space-between'

@@ -41,14 +41,7 @@ export default function TableRow({ item }) {
           Email
         </Text>
       </Table.Td>
-      {can("view user rate") && (
-        <Table.Td>
-          <Text fz="sm">{money(item.rate)} / hr</Text>
-          <Text fz="xs" c="dimmed">
-            Rate
-          </Text>
-        </Table.Td>
-      )}
+     
       {(can("edit user") || can("archive user") || can("restore user")) && (
         <Table.Td>
           <TableRowActions

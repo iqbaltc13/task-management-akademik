@@ -10,9 +10,15 @@ export default defineConfig({
         }),
         react(),
     ],
+<<<<<<< HEAD
     build: {
     chunkSizeWarningLimit: 1000
   }
     
+=======
+   build: {
+    chunkSizeWarningLimit: 1600,
+   },
+>>>>>>> 88cbf930d14dbc12e6fc78cc5d5bd7b4518155ef
 });
 

@@ -4,6 +4,7 @@ import useForm from '@/hooks/useForm';
 import ContainerBox from '@/layouts/ContainerBox';
 import Layout from '@/layouts/MainLayout';
 import { redirectTo } from '@/utils/route';
+import { DateRangePicker } from 'react-date-range';
 import {
   Anchor,
   Breadcrumbs,
@@ -18,12 +19,17 @@ import {
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { PricingType } from '@/utils/enums';
+import { DatePickerInput, DatesProvider } from "@mantine/dates";
+import dayjs from 'dayjs';
+
 
 const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
   const [currencySymbol, setCurrencySymbol] = useState();
 
   const [form, submit, updateValue] = useForm('post', route('projects.store'), {
     name: '',
+    start_date: '',
+    end_date: '',
     description: '',
     default_pricing_type: PricingType.HOURLY,
     rate: 0,
@@ -31,11 +37,19 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     users: [],
   });
 
+  const handleDateChange = (value) => {
+    setParams(prev => ({
+      ...prev,
+      start_date: value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : null,
+      end_date: value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : null,
+      }));
+  };
+
   const pricingTypes = [
     { value: PricingType.HOURLY, label: 'Hourly' },
     { value: PricingType.FIXED, label: 'Fixed' },
   ];
-
+  
   useEffect(() => {
     let symbol = currencies.find(i =>
       i.client_companies.find(c => c.id.toString() === form.data.client_company_id)
@@ -97,16 +111,31 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             onChange={e => updateValue('description', e.target.value)}
           />
 
-          <Select
-            label='Company requesting work'
-            placeholder='Select company'
+          {/* <Select
+            label='Institusi'
+            placeholder='Pilih institusi'
             required
             mt='md'
             value={form.data.client_company_id}
             onChange={value => updateValue('client_company_id', value)}
             data={companies}
             error={form.errors.client_company_id}
-          />
+          /> */}
+
+         <DatesProvider settings={{ timezone: "utc" }}>
+            <DatePickerInput
+              label="Periode Tanggal"
+              type="range"
+              mt='md'
+              valueFormat="YYYY-MM-DD"
+              placeholder="Pick dates range"
+              clearable
+              allowSingleDateInRange
+              miw={200}
+              value={form.data.dateRange}
+              onChange={handleDateChange}
+            />
+          </DatesProvider>
 
           <MultiSelect
             label='Grant access to users'
@@ -119,29 +148,9 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             error={form.errors.users}
           />
 
-          <Select
-            label='Default pricing type'
-            placeholder='Select pricing type'
-            required
-            mt='md'
-            value={form.data.default_pricing_type}
-            onChange={value => updateValue('default_pricing_type', value)}
-            data={pricingTypes}
-            error={form.errors.default_pricing_type}
-          />
+          
 
-          <NumberInput
-            label='Hourly rate'
-            mt='md'
-            allowNegative={false}
-            clampBehavior='strict'
-            decimalScale={2}
-            fixedDecimalScale={true}
-            prefix={currencySymbol}
-            value={form.data.rate}
-            onChange={value => updateValue('rate', value)}
-            error={form.errors.rate}
-          />
+          
 
           <Group
             justify='space-between'
