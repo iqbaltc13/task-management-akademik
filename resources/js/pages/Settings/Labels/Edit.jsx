@@ -20,7 +20,7 @@ const LabelEdit = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <Anchor href="#" onClick={() => redirectTo("settings.labels.index")} fz={14}>
-          Labels
+          Label
         </Anchor>
         <div>Edit</div>
       </Breadcrumbs>
@@ -35,16 +35,16 @@ const LabelEdit = () => {
       <ContainerBox maw={400}>
         <form onSubmit={submit}>
           <TextInput
-            label="Name"
-            placeholder="Label name"
+            label="Nama"
+            placeholder="Nama label"
             required
             value={form.data ? form.data.name : ""}
             onChange={(e) => updateValue("name", e.target.value)}
             error={form.errors.name}
           />
           <ColorInput
-            label="Color"
-            placeholder="Label color"
+            label="Warna"
+            placeholder="Warna label"
             required
             mt="md"
             swatches={[
@@ -70,7 +70,7 @@ const LabelEdit = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="settings.labels.index" />
-            <ActionButton loading={form.processing}>Update</ActionButton>
+            <ActionButton loading={form.processing}>Simpan</ActionButton>
           </Group>
         </form>
       </ContainerBox>
