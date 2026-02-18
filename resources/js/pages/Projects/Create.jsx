@@ -36,7 +36,10 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     client_company_id: '',
     users: [],
   });
-
+  const [params, setParams] = useState({
+    start_date: null,
+    end_date: null,
+  });
   const handleDateChange = (value) => {
     setParams(prev => ({
       ...prev,
