@@ -32,7 +32,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     start_date: dayjs().startOf('year').format('YYYY-MM-DD'),
     end_date: dayjs().endOf('year').format('YYYY-MM-DD'),
     description: '',
-    default_pricing_type: null,
+    default_pricing_type: PricingType.HOURLY,
     rate: 0,
     client_company_id: '',
     users: [],
