@@ -26,29 +26,23 @@ import dayjs from 'dayjs';
 const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
   const [currencySymbol, setCurrencySymbol] = useState();
 
-  const [params, setParams] = useState({
-    start_date: dayjs().startOf("year").format("YYYY-MM-DD"),
-    end_date: dayjs().endOf("year").format("YYYY-MM-DD"),
-  });
+  const params = currentUrlParams();
   const [form, submit, updateValue] = useForm('post', route('projects.store'), {
     name: '',
-    start_date: setParams.start_date,
-    end_date: setParams.end_date,
+    start_date: params.dateRange && params.dateRange[0] && params.dateRange[1]
+            ? dayjs(params.dateRange[0]).toDate()
+            : dayjs().startOf("year").toDate(),
+    end_date: params.dateRange && params.dateRange[0] && params.dateRange[1]
+            ? dayjs(params.dateRange[1]).toDate()
+            : dayjs().endOf("year").toDate(),
     description: '',
-    default_pricing_type: PricingType.HOURLY,
+    default_pricing_type: null,
     rate: 0,
     client_company_id: '',
     users: [],
   });
   
-  const handleDateChange = (value) => {
-    setParams(prev => ({
-      ...prev,
-      start_date: value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : null,
-      end_date: value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : null,
-      }));
-  };
-
+  
   const pricingTypes = [
     { value: PricingType.HOURLY, label: 'Hourly' },
     { value: PricingType.FIXED, label: 'Fixed' },
@@ -137,7 +131,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
               allowSingleDateInRange
               miw={200}
               value={form.data.dateRange}
-              onChange={handleDateChange}
+              onChange={(dates) => updateValue("dateRange", dates)}
             />
           </DatesProvider>
 
