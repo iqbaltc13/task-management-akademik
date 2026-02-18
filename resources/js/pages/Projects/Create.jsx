@@ -28,8 +28,14 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
 
   const [form, submit, updateValue] = useForm('post', route('projects.store'), {
     name: '',
-    start_date: '',
-    end_date: '',
+    start_date: setParams(prev => ({
+      ...prev,
+      start_date: dayjs().startOf("year").format("YYYY-MM-DD"),
+    })),
+    end_date: setParams(prev => ({
+      ...prev,
+      end_date: dayjs().endOf("year").format("YYYY-MM-DD"),
+    })),
     description: '',
     default_pricing_type: PricingType.HOURLY,
     rate: 0,
