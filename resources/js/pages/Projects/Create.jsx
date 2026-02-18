@@ -26,32 +26,38 @@ import dayjs from 'dayjs';
 const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
   const [currencySymbol, setCurrencySymbol] = useState();
 
+  
   const [form, submit, updateValue] = useForm('post', route('projects.store'), {
     name: '',
-    start_date: '',
-    end_date: '',
+    start_date: dayjs().startOf('year').format('YYYY-MM-DD'),
+    end_date: dayjs().endOf('year').format('YYYY-MM-DD'),
     description: '',
     default_pricing_type: PricingType.HOURLY,
     rate: 0,
     client_company_id: '',
     users: [],
   });
-  const [params, setParams] = useState({
-    start_date: null,
-    end_date: null,
-  });
-  const handleDateChange = (value) => {
-    setParams(prev => ({
-      ...prev,
-      start_date: value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : null,
-      end_date: value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : null,
-      }));
-  };
-
+  
+  
   const pricingTypes = [
     { value: PricingType.HOURLY, label: 'Hourly' },
     { value: PricingType.FIXED, label: 'Fixed' },
   ];
+
+  const [dateRange, setDateRange] = useState([
+    dayjs().startOf('year').toDate(),
+    dayjs().endOf('year').toDate()
+  ]);
+
+  const handleDateChange = (value) => {
+    setDateRange(value);
+    
+    const startOfYear = dayjs().startOf('year').format('YYYY-MM-DD');
+    const endOfYear = dayjs().endOf('year').format('YYYY-MM-DD');
+    
+    updateValue('start_date', value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : startOfYear);
+    updateValue('end_date', value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : endOfYear);
+  };
   
   useEffect(() => {
     let symbol = currencies.find(i =>
@@ -135,8 +141,9 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
               clearable
               allowSingleDateInRange
               miw={200}
-              value={form.data.dateRange}
+              value={dateRange}
               onChange={handleDateChange}
+
             />
           </DatesProvider>
 
