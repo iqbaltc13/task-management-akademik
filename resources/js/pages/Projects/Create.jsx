@@ -26,6 +26,10 @@ import dayjs from 'dayjs';
 const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
   const [currencySymbol, setCurrencySymbol] = useState();
 
+  const [params, setParams] = useState({
+    start_date: dayjs().startOf("year").format("YYYY-MM-DD"),
+    end_date: dayjs().endOf("year").format("YYYY-MM-DD"),
+  });
   const [form, submit, updateValue] = useForm('post', route('projects.store'), {
     name: '',
     start_date: setParams.start_date,
@@ -36,10 +40,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     client_company_id: '',
     users: [],
   });
-  const [params, setParams] = useState({
-    start_date: dayjs().startOf("year").format("YYYY-MM-DD"),
-    end_date: dayjs().endOf("year").format("YYYY-MM-DD"),
-  });
+  
   const handleDateChange = (value) => {
     setParams(prev => ({
       ...prev,
