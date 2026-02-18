@@ -28,14 +28,8 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
 
   const [form, submit, updateValue] = useForm('post', route('projects.store'), {
     name: '',
-    start_date: setParams(prev => ({
-      ...prev,
-      start_date: dayjs().startOf("year").format("YYYY-MM-DD"),
-    })),
-    end_date: setParams(prev => ({
-      ...prev,
-      end_date: dayjs().endOf("year").format("YYYY-MM-DD"),
-    })),
+    start_date: setParams.start_date,
+    end_date: setParams.end_date,
     description: '',
     default_pricing_type: PricingType.HOURLY,
     rate: 0,
@@ -43,8 +37,8 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
     users: [],
   });
   const [params, setParams] = useState({
-    start_date: null,
-    end_date: null,
+    start_date: dayjs().startOf("year").format("YYYY-MM-DD"),
+    end_date: dayjs().endOf("year").format("YYYY-MM-DD"),
   });
   const handleDateChange = (value) => {
     setParams(prev => ({
