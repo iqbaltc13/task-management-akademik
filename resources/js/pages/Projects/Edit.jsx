@@ -39,17 +39,16 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
     users: item.users.map(i => i.id.toString()),
   });
 
-  const [params, setParams] = useState({
-    start_date: item.start_date || '',
-    end_date: item.end_date || '',
-  });
+  
 
   const handleDateChange = (value) => {
-    setParams(prev => ({
-      ...prev,
-      start_date: value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : null,
-      end_date: value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : null,
-      }));
+      setDateRange(value);
+      
+      const startOfYear = dayjs().startOf('year').format('YYYY-MM-DD');
+      const endOfYear = dayjs().endOf('year').format('YYYY-MM-DD');
+      
+      updateValue('start_date', value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : startOfYear);
+      updateValue('end_date', value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : endOfYear);
   };
   
   useEffect(() => {
@@ -127,7 +126,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
               clearable
               allowSingleDateInRange
               miw={200}
-              value={[form.data.start_date, form.data.end_date]}
+              value={[item.start_date, item.end_date]}
               onChange={handleDateChange}
             />
           </DatesProvider>
