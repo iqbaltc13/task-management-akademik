@@ -39,16 +39,19 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
     users: item.users.map(i => i.id.toString()),
   });
 
+  const [dateRange, setDateRange] = useState([
+    item.start_date ? dayjs(item.start_date).toDate() : null,
+    item.end_date ? dayjs(item.end_date).toDate() : null,
+  ]);
+
   
 
   const handleDateChange = (value) => {
-      setDateRange(value);
-      
-      const startOfYear = dayjs().startOf('year').format('YYYY-MM-DD');
-      const endOfYear = dayjs().endOf('year').format('YYYY-MM-DD');
-      
-      updateValue('start_date', value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : startOfYear);
-      updateValue('end_date', value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : endOfYear);
+    setDateRange(value);
+    
+    // Update form dengan format YYYY-MM-DD (sesuai format DB)
+    updateValue('start_date', value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : '');
+    updateValue('end_date', value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : '');
   };
   
   useEffect(() => {
@@ -126,7 +129,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
               clearable
               allowSingleDateInRange
               miw={200}
-              value={[item.start_date, item.end_date]}
+              value={dateRange}
               onChange={handleDateChange}
             />
           </DatesProvider>
