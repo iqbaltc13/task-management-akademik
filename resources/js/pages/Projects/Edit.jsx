@@ -39,6 +39,11 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
     users: item.users.map(i => i.id.toString()),
   });
 
+  const [params, setParams] = useState({
+    start_date: item.start_date || '',
+    end_date: item.end_date || '',
+  });
+
   const handleDateChange = (value) => {
     setParams(prev => ({
       ...prev,
