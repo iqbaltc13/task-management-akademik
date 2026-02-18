@@ -38,7 +38,7 @@ const LabelsIndex = () => {
       <Grid justify="space-between" align="center">
         <Grid.Col span="content">
           <Group>
-            <SearchInput placeholder="Search labels" search={search} />
+            <SearchInput placeholder="Cari label" search={search} />
             <ArchivedFilterButton />
           </Group>
         </Grid.Col>
@@ -49,7 +49,7 @@ const LabelsIndex = () => {
               radius="xl"
               onClick={() => redirectTo("settings.labels.create")}
             >
-              Create
+              Tambah
             </Button>
           )}
         </Grid.Col>
@@ -70,6 +70,6 @@ const LabelsIndex = () => {
   );
 };
 
-LabelsIndex.layout = (page) => <Layout title="Labels">{page}</Layout>;
+LabelsIndex.layout = (page) => <Layout title="Label">{page}</Layout>;
 
 export default LabelsIndex;
