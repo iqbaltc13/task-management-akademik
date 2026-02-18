@@ -64,12 +64,12 @@ const ActivityIndex = () => {
   return (
     <>
       <Breadcrumbs fz={14} mb={30}>
-        <div>My Work</div>
-        <div>Projects activity</div>
+        <div>Pekerjaan Saya</div>
+        <div>Aktivitas Proyek</div>
       </Breadcrumbs>
 
       <Title order={1} mb={20}>
-        Projects activity
+        Aktivitas Proyek
       </Title>
 
       <Select

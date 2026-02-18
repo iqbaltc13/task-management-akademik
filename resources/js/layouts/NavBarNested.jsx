@@ -51,7 +51,7 @@ export default function Sidebar() {
             visible: can("view tasks"),
           },
           {
-            label: "Activity",
+            label: "Aktivitas",
             link: route("my-work.activity.index"),
             active: route().current("my-work.activity.*"),
             visible: can("view activities"),
@@ -130,7 +130,7 @@ export default function Sidebar() {
             visible: can("view roles"),
           },
           {
-            label: "Labels",
+            label: "Label",
             link: route("settings.labels.index"),
             active: route().current("settings.labels.*"),
             visible: can("view labels"),
