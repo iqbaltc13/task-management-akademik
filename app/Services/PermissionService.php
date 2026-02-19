@@ -12,7 +12,7 @@ class PermissionService
     
     public static $permissionsByRole = [
         'admin' => [
-            'User' => [
+            'Pengguna' => [
                 [
                     'name' => 'view users',
                     'title' => 'Lihat semua pengguna',
@@ -60,7 +60,7 @@ class PermissionService
                     'title' => 'Kembalikan label',
                 ],
             ],
-            'Role' => [
+            'Peran' => [
                 [
                     'name' => 'view roles',
                     'title' => 'Lihat semua peran',
@@ -82,7 +82,7 @@ class PermissionService
                     'title' => 'Kembalikan peran',
                 ],
             ],
-            'Owner Company' => [
+            'Institusi' => [
                 [
                     'name' => 'view owner company',
                     'title' => 'Lihat perusahaan pemilik',
@@ -136,7 +136,7 @@ class PermissionService
                     'title' => 'Kembalikan perusahaan client',
                 ],
             ],
-            'Owner Company' => [
+            'Institusi' => [
                 [
                     'name' => 'view owner company',
                     'title' => 'Lihat Institusi',
@@ -190,7 +190,7 @@ class PermissionService
                     'title' => 'Kembalikan Institusi client', 
                 ],
             ],
-            'Project' => [
+            'Periode Permintaan' => [
                 [
                     'name' => 'view projects',
                     'title' => 'Lihat semua periode permintaan',
@@ -220,7 +220,7 @@ class PermissionService
                     'title' => 'Edit akses pengguna periode permintaan',
                 ],
             ],
-            'TaskGroups' => [
+            'Grup Permintaan' => [
                 [
                     'name' => 'create task group',
                     'title' => 'Buat grup permintaan',
@@ -242,7 +242,7 @@ class PermissionService
                     'title' => 'Urutkan grup permintaan',
                 ],
             ],
-            'Tasks' => [
+            'Permintaan' => [
                 [
                     'name' => 'view tasks',
                     'title' => 'Lihat semua permintaan',
@@ -323,7 +323,7 @@ class PermissionService
                 ],
             
             ],
-            'Reports' => [
+            'Laporan' => [
                 [
                     'name' => 'view logged time sum report',
                     'title' => 'Lihat laporan  ringkasan waktu total ',
@@ -337,7 +337,7 @@ class PermissionService
                     'title' => 'Lihat laporan  total harga fix',
                 ],
             ],
-            'Activities' => [
+            'Aktivitas' => [
                 [
                     'name' => 'view activities',
                     'title' => 'Lihat aktivitas',
@@ -370,7 +370,7 @@ class PermissionService
                 ],
             ],
            
-            'Owner Company' => [
+            'Institusi' => [
                 [
                     'name' => 'view owner company',
                     'title' => 'Lihat perusahaan pemilik',
@@ -424,7 +424,7 @@ class PermissionService
                     'title' => 'Kembalikan perusahaan client',
                 ],
             ],
-            'Owner Company' => [
+            'Institusi' => [
                 [
                     'name' => 'view owner company',
                     'title' => 'Lihat Institusi',
@@ -478,7 +478,7 @@ class PermissionService
                     'title' => 'Kembalikan Institusi client', 
                 ],
             ],
-            'Project' => [
+            'Periode Permintaan' => [
                 [
                     'name' => 'view projects',
                     'title' => 'Lihat semua periode permintaan',
@@ -508,7 +508,7 @@ class PermissionService
                     'title' => 'Edit akses pengguna periode permintaan',
                 ],
             ],
-            'TaskGroups' => [
+            'Grup Permintaan' => [
                 [
                     'name' => 'create task group',
                     'title' => 'Buat grup permintaan',
@@ -530,7 +530,7 @@ class PermissionService
                     'title' => 'Urutkan grup permintaan',
                 ],
             ],
-            'Tasks' => [
+            'Permintaan' => [
                 [
                     'name' => 'view tasks',
                     'title' => 'Lihat semua permintaan',
@@ -611,7 +611,7 @@ class PermissionService
                 ],
             
             ],
-            'Reports' => [
+            'Laporan' => [
                 [
                     'name' => 'view logged time sum report',
                     'title' => 'Lihat laporan  ringkasan waktu total ',
@@ -625,7 +625,7 @@ class PermissionService
                     'title' => 'Lihat laporan  total harga fix',
                 ],
             ],
-            'Activities' => [
+            'Aktivitas' => [
                 [
                     'name' => 'view activities',
                     'title' => 'Lihat aktivitas',
@@ -633,31 +633,31 @@ class PermissionService
             ],
         ],
         // 'manager' => [
-        //     'User' => ['view users'],
-        //     'Project' => ['view projects', 'view project', 'create project', 'edit project', 'archive project', 'restore project', 'edit project user access'],
-        //     'TaskGroups' => ['create task group', 'edit task group', 'archive task group', 'restore task group', 'reorder task group'],
-        //     'Tasks' => [
+        //     'Pengguna' => ['view users'],
+        //     'Periode Permintaan' => ['view projects', 'view project', 'create project', 'edit project', 'archive project', 'restore project', 'edit project user access'],
+        //     'Grup Permintaan' => ['create task group', 'edit task group', 'archive task group', 'restore task group', 'reorder task group'],
+        //     'Permintaan' => [
         //         'view tasks', 'create task', 'edit task', 'archive task', 'restore task', 'reorder task', 'complete task', 'add time log', 'delete time log',
         //         'view time logs', 'view comments',
         //     ],
-        //     'Reports' => ['view logged time sum report', 'view daily logged time report', 'view fixed price sum report'],
+        //     'Laporan' => ['view logged time sum report', 'view daily logged time report', 'view fixed price sum report'],
         // ],
         // 'developer' => [
-        //     'Project' => ['view projects', 'view project'],
-        //     'Tasks' => [
+        //     'Periode Permintaan' => ['view projects', 'view project'],
+        //     'Permintaan' => [
         //         'view tasks', 'create task', 'edit task', 'restore task', 'reorder task', 'complete task', 'add time log', 'delete time log',
         //         'view time logs', 'view comments',
         //     ],
         // ],
         // 'qa engineer' => [
-        //     'Project' => ['view projects', 'view project'],
-        //     'Tasks' => [
+        //     'Periode Permintaan' => ['view projects', 'view project'],
+        //     'Permintaan' => [
         //         'view tasks', 'create task', 'edit task', 'add time log', 'delete time log', 'view time logs', 'view comments',
         //     ],
         // ],
         // 'designer' => [
-        //     'Project' => ['view projects', 'view project'],
-        //     'Tasks' => [
+        //     'Periode Permintaan' => ['view projects', 'view project'],
+        //     'Permintaan' => [
         //         'view tasks', 'create task', 'edit task', 'restore task', 'reorder task', 'complete task', 'add time log', 'delete time log',
         //         'view time logs', 'view comments',
         //     ],
