@@ -214,7 +214,7 @@ export function EditTaskDrawer() {
                 />
               )}
 
-              {can('view comments') && <Comments task={task} />}
+              {/* {can('view comments') && <Comments task={task} />} */}
             </div>
             <div className={classes.sidebar}>
               <Select
