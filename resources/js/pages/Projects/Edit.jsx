@@ -22,6 +22,8 @@ import { useEffect, useState } from 'react';
 import { PricingType } from '@/utils/enums';
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
   const { item } = usePage().props;
@@ -40,8 +42,8 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
   });
 
   const [dateRange, setDateRange] = useState([
-    item.start_date ? dayjs(item.start_date).toDate() : null,
-    item.end_date ? dayjs(item.end_date).toDate() : null,
+    item.start_date ? dayjs.utc(item.start_date).toDate() : null,
+    item.end_date ? dayjs.utc(item.end_date).toDate() : null,
   ]);
 
   
