@@ -124,7 +124,7 @@ const UserCreate = () => {
               error={form.errors.phone}
             />
 
-            <NumberInput
+            {/* <NumberInput
               label="Hourly rate"
               allowNegative={false}
               clampBehavior="strict"
@@ -134,7 +134,7 @@ const UserCreate = () => {
               value={form.data.rate}
               onChange={(value) => updateValue("rate", value)}
               error={form.errors.rate}
-            />
+            /> */}
           </Group>
 
           <Divider mt="xl" mb="md" label="Login credentials" labelPosition="center" />
