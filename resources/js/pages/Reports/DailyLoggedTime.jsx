@@ -91,7 +91,7 @@ const DailyLoggedTime = () => {
               /> */}
 
               <Checkbox
-                label="Completed"
+                label="Terselesaikan"
                 checked={form.data.completed}
                 onChange={(event) => updateValue("completed", event.currentTarget.checked)}
               />
