@@ -46,14 +46,14 @@ const RoleEdit = () => {
           onClick={() => redirectTo("settings.roles.index")}
           fz={14}
         >
-          Roles
+          Peran
         </Anchor>
         <div>Edit</div>
       </Breadcrumbs>
 
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Edit role</Title>
+          <Title order={1}>Edit Peran</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -72,7 +72,7 @@ const RoleEdit = () => {
           )}
 
           <Title order={3} mt={form.data ? (form.data.name !== "client" ? "xl" : "") : ""}>
-            Permissions
+            Hak Akses
           </Title>
 
           {Object.keys(allPermissionsGrouped).map((group) => (
@@ -96,7 +96,7 @@ const RoleEdit = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="settings.roles.index" />
-            <ActionButton loading={form.processing}>Update</ActionButton>
+            <ActionButton loading={form.processing}>Simpan</ActionButton>
           </Group>
         </form>
       </ContainerBox>

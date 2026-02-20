@@ -41,14 +41,14 @@ const UserCreate = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <Anchor href="#" onClick={() => redirectTo("users.index")} fz={14}>
-          Users
+          Pengguna
         </Anchor>
-        <div>Create</div>
+        <div>Tambah</div>
       </Breadcrumbs>
 
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Create user</Title>
+          <Title order={1}>Tambah pengguna</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -67,26 +67,26 @@ const UserCreate = () => {
             </Grid.Col>
             <Grid.Col span="auto">
               <FileInput
-                label="Profile image"
-                placeholder="Choose image"
+                label="Foto profil"
+                placeholder="Pilih gambar"
                 accept="image/png,image/jpeg"
                 onChange={(image) => updateValue("avatar", image)}
                 clearable
                 error={form.errors.avatar}
               />
               <Text size="xs" c="dimmed" mt="sm">
-                If no image is uploaded we will try to fetch it via{" "}
+                Jika tidak ada gambar yang diunggah, kami akan mencoba mengambilnya melalui layanan{" "}
                 <Anchor href="https://unavatar.io" target="_blank" opacity={0.6}>
                   unavatar.io
                 </Anchor>{" "}
-                service.
+                .
               </Text>
             </Grid.Col>
           </Grid>
 
           <TextInput
-            label="Name"
-            placeholder="User full name"
+            label="Nama"
+            placeholder="Nama lengkap"
             required
             mt="md"
             value={form.data.name}
@@ -95,8 +95,8 @@ const UserCreate = () => {
           />
 
           <TextInput
-            label="Job title"
-            placeholder="e.g. Frontend Developer"
+            label="Jabatan"
+            placeholder="Jabatan"
             required
             mt="md"
             value={form.data.job_title}
@@ -105,8 +105,8 @@ const UserCreate = () => {
           />
 
           <MultiSelect
-            label="Roles"
-            placeholder="Select role"
+            label="Peran"
+            placeholder="Pilih peran"
             required
             mt="md"
             value={form.data.roles}
@@ -117,8 +117,8 @@ const UserCreate = () => {
 
           <Group grow mt="md">
             <TextInput
-              label="Phone"
-              placeholder="Users phone number"
+              label="Telepon"
+              placeholder="Nomor telepon"
               value={form.data.phone}
               onChange={(e) => updateValue("phone", e.target.value)}
               error={form.errors.phone}
@@ -141,7 +141,7 @@ const UserCreate = () => {
 
           <TextInput
             label="Email"
-            placeholder="User email"
+            placeholder="Email"
             required
             value={form.data.email}
             onChange={(e) => updateValue("email", e.target.value)}
@@ -151,7 +151,7 @@ const UserCreate = () => {
 
           <PasswordInput
             label="Password"
-            placeholder="User password"
+            placeholder="Password"
             required
             mt="md"
             value={form.data.password}
@@ -160,8 +160,8 @@ const UserCreate = () => {
           />
 
           <PasswordInput
-            label="Confirm password"
-            placeholder="Confirm password"
+            label="Konfirmasi password"
+            placeholder="Konfirmasi password"
             required
             mt="md"
             value={form.data.password_confirmation}
@@ -171,7 +171,7 @@ const UserCreate = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="users.index" />
-            <ActionButton loading={form.processing}>Create</ActionButton>
+            <ActionButton loading={form.processing}>Tambah</ActionButton>
           </Group>
         </form>
       </ContainerBox>

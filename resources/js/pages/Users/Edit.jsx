@@ -44,14 +44,14 @@ const UserEdit = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <Anchor href="#" onClick={() => redirectTo("users.index")} fz={14}>
-          Users
+          Pengguna
         </Anchor>
         <div>Edit</div>
       </Breadcrumbs>
 
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Edit user</Title>
+          <Title order={1}>Edit pengguna</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -72,8 +72,8 @@ const UserEdit = () => {
             </Grid.Col>
             <Grid.Col span="auto">
               <FileInput
-                label="Profile image"
-                placeholder="Choose image"
+                label="Foto profil"
+                placeholder="Pilih gambar"
                 accept="image/png,image/jpeg"
                 onChange={(image) => updateValue("avatar", image)}
                 clearable
@@ -90,8 +90,8 @@ const UserEdit = () => {
           </Grid>
 
           <TextInput
-            label="Name"
-            placeholder="User full name"
+            label="Nama"
+            placeholder="Nama lengkap"
             required
             mt="md"
             value={form.data.name}
@@ -100,8 +100,8 @@ const UserEdit = () => {
           />
 
           <TextInput
-            label="Job title"
-            placeholder="e.g. Frontend Developer"
+            label="Jabatan"
+            placeholder="Jabatan"
             required
             mt="md"
             value={form.data.job_title}
@@ -110,8 +110,8 @@ const UserEdit = () => {
           />
 
           <MultiSelect
-            label="Roles"
-            placeholder="Select role"
+            label="Peran"
+            placeholder="Pilih peran"
             required
             mt="md"
             value={form.data.roles}
@@ -122,8 +122,8 @@ const UserEdit = () => {
 
           <Group grow mt="md">
             <TextInput
-              label="Phone"
-              placeholder="Users phone number"
+              label="Telepon"
+              placeholder="Nomor telepon"
               value={form.data.phone}
               onChange={(e) => updateValue("phone", e.target.value)}
               error={form.errors.phone}
@@ -146,7 +146,7 @@ const UserEdit = () => {
 
           <TextInput
             label="Email"
-            placeholder="User email"
+            placeholder="Email"
             required
             value={form.data.email}
             onChange={(e) => updateValue("email", e.target.value)}
@@ -156,7 +156,7 @@ const UserEdit = () => {
 
           <PasswordInput
             label="Password"
-            placeholder="User password"
+            placeholder="Password"
             mt="md"
             value={form.data.password}
             onChange={(e) => updateValue("password", e.target.value)}
@@ -164,8 +164,8 @@ const UserEdit = () => {
           />
 
           <PasswordInput
-            label="Confirm password"
-            placeholder="Confirm password"
+            label="Konfirmasi password"
+            placeholder="Konfirmasi password"
             mt="md"
             value={form.data.password_confirmation}
             onChange={(e) => updateValue("password_confirmation", e.target.value)}
@@ -174,7 +174,7 @@ const UserEdit = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="users.index" />
-            <ActionButton loading={form.processing}>Update</ActionButton>
+            <ActionButton loading={form.processing}>Simpan</ActionButton>
           </Group>
         </form>
       </ContainerBox>
