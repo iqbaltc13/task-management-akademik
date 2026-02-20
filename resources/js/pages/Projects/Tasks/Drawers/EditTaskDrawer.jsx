@@ -6,6 +6,7 @@ import useWebSockets from '@/hooks/useWebSockets';
 import { date } from '@/utils/datetime';
 import { hasRoles } from '@/utils/user';
 import { usePage } from '@inertiajs/react';
+import RichTextEditorWithCreator from '@/components/RichTextEditorWithCreator';
 import {
   Breadcrumbs,
   Checkbox,
@@ -194,7 +195,7 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-              <RichTextEditor
+              <RichTextEditorWithCreator
                 ref={editorRef}
                 mt='xl'
                 placeholder='Task description'
