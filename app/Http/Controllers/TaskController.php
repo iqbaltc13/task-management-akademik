@@ -16,6 +16,7 @@ use App\Models\OwnerCompany;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskGroup;
+use App\Models\JobTitle;
 use App\Services\PermissionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -28,6 +29,10 @@ class TaskController extends Controller
     public function index(Request $request, Project $project, ?Task $task = null): Response
     {
         $this->authorize('viewAny', [Task::class, $project]);
+
+        $jobTitles = JobTitle::select('code', 'name')
+        ->orderBy('name')
+        ->get();
 
         $groups = $project
             ->taskGroups()
@@ -58,6 +63,7 @@ class TaskController extends Controller
             'usersWithAccessToProject' => PermissionService::usersWithAccessToProject($project),
             'labels' => Label::get(['id', 'name', 'color']),
             'taskGroups' => $groups,
+            'jobTitles' => $jobTitles,
             'groupedTasks' => $groupedTasks,
             'openedTask' => $task ? $task->loadDefault() : null,
             'currency' => [
@@ -68,6 +74,7 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request, Project $project): RedirectResponse
     {
+        dd($request->all());
         $this->authorize('create', [Task::class, $project]);
 
         (new CreateTask)->create($project, $request->validated());

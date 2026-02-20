@@ -29,6 +29,7 @@ export function CreateTaskDrawer() {
     usersWithAccessToProject,
     taskGroups,
     labels,
+    jobTitles,
     project,
     currency,
     auth: { user },
@@ -48,6 +49,8 @@ export function CreateTaskDrawer() {
     subscribed_users: [user.id.toString()],
     labels: [],
     attachments: [],
+    job_title: '',
+    identity_number: '',
   };
 
   const [form, submit, updateValue] = useForm(
@@ -132,6 +135,34 @@ export function CreateTaskDrawer() {
             value={form.data.name}
             onChange={e => updateValue('name', e.target.value)}
             error={form.errors.name}
+          />
+          <Select
+            label='Anda Sebagai'
+            placeholder='Anda sebagai'
+            required
+            searchable
+            mt='xl'
+            clearable
+            value={form.data.job_title}
+            onChange={value =>
+              form.setData('job_title', value)
+            }
+            data={jobTitles.map(job => ({
+              value: job.code.toString(),
+              label: job.name,
+            }))}
+            error={form.errors.job_title}
+          />
+
+          <TextInput
+            label='Nomor Identitas'
+            placeholder='Nomor Identitas'
+            required
+             mt='xl'
+            data-autofocus
+            value={form.data.identity_number}
+            onChange={e => updateValue('identity_number', e.target.value)}
+            error={form.errors.identity_number}
           />
 
           <RichTextEditor

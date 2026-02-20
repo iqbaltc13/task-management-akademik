@@ -24,6 +24,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
+use Illuminate\Support\Carbon;
 
 class Task extends Model implements AuditableContract, Sortable
 {
@@ -106,6 +107,10 @@ class Task extends Model implements AuditableContract, Sortable
     {
         static::addGlobalScope('ordered', function ($query) {
             $query->ordered();
+        });
+
+        static::creating(function ($model) {
+            $model->code = 'PMT-' . Carbon::now()->format('YmdHis');
         });
     }
 
