@@ -243,7 +243,7 @@ export function CreateTaskDrawer() {
             onChange={value => updateValue('estimation', value)}
           />
 
-          <Select
+          {/* <Select
             label='Pricing type'
             placeholder='Select pricing type'
             required
@@ -252,7 +252,7 @@ export function CreateTaskDrawer() {
             onChange={value => updateValue('pricing_type', value)}
             data={pricingTypes}
             error={form.errors.pricing_type}
-          />
+          /> */}
 
           {/* {isFixedPrice ? (
             <NumberInput
