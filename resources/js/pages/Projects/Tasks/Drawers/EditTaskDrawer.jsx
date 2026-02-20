@@ -277,7 +277,7 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-              <Select
+              {/* <Select
                 label='Pricing type'
                 placeholder='Select pricing type'
                 mt='md'
@@ -285,7 +285,7 @@ export function EditTaskDrawer() {
                 onChange={value => updateValue('pricing_type', value)}
                 data={pricingTypes}
                 readOnly={!can('edit task')}
-              />
+              /> */}
 
               {/* {isFixedPrice && (can('view time logs') || can('add time log')) && (
                 <NumberInput
@@ -303,12 +303,12 @@ export function EditTaskDrawer() {
                 />
               )} */}
 
-              {!isFixedPrice && (can('view time logs') || can('add time log')) && (
+              {/* {!isFixedPrice && (can('view time logs') || can('add time log')) && (
                 <Timer
                   mt='xl'
                   task={task}
                 />
-              )}
+              )} */}
 
               {/* <Checkbox
                 label='Billable'
