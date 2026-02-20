@@ -74,6 +74,7 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request, Project $project): RedirectResponse
     {
+        dd($request->all());
         $this->authorize('create', [Task::class, $project]);
 
         (new CreateTask)->create($project, $request->validated());
