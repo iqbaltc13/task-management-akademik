@@ -9,6 +9,10 @@ import StarterKit from "@tiptap/starter-kit";
 import { forwardRef, useImperativeHandle } from "react";
 import suggestion from "./RichTextEditor/Mention/suggestion.js";
 import classes from "./css/RichTextEditor.module.css";
+import {
+    TextInput,
+  
+} from '@mantine/core';
 
 const RichTextEditorWithCreator = forwardRef(function RichTextEditorWithCreator(
   { onChange, placeholder, content, height = 200, readOnly = false, ...props },
@@ -44,6 +48,7 @@ const RichTextEditorWithCreator = forwardRef(function RichTextEditorWithCreator(
   const computedColorScheme = useComputedColorScheme();
 
   return (
+    
     <Editor editor={editor} {...props}>
       <Editor.Toolbar sticky stickyOffset={60}>
         <Editor.ControlsGroup>

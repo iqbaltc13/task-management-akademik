@@ -74,8 +74,9 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request, Project $project): RedirectResponse
     {
+       
         $this->authorize('create', [Task::class, $project]);
-
+        
         (new CreateTask)->create($project, $request->validated());
 
         return redirect()->route('projects.tasks', $project)->success('Task added', 'A new task was successfully added.');
