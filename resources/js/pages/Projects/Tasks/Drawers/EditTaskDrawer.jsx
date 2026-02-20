@@ -6,6 +6,7 @@ import useWebSockets from '@/hooks/useWebSockets';
 import { date } from '@/utils/datetime';
 import { hasRoles } from '@/utils/user';
 import { usePage } from '@inertiajs/react';
+import RichTextEditorWithCreator from '@/components/RichTextEditorWithCreator';
 import {
   Breadcrumbs,
   Checkbox,
@@ -194,7 +195,7 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-              <RichTextEditor
+              <RichTextEditorWithCreator
                 ref={editorRef}
                 mt='xl'
                 placeholder='Task description'
@@ -277,7 +278,7 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-              <Select
+              {/* <Select
                 label='Pricing type'
                 placeholder='Select pricing type'
                 mt='md'
@@ -285,7 +286,7 @@ export function EditTaskDrawer() {
                 onChange={value => updateValue('pricing_type', value)}
                 data={pricingTypes}
                 readOnly={!can('edit task')}
-              />
+              /> */}
 
               {/* {isFixedPrice && (can('view time logs') || can('add time log')) && (
                 <NumberInput
@@ -303,12 +304,12 @@ export function EditTaskDrawer() {
                 />
               )} */}
 
-              {!isFixedPrice && (can('view time logs') || can('add time log')) && (
+              {/* {!isFixedPrice && (can('view time logs') || can('add time log')) && (
                 <Timer
                   mt='xl'
                   task={task}
                 />
-              )}
+              )} */}
 
               {/* <Checkbox
                 label='Billable'
