@@ -37,6 +37,8 @@ class StoreTaskRequest extends FormRequest
             'subscribed_users' => ['array'],
             'labels' => ['array'],
             'attachments' => ['array'],
+            'job_title' => ['required', 'string','exists:job_titles,code'],
+            'identity_number' => ['required', 'string'],
         ];
     }
 }
