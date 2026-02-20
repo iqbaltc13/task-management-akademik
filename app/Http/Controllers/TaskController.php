@@ -76,7 +76,7 @@ class TaskController extends Controller
     {
        
         $this->authorize('create', [Task::class, $project]);
-        dd($request->validated());
+        
         (new CreateTask)->create($project, $request->validated());
 
         return redirect()->route('projects.tasks', $project)->success('Task added', 'A new task was successfully added.');
