@@ -21,7 +21,7 @@ export default function ArchivedItems({ groups, tasks }) {
       {groups.length > 0 && (
         <>
           <Text fz={24} fw={600} mt={35} mb={20}>
-            Task groups
+            Grup Permintaan
           </Text>
           {groups.map((group) => (
             <ArchivedTaskGroup key={`group-${group.id}`} group={group} />

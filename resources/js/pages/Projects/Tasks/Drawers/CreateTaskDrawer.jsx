@@ -134,8 +134,8 @@ export function CreateTaskDrawer() {
       >
         <div className={classes.content}>
           <TextInput
-            label='Name'
-            placeholder='Task name'
+            label='Nama'
+            placeholder='Nama Permintaan'
             required
             data-autofocus
             value={form.data.name}
@@ -173,7 +173,7 @@ export function CreateTaskDrawer() {
 
           <RichTextEditor
             mt='xl'
-            placeholder='Task description'
+            placeholder='Deskripsi Permintaan'
             height={260}
             onChange={content => updateValue('description', content)}
           />
@@ -217,14 +217,14 @@ export function CreateTaskDrawer() {
               w={120}
               loading={form.processing}
             >
-              Add task
+              Tambah Permintaan
             </Button>
           </Flex>
         </div>
         <div className={classes.sidebar}>
           <Select
-            label='Task group'
-            placeholder='Select task group'
+            label='Grup Permintaan'
+            placeholder='Pilih grup permintaan'
             required
             value={form.data.group_id}
             onChange={value => updateValue('group_id', value)}
@@ -236,8 +236,8 @@ export function CreateTaskDrawer() {
           />
 
           <Select
-            label='Assignee'
-            placeholder='Select assignee'
+            label='Penerima Tugas'
+            placeholder='Pilih penerima tugas'
             searchable
             mt='md'
             value={form.data.assigned_to_user_id}
@@ -254,8 +254,8 @@ export function CreateTaskDrawer() {
             valueFormat='DD MMM YYYY'
             minDate={new Date()}
             mt='md'
-            label='Due date'
-            placeholder='Pick task due date'
+            label='Batas Waktu'
+            placeholder='Pilih batas waktu'
             value={form.data.due_on}
             onChange={value => updateValue('due_on', value)}
           />
@@ -268,7 +268,7 @@ export function CreateTaskDrawer() {
           />
 
           <NumberInput
-            label='Time estimation'
+            label='Estimasi Waktu'
             mt='md'
             decimalScale={2}
             fixedDecimalScale
@@ -315,7 +315,7 @@ export function CreateTaskDrawer() {
 
           {!hasRoles(user, ['client']) && (
             <Checkbox
-              label='Hidden from clients'
+              label='Disembunyikan dari klien'
               mt='md'
               checked={form.data.hidden_from_clients}
               onChange={event => updateValue('hidden_from_clients', event.currentTarget.checked)}
