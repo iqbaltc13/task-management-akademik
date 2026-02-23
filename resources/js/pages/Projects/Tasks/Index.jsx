@@ -103,9 +103,9 @@ const TasksIndex = () => {
                               m={4}
                               radius="xl"
                               onClick={CreateTasksGroupModal}
-                              style={{ width: "200px" }}
+                              style={{ width: "250px" }}
                             >
-                              Add {tasksView === "list" ? "tasks group" : "group"}
+                              Tambah {tasksView === "list" ? "Grup Permintaan" : "group"}
                             </Button>
                           )}
                         </div>

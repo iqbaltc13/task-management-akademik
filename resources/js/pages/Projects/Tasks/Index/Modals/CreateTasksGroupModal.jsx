@@ -19,8 +19,8 @@ function ModalForm() {
   return (
     <form onSubmit={submitModal}>
       <TextInput
-        label="Name"
-        placeholder="Group name"
+        label="Nama"
+        placeholder="Nama grup"
         required
         data-autofocus
         value={form.data.name}
@@ -30,7 +30,7 @@ function ModalForm() {
 
       <Flex justify="flex-end" mt="xl">
         <Button type="submit" w={100} loading={form.processing}>
-          Create
+          Tambah
         </Button>
       </Flex>
     </form>
@@ -41,7 +41,7 @@ const CreateTasksGroupModal = () => {
   modals.open({
     title: (
       <Text size="xl" fw={700} mb={-10}>
-        Create tasks group
+        Tambah Grup Permintaan
       </Text>
     ),
     centered: true,
