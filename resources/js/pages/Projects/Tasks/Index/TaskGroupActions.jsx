@@ -84,7 +84,7 @@ export default function TaskGroupActions({ group, ...props }) {
                 color="red"
                 onClick={openArchiveModal}
               >
-                Archive
+                Hapus
               </Menu.Item>
             )}
           </Menu.Dropdown>
