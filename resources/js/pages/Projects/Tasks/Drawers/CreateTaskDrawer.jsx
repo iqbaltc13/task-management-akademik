@@ -24,6 +24,8 @@ import classes from './css/TaskDrawer.module.css';
 import { PricingType } from '@/utils/enums';
 
 export function CreateTaskDrawer() {
+  let currentUser = "Ella Alvianita Farikha";
+  let initialComments = [];
   const { create, closeCreateTask } = useTaskDrawerStore();
   const {
     usersWithAccessToProject,
@@ -60,6 +62,10 @@ export function CreateTaskDrawer() {
       ...initial,
     }
   );
+
+  function handleDelete(id) {
+    setComments((prev) => prev.filter((c) => c.id !== id));
+  }
 
   useEffect(() => {
     updateValue({ ...initial });
