@@ -36,6 +36,8 @@ class UpdateTaskRequest extends FormRequest
             'billable' => ['boolean'],
             'subscribed_users' => ['array'],
             'labels' => ['array'],
+            'identity_number' => ['sometimes', 'string'],
+        'job_title' => ['sometimes', 'exists:job_titles,code'],
         ];
     }
 }

@@ -42,7 +42,8 @@ export function EditTaskDrawer() {
     currency,
     auth: { user },
   } = usePage().props;
-
+  const { jobTitles } = usePage().props;
+  
   useEffect(() => {
     if (openedTask) setTimeout(() => openEditTask(openedTask), 50);
   }, []);
@@ -53,6 +54,8 @@ export function EditTaskDrawer() {
     group_id: '',
     assigned_to_user_id: '',
     name: '',
+    identity_number: '',
+    job_title: '',
     description: '',
     pricing_type: PricingType.HOURLY,
     estimation: 0,
@@ -76,6 +79,8 @@ export function EditTaskDrawer() {
         group_id: task?.group_id || '',
         assigned_to_user_id: task?.assigned_to_user_id || '',
         name: task?.name || '',
+        identity_number: task?.identity_number || '', 
+        job_title: task?.job_title || '',
         description: task?.description || '',
         pricing_type: task?.pricing_type || PricingType.HOURLY,
         estimation: task?.estimation || 0,
@@ -186,8 +191,8 @@ export function EditTaskDrawer() {
           <form className={classes.inner}>
             <div className={classes.content}>
               <TextInput
-                label='Name'
-                placeholder='Task name'
+                label='Nama'
+                placeholder='Nama Permintaan'
                 value={data.name}
                 onChange={e => updateValue('name', e.target.value)}
                 onBlur={() => onBlurUpdate('name')}
@@ -195,10 +200,36 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
+               <TextInput
+                label="Nomor Identitas"
+                placeholder="Nomor Identitas"
+                mt="xl"
+                value={data.identity_number}
+                onChange={e => updateValue('identity_number', e.target.value)}
+                onBlur={() => onBlurUpdate('identity_number')}
+                error={!data.identity_number}
+                readOnly={!can('edit task')}
+              />
+
+              <Select
+                label="Anda Sebagai"
+                placeholder="Pilih peran"
+                mt="md"
+                searchable
+                clearable
+                value={data.job_title}
+                onChange={value => updateValue('job_title', value)}
+                data={jobTitles.map(job => ({
+                  value: job.code, // 🔑 HARUS code
+                  label: job.name,
+                }))}
+                readOnly={!can('edit task')}
+              />
+
               <RichTextEditorWithCreator
                 ref={editorRef}
                 mt='xl'
-                placeholder='Task description'
+                placeholder='Deskripsi permintaan'
                 content={data.description}
                 height={260}
                 onChange={content => updateValue('description', content)}
@@ -219,8 +250,8 @@ export function EditTaskDrawer() {
             </div>
             <div className={classes.sidebar}>
               <Select
-                label='Task group'
-                placeholder='Select task group'
+                label='Grup Permintaan'
+                placeholder='Pilih grup permintaan'
                 allowDeselect={false}
                 value={data.group_id.toString()}
                 onChange={value => updateValue('group_id', value)}
@@ -232,8 +263,8 @@ export function EditTaskDrawer() {
               />
 
               <Select
-                label='Assignee'
-                placeholder='Select assignee'
+                label='Penerima Tugas'
+                placeholder='Pilih penerima tugas'
                 searchable
                 mt='md'
                 value={data.assigned_to_user_id?.toString()}
@@ -250,8 +281,8 @@ export function EditTaskDrawer() {
                 valueFormat='DD MMM YYYY'
                 minDate={new Date()}
                 mt='md'
-                label='Due date'
-                placeholder='Pick task due date'
+                label='Batas Waktu'
+                placeholder='Pilih batas waktu'
                 value={data.due_on}
                 onChange={value => updateValue('due_on', value)}
                 readOnly={!can('edit task')}
@@ -265,7 +296,7 @@ export function EditTaskDrawer() {
               />
 
               <NumberInput
-                label='Time estimation'
+                label='Estimasi Waktu'
                 mt='md'
                 decimalScale={2}
                 fixedDecimalScale
@@ -321,7 +352,7 @@ export function EditTaskDrawer() {
 
               {!hasRoles(user, ['client']) && (
                 <Checkbox
-                  label='Hidden from clients'
+                  label='Disembunyikan dari klien'
                   mt='md'
                   checked={data.hidden_from_clients}
                   onChange={event =>
