@@ -13,9 +13,9 @@ export default function TaskActions({ task, ...props }) {
   const openArchiveModal = () =>
     openConfirmModal({
       type: "danger",
-      title: "Archive task",
-      content: `Are you sure you want to archive this task?`,
-      confirmLabel: "Archive",
+      title: "Hapus Permintaan",
+      content: `Apakah ada yakin menghapus permintaan ini?`,
+      confirmLabel: "Hapus",
       confirmProps: { color: "red" },
       onConfirm: () => archiveForm.submit({ preserveScroll: true }),
     });
@@ -67,7 +67,7 @@ export default function TaskActions({ task, ...props }) {
                 color="red"
                 onClick={openArchiveModal}
               >
-                Archive
+                Hapus
               </Menu.Item>
             )}
           </Menu.Dropdown>

@@ -65,7 +65,7 @@ export default function Header() {
                 variant={tasksView === "list" ? "filled" : "default"}
                 onClick={() => setTasksView("list")}
               >
-                <Tooltip label="List view" openDelay={250} withArrow>
+                <Tooltip label="Mode Daftar" openDelay={250} withArrow>
                   <IconLayoutList style={{ width: "40%", height: "40%" }} />
                 </Tooltip>
               </ActionIcon>
@@ -74,7 +74,7 @@ export default function Header() {
                 variant={tasksView === "kanban" ? "filled" : "default"}
                 onClick={() => setTasksView("kanban")}
               >
-                <Tooltip label="Kanban view" openDelay={250} withArrow>
+                <Tooltip label="Mode Kanban" openDelay={250} withArrow>
                   <IconLayoutKanban style={{ width: "45%", height: "45%" }} />
                 </Tooltip>
               </ActionIcon>
