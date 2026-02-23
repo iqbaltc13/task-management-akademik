@@ -1,5 +1,7 @@
 import { openConfirmModal } from '@/components/ConfirmModal';
 import Dropzone from '@/components/Dropzone';
+import CommentItem from '@/components/CommentItem';
+import NewCommentForm from '@/components/NewCommentForm';
 import RichTextEditor from '@/components/RichTextEditor';
 import useTaskDrawerStore from '@/hooks/store/useTaskDrawerStore';
 import useForm from '@/hooks/useForm';
@@ -171,11 +173,16 @@ export function CreateTaskDrawer() {
             error={form.errors.identity_number}
           />
 
-          <RichTextEditor
+          {/* <RichTextEditor
             mt='xl'
             placeholder='Deskripsi Permintaan'
             height={260}
             onChange={content => updateValue('description', content)}
+          /> */}
+          <NewCommentForm
+            mt='xl'
+            initialComments={initialComments}
+            onSubmit={comment => setComments([...comments, comment])}
           />
 
           <Dropzone
