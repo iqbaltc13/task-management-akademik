@@ -97,25 +97,10 @@ export default function NewCommentForm({ currentUser, onSubmit }) {
       />
 
       {/* Upload zone */}
-      <Box mt={10}>
-        <UploadZone
-          files={files}
-          onAdd={handleAddFile}
-          onRemove={handleRemoveFile}
-        />
-      </Box>
+      
 
       {/* Tombol kirim */}
-      <Group justify="flex-end" mt={12}>
-        <Button
-          leftSection={<IconSend size={14} />}
-          onClick={handleSubmit}
-          loading={loading}
-          disabled={!html.replace(/<[^>]*>/g, "").trim()}
-        >
-          Kirim Komentar
-        </Button>
-      </Group>
+      
     </Paper>
   );
 }
