@@ -36,7 +36,7 @@ export default function Header() {
           </Title>
         </Group>
         <Group>
-          <SearchInput placeholder="Search tasks" search={search} mr="md" />
+          <SearchInput placeholder="Cari permintaan" search={search} mr="md" />
 
           <ActionIcon.Group>
             {tasksView === "kanban" && (
@@ -87,7 +87,7 @@ export default function Header() {
               radius="xl"
               onClick={() => openCreateTask()}
             >
-              Add task
+              Tambah Permintaan
             </Button>
           )}
         </Group>

@@ -17,7 +17,7 @@ export default function Filters() {
         {groups.length > 0 && (
           <div>
             <Text fz="xs" fw={700} tt="uppercase" mb="sm">
-              Task groups
+              Grup Permintaan
             </Text>
             <Stack justify="flex-start" gap={6}>
               {groups.map((item) => (
@@ -36,7 +36,7 @@ export default function Filters() {
         {usersWithAccessToProject.length > 0 && (
           <div>
             <Text fz="xs" fw={700} tt="uppercase" mb="sm">
-              Assignees
+              Penerima Tugas
             </Text>
             <Stack justify="flex-start" gap={6}>
               {usersWithAccessToProject.map((item) => (
@@ -54,20 +54,20 @@ export default function Filters() {
 
         <div>
           <Text fz="xs" fw={700} tt="uppercase" mb="sm">
-            Due date
+            Batas Waktu
           </Text>
           <Stack justify="flex-start" gap={6}>
             <FilterButton
               selected={filters.due_date.not_set === 1}
               onClick={() => toggleObjectFilter("due_date", "not_set")}
             >
-              Not set
+              Belum diatur
             </FilterButton>
             <FilterButton
               selected={filters.due_date.overdue === 1}
               onClick={() => toggleObjectFilter("due_date", "overdue")}
             >
-              Overdue
+              Terlambat
             </FilterButton>
           </Stack>
         </div>
@@ -81,7 +81,7 @@ export default function Filters() {
               selected={filters.status === "completed"}
               onClick={() => toggleValueFilter("status", "completed")}
             >
-              Completed
+              Selesai
             </FilterButton>
           </Stack>
         </div>
@@ -89,7 +89,7 @@ export default function Filters() {
         {labels.length > 0 && (
           <div>
             <Text fz="xs" fw={700} tt="uppercase" mb="sm">
-              Labels
+              Label
             </Text>
             <Stack justify="flex-start" gap={6}>
               {labels.map((item) => (
