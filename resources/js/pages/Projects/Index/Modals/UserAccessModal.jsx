@@ -68,7 +68,7 @@ function ModalForm({ item }) {
             error={form.errors.users}
           />
 
-          <MultiSelect
+          {/* <MultiSelect
             label="Clients"
             placeholder="Select clients"
             searchable
@@ -77,7 +77,7 @@ function ModalForm({ item }) {
             onChange={(values) => updateValue("clients", values)}
             data={clients}
             error={form.errors.clients}
-          />
+          /> */}
         </>
       )}
 
