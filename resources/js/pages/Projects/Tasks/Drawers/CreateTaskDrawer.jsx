@@ -179,11 +179,11 @@ export function CreateTaskDrawer() {
             height={260}
             onChange={content => updateValue('description', content)}
           /> */}
-          <NewCommentForm
+          {/* <NewCommentForm
             mt='xl'
             initialComments={initialComments}
             onSubmit={comment => setComments([...comments, comment])}
-          />
+          /> */}
 
           <Dropzone
             mt='xl'
