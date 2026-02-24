@@ -7,6 +7,7 @@ import useTaskDrawerStore from '@/hooks/store/useTaskDrawerStore';
 import useForm from '@/hooks/useForm';
 import { hasRoles } from '@/utils/user';
 import { usePage } from '@inertiajs/react';
+import Comments from './Comments';
 import {
   Button,
   Checkbox,
