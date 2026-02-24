@@ -191,7 +191,7 @@ export function CreateTaskDrawer() {
             onChange={files => updateValue('attachments', files)}
             remove={index => removeAttachment(index)}
           />
-
+          {can('view comments') && <Comments task={task} />}
           <MultiSelect
             label='Subscribers'
             placeholder='Select subscribers'

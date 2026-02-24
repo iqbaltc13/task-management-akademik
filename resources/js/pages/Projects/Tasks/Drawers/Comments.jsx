@@ -30,7 +30,7 @@ export default function Comments({ task }) {
   return (
     <Box mb="xl">
       <Title order={3} mt="xl">
-        Discussion
+        {/* Discussion */}
         {!loading && (
           <Text c="dimmed" fw={500} display="inline-block" ml={5}>
             ({comments.length})
@@ -41,7 +41,7 @@ export default function Comments({ task }) {
         ref={editorRef}
         mt="md"
         placeholder="Write a comment"
-        height={100}
+        height={200}
         content={comment}
         onChange={(content) => setComment(content)}
       />
