@@ -63,7 +63,7 @@ export default function ProjectCardActions({ item }) {
                 onClick={openUserAccess}
                 data-ignore-link
               >
-                User access
+                Pengguna ditugaskan
               </Menu.Item>
             )}
             {can("edit project") && (
@@ -110,7 +110,7 @@ export default function ProjectCardActions({ item }) {
                 onClick={openArchiveModal}
                 data-ignore-link
               >
-                Archive
+                Hapus
               </Menu.Item>
             )}
           </Menu.Dropdown>

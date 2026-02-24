@@ -80,9 +80,9 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
           onClick={() => redirectTo('projects.index')}
           fz={14}
         >
-          Projects
+          Periode Permintaan
         </Anchor>
-        <div>Create</div>
+        <div>Tambah</div>
       </Breadcrumbs>
 
       <Grid
@@ -92,7 +92,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
         mb='lg'
       >
         <Grid.Col span='auto'>
-          <Title order={1}>Create project</Title>
+          <Title order={1}>Tambah Periode Permintaan</Title>
         </Grid.Col>
         <Grid.Col span='content'></Grid.Col>
       </Grid>
@@ -100,8 +100,8 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
       <ContainerBox maw={500}>
         <form onSubmit={submit}>
           <TextInput
-            label='Name'
-            placeholder='Project name'
+            label='Nama'
+            placeholder='Nama Periode Permintaan'
             required
             mt='md'
             value={form.data.name}
@@ -110,8 +110,8 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
           />
 
           <Textarea
-            label='Description'
-            placeholder='Project description'
+            label='Deskripsi'
+            placeholder='Deskripsi Periode Permintaan'
             mt='md'
             autosize
             minRows={4}
@@ -148,8 +148,8 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
           </DatesProvider>
 
           <MultiSelect
-            label='Grant access to users'
-            placeholder='Select users'
+            label='Berikan akses kepada pengguna'
+            placeholder='Pilih Pengguna'
             mt='md'
             searchable
             value={form.data.users}
@@ -167,7 +167,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             mt='xl'
           >
             <BackButton route='projects.index' />
-            <ActionButton loading={form.processing}>Create</ActionButton>
+            <ActionButton loading={form.processing}>Tambah</ActionButton>
           </Group>
         </form>
       </ContainerBox>
