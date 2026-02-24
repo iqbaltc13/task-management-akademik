@@ -31,7 +31,7 @@ export default function Sidebar() {
         visible: true,
       },
       {
-        label: "Proyek",
+        label: "Periode Permintaan",
         icon: IconListDetails,
         link: route("projects.index"),
         active: route().current("projects.*"),
