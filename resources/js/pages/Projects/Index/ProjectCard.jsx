@@ -35,7 +35,7 @@ export default function ProjectCard({ item }) {
         )}
 
         <Text c="dimmed" fz="sm" mt="md">
-          Completed tasks:{" "}
+          Tugas selesai:{" "}
           <Text span fw={500} c="bright">
             {item.completed_tasks_count} / {item.all_tasks_count}
           </Text>

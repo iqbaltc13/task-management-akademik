@@ -88,7 +88,7 @@ function ModalForm({ item }) {
           disabled={requestPending}
           loading={form.processing}
         >
-          Save
+          Simpan
         </Button>
       </Flex>
     </form>
@@ -99,7 +99,7 @@ const UserAccessModal = (item) => {
   modals.open({
     title: (
       <Text size="xl" fw={700} mb={-10}>
-        User access
+        Pengguna ditugaskan
       </Text>
     ),
     centered: true,

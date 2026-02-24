@@ -20,7 +20,7 @@ const ProjectsIndex = () => {
       <Grid justify="space-between" align="center">
         <Grid.Col span="content">
           <Group>
-            <SearchInput placeholder="Search projects" search={search} />
+            <SearchInput placeholder="Cari periode permintaan" search={search} />
             {isAdmin() && <ArchivedFilterButton />}
           </Group>
         </Grid.Col>
@@ -31,7 +31,7 @@ const ProjectsIndex = () => {
               radius="xl"
               onClick={() => redirectTo("projects.create")}
             >
-              Create
+              Tambah
             </Button>
           )}
         </Grid.Col>
@@ -46,8 +46,8 @@ const ProjectsIndex = () => {
       ) : (
         <Center mih={400}>
           <EmptyWithIcon
-            title="No projects found"
-            subtitle="or you do not have access to any of them"
+            title="Tida ada periode permintaan yang ditemukan"
+            subtitle="atau Anda tidak memiliki akses ke proyek mana pun"
             icon={IconSearch}
           />
         </Center>
