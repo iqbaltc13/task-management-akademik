@@ -7,6 +7,7 @@ import useTaskDrawerStore from '@/hooks/store/useTaskDrawerStore';
 import useForm from '@/hooks/useForm';
 import { hasRoles } from '@/utils/user';
 import { usePage } from '@inertiajs/react';
+import Comments from './Comments';
 import {
   Button,
   Checkbox,
@@ -191,7 +192,7 @@ export function CreateTaskDrawer() {
             onChange={files => updateValue('attachments', files)}
             remove={index => removeAttachment(index)}
           />
-
+          {can('view comments') && <Comments task={null} />}
           <MultiSelect
             label='Subscribers'
             placeholder='Select subscribers'
