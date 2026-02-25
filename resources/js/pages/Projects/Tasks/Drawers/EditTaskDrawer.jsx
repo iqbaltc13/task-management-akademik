@@ -183,16 +183,16 @@ export function EditTaskDrawer() {
             styles={{ separator: { opacity: 0.3 } }}
           >
             <Text size='xs'>{task.project.name}</Text>
-            <Text size='xs'>Task #{task.number}</Text>
+            <Text size='xs'>Permintaan #{task.number}</Text>
             <Text size='xs'>
-              Created by {task.created_by_user.name} on {date(task.created_at)}
+              Dibuat oleh {task.created_by_user.name} pada {date(task.created_at)}
             </Text>
           </Breadcrumbs>
           <form className={classes.inner}>
             <div className={classes.content}>
               <TextInput
                 label='Nama'
-                placeholder='Nama Permintaan'
+                placeholder='Nama Pengaju'
                 value={data.name}
                 onChange={e => updateValue('name', e.target.value)}
                 onBlur={() => onBlurUpdate('name')}
@@ -200,20 +200,9 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-               <TextInput
-                label="Nomor Identitas"
-                placeholder="Nomor Identitas"
-                mt="xl"
-                value={data.identity_number}
-                onChange={e => updateValue('identity_number', e.target.value)}
-                onBlur={() => onBlurUpdate('identity_number')}
-                error={!data.identity_number}
-                readOnly={!can('edit task')}
-              />
-
               <Select
-                label="Anda Sebagai"
-                placeholder="Pilih peran"
+                label='Permintaan dari'
+                placeholder='Pilih permintaan dari'
                 mt="md"
                 searchable
                 clearable
@@ -225,6 +214,19 @@ export function EditTaskDrawer() {
                 }))}
                 readOnly={!can('edit task')}
               />
+
+              <TextInput
+                label='Nomor Identitas'
+                placeholder='Nomor Identitas Pengaju'
+                mt="xl"
+                value={data.identity_number}
+                onChange={e => updateValue('identity_number', e.target.value)}
+                onBlur={() => onBlurUpdate('identity_number')}
+                error={!data.identity_number}
+                readOnly={!can('edit task')}
+              />
+
+              
 
               <RichTextEditorWithCreator
                 ref={editorRef}
@@ -363,8 +365,8 @@ export function EditTaskDrawer() {
               )}
 
               <MultiSelect
-                label='Subscribers'
-                placeholder={!data.subscribed_users.length ? 'Select subscribers' : null}
+                label='Penerima Notifikasi'
+                placeholder={!data.subscribed_users.length ? 'Pilih penerima notifikasi' : null}
                 mt='lg'
                 value={data.subscribed_users}
                 onChange={values => updateValue('subscribed_users', values)}
