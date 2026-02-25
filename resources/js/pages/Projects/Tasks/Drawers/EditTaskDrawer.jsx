@@ -363,8 +363,8 @@ export function EditTaskDrawer() {
               )}
 
               <MultiSelect
-                label='Subscribers'
-                placeholder={!data.subscribed_users.length ? 'Select subscribers' : null}
+                label='Penerima Notifikasi'
+                placeholder={!data.subscribed_users.length ? 'Pilih penerima notifikasi' : null}
                 mt='lg'
                 value={data.subscribed_users}
                 onChange={values => updateValue('subscribed_users', values)}
