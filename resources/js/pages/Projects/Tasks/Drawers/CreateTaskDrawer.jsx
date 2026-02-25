@@ -192,10 +192,10 @@ export function CreateTaskDrawer() {
             onChange={files => updateValue('attachments', files)}
             remove={index => removeAttachment(index)}
           />
-          {can('view comments') && <Comments task={null} />}
+          
           <MultiSelect
-            label='Subscribers'
-            placeholder='Select subscribers'
+            label='Penerima Notifikasi'
+            placeholder='Pilih penerima notifikasi'
             searchable
             mt='md'
             value={form.data.subscribed_users}
