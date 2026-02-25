@@ -192,7 +192,7 @@ export function EditTaskDrawer() {
             <div className={classes.content}>
               <TextInput
                 label='Nama'
-                placeholder='Nama Permintaan'
+                placeholder='Nama Pengaju'
                 value={data.name}
                 onChange={e => updateValue('name', e.target.value)}
                 onBlur={() => onBlurUpdate('name')}
@@ -200,20 +200,9 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-               <TextInput
-                label="Nomor Identitas"
-                placeholder="Nomor Identitas"
-                mt="xl"
-                value={data.identity_number}
-                onChange={e => updateValue('identity_number', e.target.value)}
-                onBlur={() => onBlurUpdate('identity_number')}
-                error={!data.identity_number}
-                readOnly={!can('edit task')}
-              />
-
               <Select
-                label="Anda Sebagai"
-                placeholder="Pilih peran"
+                label='Permintaan dari'
+                placeholder='Pilih permintaan dari'
                 mt="md"
                 searchable
                 clearable
@@ -225,6 +214,19 @@ export function EditTaskDrawer() {
                 }))}
                 readOnly={!can('edit task')}
               />
+
+              <TextInput
+                label='Nomor Identitas'
+                placeholder='Nomor Identitas Pengaju'
+                mt="xl"
+                value={data.identity_number}
+                onChange={e => updateValue('identity_number', e.target.value)}
+                onBlur={() => onBlurUpdate('identity_number')}
+                error={!data.identity_number}
+                readOnly={!can('edit task')}
+              />
+
+              
 
               <RichTextEditorWithCreator
                 ref={editorRef}
