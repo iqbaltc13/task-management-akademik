@@ -59,8 +59,8 @@ function ModalForm({ item }) {
       ) : (
         <>
           <MultiSelect
-            label="Users"
-            placeholder="Select users"
+            label="Pengguna"
+            placeholder="Pilih Pengguna"
             searchable
             value={requestPending ? [] : form.data.users}
             onChange={(values) => updateValue("users", values)}
