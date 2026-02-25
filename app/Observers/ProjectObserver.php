@@ -14,8 +14,8 @@ class ProjectObserver
         $project->activities()->create([
             'project_id' => $project->id,
             'user_id' => auth()->id(),
-            'title' => 'New project',
-            'subtitle' => "\"{$project->name}\" was created by ".auth()->user()->name,
+            'title' => 'Periode permintaan baru',
+            'subtitle' => "\"{$project->name}\" dibuat oleh ".auth()->user()->name,
         ]);
     }
 
@@ -28,8 +28,8 @@ class ProjectObserver
             $project->activities()->create([
                 'project_id' => $project->id,
                 'user_id' => auth()->id(),
-                'title' => 'Project name was changed',
-                'subtitle' => "from \"{$project->getOriginal('name')}\" to \"{$project->name}\" by ".auth()->user()->name,
+                'title' => 'Nama periode permintaan diubah',
+                'subtitle' => "dari \"{$project->getOriginal('name')}\" menjadi \"{$project->name}\" oleh ".auth()->user()->name,
             ]);
         }
     }
@@ -42,8 +42,8 @@ class ProjectObserver
         $project->activities()->create([
             'project_id' => $project->id,
             'user_id' => auth()->id(),
-            'title' => 'Project was archived',
-            'subtitle' => "\"{$project->name}\" was archived by ".auth()->user()->name,
+            'title' => 'Periode permintaan dihapus',
+            'subtitle' => "\"{$project->name}\" dihapus oleh ".auth()->user()->name,
         ]);
     }
 
@@ -55,8 +55,8 @@ class ProjectObserver
         $project->activities()->create([
             'project_id' => $project->id,
             'user_id' => auth()->id(),
-            'title' => 'Project was unarchived',
-            'subtitle' => "\"{$project->name}\" was unarchived by ".auth()->user()->name,
+            'title' => 'Periode Permintaan dipulihkan',
+            'subtitle' => "\"{$project->name}\" dipulihkan oleh ".auth()->user()->name,
         ]);
     }
 }

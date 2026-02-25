@@ -52,7 +52,7 @@ export default function Comments({ task }) {
           disabled={comment.length <= 7}
           onClick={() => saveComment(task, comment, () => editorRef.current.setContent(""))}
         >
-          Add comment
+          Tambah komentar
         </Button>
       </Flex>
 

@@ -14,8 +14,8 @@ class TaskObserver
         $task->activities()->create([
             'project_id' => $task->project_id,
             'user_id' => auth()->id(),
-            'title' => 'New task',
-            'subtitle' => "\"{$task->name}\" was created by ".auth()->user()->name,
+            'title' => 'Permintaan baru',
+            'subtitle' => "\"{$task->name}\" dibuat oleh ".auth()->user()->name,
         ]);
 
         if ($task->assigned_to_user_id !== null) {
@@ -33,26 +33,26 @@ class TaskObserver
             $task->activities()->create([
                 'project_id' => $task->project_id,
                 'user_id' => auth()->id(),
-                'title' => 'Task name was changed',
-                'subtitle' => "from \"{$task->getOriginal('name')}\" to \"{$task->name}\" by ".auth()->user()->name,
+                'title' => 'Nama permintaan diperbarui',
+                'subtitle' => "Dari \"{$task->getOriginal('name')}\" menjadi \"{$task->name}\" oleh ".auth()->user()->name,
             ]);
         }
         if ($task->isDirty('description')) {
             $task->activities()->create([
                 'project_id' => $task->project_id,
                 'user_id' => auth()->id(),
-                'title' => 'Task description was changed',
-                'subtitle' => "on \"{$task->name}\" by ".auth()->user()->name,
+                'title' => 'Deskripsi permintaan diperbarui',
+                'subtitle' => "pada \"{$task->name}\" oleh ".auth()->user()->name,
             ]);
         }
         if ($task->isDirty('assigned_to_user_id')) {
             $task->activities()->create([
                 'project_id' => $task->project_id,
                 'user_id' => auth()->id(),
-                'title' => $task->assigned_to_user_id ? 'Assigned user to task' : 'Assigned user was removed',
+                'title' => $task->assigned_to_user_id ? 'Pengguna ditugaskan ke permintaan' : 'Pengguna yang ditugaskan telah dihapus',
                 'subtitle' => $task->assigned_to_user_id
-                    ? "\"{$task->name}\" was assigned to {$task->assignedToUser->name} by ".auth()->user()->name
-                    : "on task \"{$task->name}\" by ".auth()->user()->name,
+                    ? "\"{$task->name}\" ditugaskan ke {$task->assignedToUser->name} oleh ".auth()->user()->name
+                    : "pada permintaan \"{$task->name}\" oleh ".auth()->user()->name,
             ]);
 
             $task->assigned_at = now();
@@ -62,26 +62,26 @@ class TaskObserver
             $task->activities()->create([
                 'project_id' => $task->project_id,
                 'user_id' => auth()->id(),
-                'title' => $task->due_on ? 'Due date was set on task' : 'Due date was removed',
+                'title' => $task->due_on ? 'Batas waktu ditetapkan pada permintaan' : 'Batas waktu dihapus',
                 'subtitle' => $task->due_on
-                    ? "to {$task->due_on->format('F j, Y')} on \"{$task->name}\" by ".auth()->user()->name
-                    : "on \"{$task->name}\" task by ".auth()->user()->name,
+                    ? "hingga {$task->due_on->format('F j, Y')} pada \"{$task->name}\" oleh ".auth()->user()->name
+                    : "pada \"{$task->name}\" permintaan oleh ".auth()->user()->name,
             ]);
         }
         if ($task->isDirty('estimation')) {
             $task->activities()->create([
                 'project_id' => $task->project_id,
                 'user_id' => auth()->id(),
-                'title' => 'Estimation was set',
-                'subtitle' => "to {$task->estimation}h on \"{$task->name}\" by ".auth()->user()->name,
+                'title' => 'Estimasi telah diatur',
+                'subtitle' => "hingga {$task->estimation}h pada \"{$task->name}\" oleh ".auth()->user()->name,
             ]);
         }
         if ($task->isDirty('completed_at')) {
             $task->activities()->create([
                 'project_id' => $task->project_id,
                 'user_id' => auth()->id(),
-                'title' => $task->completed_at ? 'Task was completed' : 'Task was set to uncompleted',
-                'subtitle' => "\"{$task->name}\" was set as ".($task->completed_at ? 'completed' : 'uncompleted').' by '.auth()->user()->name,
+                'title' => $task->completed_at ? 'Permintaan telah selesai' : 'Status permintaan diubah menjadi belum selesai',
+                'subtitle' => "\"{$task->name}\" diubah menjadi ".($task->completed_at ? 'telah selesai' : 'belum selesai').' oleh '.auth()->user()->name,
             ]);
         }
     }
@@ -94,8 +94,8 @@ class TaskObserver
         $task->activities()->create([
             'project_id' => $task->project_id,
             'user_id' => auth()->id(),
-            'title' => 'Task was archived',
-            'subtitle' => "\"{$task->name}\" was archived by ".auth()->user()->name,
+            'title' => 'Permintaan dihapus',
+            'subtitle' => "\"{$task->name}\" dihapus oleh ".auth()->user()->name,
         ]);
     }
 
@@ -107,8 +107,8 @@ class TaskObserver
         $task->activities()->create([
             'project_id' => $task->project_id,
             'user_id' => auth()->id(),
-            'title' => 'Task was unarchived',
-            'subtitle' => "\"{$task->name}\" was unarchived by ".auth()->user()->name,
+            'title' => 'Permintaan dipulihkan',
+            'subtitle' => "\"{$task->name}\" dipulihkan oleh ".auth()->user()->name,
         ]);
     }
 }

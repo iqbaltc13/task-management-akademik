@@ -80,9 +80,9 @@ export function CreateTaskDrawer() {
     } else {
       openConfirmModal({
         type: 'danger',
-        title: 'Discard changes?',
-        content: `All unsaved changes will be lost.`,
-        confirmLabel: 'Discard',
+        title: 'Buang perubahan?',
+        content: `Semua perubahan yang belum disimpan akan hilang.`,
+        confirmLabel: 'Buang',
         confirmProps: { color: 'red' },
         onConfirm: () => closeCreateTask(),
       });
@@ -114,7 +114,7 @@ export function CreateTaskDrawer() {
           ml={25}
           my='sm'
         >
-          Add new task
+          Tambah permintaan baru
         </Text>
       }
       position='right'
@@ -217,12 +217,12 @@ export function CreateTaskDrawer() {
               disabled={form.processing}
               onClick={closeDrawer}
             >
-              Cancel
+              Batal
             </Button>
 
             <Button
               type='submit'
-              w={120}
+              w={170}
               loading={form.processing}
             >
               Tambah Permintaan
@@ -284,7 +284,7 @@ export function CreateTaskDrawer() {
             min={0}
             allowNegative={false}
             step={0.5}
-            suffix=' hours'
+            suffix=' jam'
             onChange={value => updateValue('estimation', value)}
           />
 

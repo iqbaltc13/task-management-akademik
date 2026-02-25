@@ -304,7 +304,7 @@ export function EditTaskDrawer() {
                 min={0}
                 allowNegative={false}
                 step={0.5}
-                suffix=' hours'
+                suffix=' jam'
                 onChange={value => updateValue('estimation', value)}
                 readOnly={!can('edit task')}
               />
