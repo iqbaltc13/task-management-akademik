@@ -183,9 +183,9 @@ export function EditTaskDrawer() {
             styles={{ separator: { opacity: 0.3 } }}
           >
             <Text size='xs'>{task.project.name}</Text>
-            <Text size='xs'>Task #{task.number}</Text>
+            <Text size='xs'>Permintaan #{task.number}</Text>
             <Text size='xs'>
-              Created by {task.created_by_user.name} on {date(task.created_at)}
+              Dibuat oleh {task.created_by_user.name} pada {date(task.created_at)}
             </Text>
           </Breadcrumbs>
           <form className={classes.inner}>

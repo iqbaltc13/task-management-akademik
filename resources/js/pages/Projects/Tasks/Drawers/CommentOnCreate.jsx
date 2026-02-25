@@ -40,7 +40,7 @@ export default function CommentOnCreate() {
       <RichTextEditor
         ref={editorRef}
         mt="md"
-        placeholder="Write a comment"
+        placeholder="Tulis komentar"
         height={200}
         content={comment}
         onChange={(content) => setComment(content)}

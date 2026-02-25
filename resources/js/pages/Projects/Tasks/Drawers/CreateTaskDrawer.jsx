@@ -114,7 +114,7 @@ export function CreateTaskDrawer() {
           ml={25}
           my='sm'
         >
-          Add new task
+          Buat Permintaan Baru
         </Text>
       }
       position='right'
@@ -138,7 +138,7 @@ export function CreateTaskDrawer() {
         <div className={classes.content}>
           <TextInput
             label='Nama'
-            placeholder='Nama Permintaan'
+            placeholder='Nama Pengaju'
             required
             data-autofocus
             value={form.data.name}
@@ -146,8 +146,8 @@ export function CreateTaskDrawer() {
             error={form.errors.name}
           />
           <Select
-            label='Anda Sebagai'
-            placeholder='Anda sebagai'
+            label='Permintaan dari'
+            placeholder='Pilih permintaan dari'
             required
             searchable
             mt='xl'
@@ -165,7 +165,7 @@ export function CreateTaskDrawer() {
 
           <TextInput
             label='Nomor Identitas'
-            placeholder='Nomor Identitas'
+            placeholder='Nomor Identitas Pengaju'
             required
              mt='xl'
             data-autofocus

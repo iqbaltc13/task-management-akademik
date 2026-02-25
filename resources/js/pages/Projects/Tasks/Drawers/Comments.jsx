@@ -40,7 +40,7 @@ export default function Comments({ task }) {
       <RichTextEditor
         ref={editorRef}
         mt="md"
-        placeholder="Write a comment"
+        placeholder="Tulis komentar"
         height={200}
         content={comment}
         onChange={(content) => setComment(content)}
@@ -52,7 +52,7 @@ export default function Comments({ task }) {
           disabled={comment.length <= 7}
           onClick={() => saveComment(task, comment, () => editorRef.current.setContent(""))}
         >
-          Add comment
+          Tambah Komentar
         </Button>
       </Flex>
 
