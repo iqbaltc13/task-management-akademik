@@ -9,29 +9,28 @@ export default function LoginNotification({ notify }) {
   return (
     <div style={{ marginTop: "25px" }}>
       {notify === "password-reset" && (
-        <Alert radius="md" title="Password was reset" icon={<IconInfoCircle />}>
-          Your password was successfully updated, you may use it to login.
+        <Alert radius="md" title="Reset Password Sukses" icon={<IconInfoCircle />}>
+          Password Anda berhasil direset, Anda dapat menggunakan password baru tersebut untuk login.
         </Alert>
       )}
       {notify === "social-login-user-not-found" && (
         <Alert
           radius="md"
-          title="Login failed"
+          title="Login Gagal"
           icon={<IconAlertTriangle />}
           color="orange"
         >
-          No user was found with your Google email address.
+          Tidak ada pengguna yang ditemukan dengan alamat email Google Anda.
         </Alert>
       )}
       {notify === "social-login-failed" && (
         <Alert
           radius="md"
-          title="Whoops, something went wrong"
+          title="Login Gagal"
           icon={<IconExclamationCircle />}
           color="red"
         >
-          Unexpected error has occurred, please try logging in with your email
-          and password.
+          Terjadi kesalahan yang tidak terduga, silakan coba login dengan email dan password Anda.
         </Alert>
       )}
     </div>

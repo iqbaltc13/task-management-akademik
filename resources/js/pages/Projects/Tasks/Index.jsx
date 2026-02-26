@@ -115,7 +115,7 @@ const TasksIndex = () => {
                 </DragDropContext>
               </>
             ) : (
-              <EmptyResult title="No tasks found" subtitle="or none match your search criteria" />
+              <EmptyResult title="Tidak ada tugas yang ditemukan" subtitle="atau tidak sesuai kriteria pencarian" />
             )}
           </Grid.Col>
         ) : (

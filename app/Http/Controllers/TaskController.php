@@ -79,7 +79,7 @@ class TaskController extends Controller
         
         (new CreateTask)->create($project, $request->validated());
 
-        return redirect()->route('projects.tasks', $project)->success('Task added', 'A new task was successfully added.');
+        return redirect()->route('projects.tasks', $project)->success('Permintaan ditambahkan', 'Permintaan baru berhasil ditambahkan.');
     }
 
     public function update(UpdateTaskRequest $request, Project $project, Task $task): JsonResponse
@@ -144,7 +144,7 @@ class TaskController extends Controller
         $task->archive();
         TaskDeleted::dispatch($task->id, $task->project_id);
 
-        return redirect()->back()->success('Task archived', 'The task was successfully archived.');
+        return redirect()->back()->success('Tugas dihapus', 'Tugas berhasil dihapus.');
     }
 
     public function restore(Project $project, Task $task)
@@ -155,6 +155,6 @@ class TaskController extends Controller
         $task->unArchive();
         TaskRestored::dispatch($task);
 
-        return redirect()->back()->success('Task restored', 'The restoring of the Task was completed successfully.');
+        return redirect()->back()->success('Permintaan dipulihkan', 'pemulihan permintaan berhasil.');
     }
 }
