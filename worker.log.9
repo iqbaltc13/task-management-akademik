@@ -39,3 +39,24 @@
   18  /var/www/html/worklane-akademik/artisan:35
       Illuminate\Foundation\Console\Kernel::handle()
 
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /var/www/html/worklane-akademik/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient(
+     27▕                 Arr::except($config, ['token'])
+     28▕             ),
+     29▕             $config['queue'],
+     30▕             $config['prefix'] ?? '',
+
+      [2m+17 vendor frames [22m
+
+  18  /var/www/html/worklane-akademik/artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
