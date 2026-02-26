@@ -17,6 +17,9 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
+dayjs.locale('id');
 
 const ActivityIndex = () => {
   let { groupedActivities, dropdowns } = usePage().props;
@@ -87,7 +90,7 @@ const ActivityIndex = () => {
         Object.keys(groupedActivities).map((date) => (
           <div key={date}>
             <Title order={3} mb="lg">
-              {date}
+              {dayjs(date).format('DD MMMM YYYY')}
             </Title>
             <Timeline active={9999} bulletSize={32} lineWidth={3} mb="xl">
               {groupedActivities[date].map((activity) => (

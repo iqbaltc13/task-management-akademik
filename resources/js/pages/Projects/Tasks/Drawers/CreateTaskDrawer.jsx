@@ -259,6 +259,7 @@ export function CreateTaskDrawer() {
 
           <DateInput
             clearable
+            locale="id"
             valueFormat='DD MMM YYYY'
             minDate={new Date()}
             mt='md'
