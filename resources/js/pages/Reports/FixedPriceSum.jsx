@@ -92,7 +92,8 @@ const FixedPriceSum = () => {
                 <DatePickerInput
                   type='range'
                   valueFormat='YYYY-MM-DD'
-                  placeholder='Pick dates range'
+                  placeholder="Pilih rentang tanggal"
+                  locale="id"
                   clearable
                   allowSingleDateInRange
                   miw={200}
