@@ -85,13 +85,13 @@ export default function UserButton() {
           leftSection={<IconUser style={{ width: rem(14), height: rem(14) }} />}
           onClick={() => redirectTo("account.profile.edit")}
         >
-          My Profile
+          Profil Saya
         </Menu.Item>
         <Menu.Item
           leftSection={<IconBell style={{ width: rem(14), height: rem(14) }} />}
           onClick={() => redirectTo("notifications")}
         >
-          Notifications
+          Notifikasi
         </Menu.Item>
 
         <Menu.Divider />
@@ -106,7 +106,7 @@ export default function UserButton() {
           }
           onClick={() => setColorScheme(computedColorScheme === "light" ? "dark" : "light")}
         >
-          {upperFirst(computedColorScheme)} mode
+          Mode {computedColorScheme === "light" ? "Terang":"Gelap"}
         </Menu.Item>
 
         <Menu.Divider />
@@ -116,7 +116,7 @@ export default function UserButton() {
           leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}
           onClick={logout}
         >
-          Logout
+          Keluar
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
