@@ -174,12 +174,12 @@ export function CreateTaskDrawer() {
             error={form.errors.identity_number}
           />
 
-          {/* <RichTextEditor
+          <RichTextEditor
             mt='xl'
             placeholder='Deskripsi Permintaan'
             height={260}
             onChange={content => updateValue('description', content)}
-          /> */}
+          />
           {/* <NewCommentForm
             mt='xl'
             initialComments={initialComments}
