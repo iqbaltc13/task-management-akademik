@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function __construct()
     {
-        $this->table_name =  'label_task';
+        $this->table_name =  'tasks';
         $this->schema = Schema::connection($this->getConnection());
     }
 
     public function up(): void
     {
-        $this->schema->create($this->table_name, function (Blueprint $table) {
-            $table->bigInteger('label_id')->nullable();
-            $table->string('task_id',255)->nullable();
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
-            $table->dateTime('deleted_at')->nullable();
+        $this->schema->table($this->table_name, function (Blueprint $table) {
+            $table->text('result_description')->nullable();
         });
     }
 
@@ -31,6 +27,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $this->schema->dropIfExists($this->table_name);
+        $this->schema->table($this->table_name, function (Blueprint $table) {
+            $table->dropColumn('result_description');
+        });
     }
 };
