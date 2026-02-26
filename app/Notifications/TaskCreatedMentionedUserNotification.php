@@ -70,8 +70,8 @@ class TaskCreatedMentionedUserNotification extends Notification implements Shoul
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("[{$this->task->project->name}] You were mentioned in a new \"{$this->task->name}\" task")
-            ->greeting("{$this->task->createdByUser->name} has mentioned you in a new \"{$this->task->name}\" task")
+            ->subject("[{$this->task->project->name}] Anda telah disebut pada permintaan \"{$this->task->name}\" yang baru")
+            ->greeting("{$this->task->createdByUser->name} menyebut anda pada permintaan baru \"{$this->task->name}\"")
             ->action('Open task', route('projects.tasks.open', ['project' => $this->task->project_id, 'task' => $this->task->id]))
             ->line($this->task->description);
     }
@@ -85,8 +85,8 @@ class TaskCreatedMentionedUserNotification extends Notification implements Shoul
     {
         return [
             'task_id' => $this->task->id,
-            'title' => "{$this->task->createdByUser->name} has mentioned you in a new \"{$this->task->name}\" task",
-            'subtitle' => "On \"{$this->task->project->name}\" project",
+            'title' => "{$this->task->createdByUser->name} menyebut anda pada permintaan baru \"{$this->task->name}\"",
+            'subtitle' => "pada periode permintaan \"{$this->task->project->name}\"",
             'link' => route('projects.tasks.open', [$this->task->project_id, $this->task->id]),
             'created_at' => $notifiable->created_at,
             'read_at' => $notifiable->read_at,
