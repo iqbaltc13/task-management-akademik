@@ -11,17 +11,21 @@ return new class extends Migration
      */
     public function __construct()
     {
-        $this->table_name =  'comments';
+        $this->table_name =  'result_of_tasks_attachments';
         $this->schema = Schema::connection($this->getConnection());
     }
 
     public function up(): void
     {
         $this->schema->create($this->table_name, function (Blueprint $table) {
-           $table->string('id',255)->primary();
-            $table->string('user_id',255)->nullable();
+            $table->string('id',255)->primary();
             $table->string('task_id',255)->nullable();
-            $table->text('content')->nullable();
+            $table->string('user_id',255)->nullable();
+            $table->string('name')->nullable();
+            $table->string('path')->nullable();
+            $table->string('thumb')->nullable();
+            $table->string('type')->nullable();
+            $table->integer('size')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
@@ -33,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $this->schema->dropIfExists($this->table_name);
+        $this->schema->dropIfExists('result_of_tasks_attachments');
     }
 };

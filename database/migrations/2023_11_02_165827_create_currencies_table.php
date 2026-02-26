@@ -17,7 +17,7 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::create($this->table_name, function (Blueprint $table) {
+        $this->schema->create($this->table_name, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 120)->nullable();
             $table->string('code', 3)->nullable();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists($this->table_name);
+        $this->schema->dropIfExists($this->table_name);
     }
 };

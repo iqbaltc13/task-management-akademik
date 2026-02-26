@@ -18,7 +18,7 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::table($this->table_name, function (Blueprint $table) {
+        $this->schema->table($this->table_name, function (Blueprint $table) {
             $table->string('pricing_type')->default(PricingType::HOURLY->value)->after('estimation');
         });
     }
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table($this->table_name, function (Blueprint $table) {
+        $this->schema->table($this->table_name, function (Blueprint $table) {
             $table->dropColumn('pricing_type');
         });
     }
