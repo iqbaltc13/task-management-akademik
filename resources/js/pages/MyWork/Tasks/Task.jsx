@@ -7,6 +7,11 @@ import { shortName } from "@/utils/user";
 import { Link } from "@inertiajs/react";
 import { Flex, Group, Pill, Text, Tooltip, rem } from "@mantine/core";
 import classes from "./css/Task.module.css";
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/id'
+dayjs.extend(relativeTime)
+dayjs.locale('id')
 
 export default function Task({ task }) {
   return (
@@ -15,7 +20,7 @@ export default function Task({ task }) {
       wrap="nowrap"
     >
       <Group gap="sm" wrap="nowrap">
-        <Tooltip label="Task group" openDelay={1000} withArrow>
+        <Tooltip label="Grup permintaan" openDelay={1000} withArrow>
           <TaskGroupLabel size="sm">{task.task_group.name}</TaskGroupLabel>
         </Tooltip>
         {task.assigned_to_user && (
@@ -30,7 +35,7 @@ export default function Task({ task }) {
 
         <Tooltip
           disabled={!isOverdue(task)}
-          label={`${diffForHumans(task.due_on, true)} overdue`}
+          label={`${diffForHumans(task.due_on, true)} lewat batas waktu`}
           openDelay={1000}
           withArrow
         >

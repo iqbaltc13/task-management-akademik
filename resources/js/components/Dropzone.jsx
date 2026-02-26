@@ -83,10 +83,10 @@ export default function Dropzone({ selected, onChange, remove, ...props }) {
 
           <div>
             <Text size="md" inline>
-              Drag files here or click to select
+              Seret berkas ke sini atau klik untuk memilih
             </Text>
             <Text size="xs" c="dimmed" inline mt={7}>
-              Files of any type will be accepted
+              File dengan jenis apa pun akan diterima.
             </Text>
           </div>
         </Group>
