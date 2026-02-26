@@ -17,6 +17,9 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
+dayjs.locale('id');
 
 const ActivityIndex = () => {
   let { groupedActivities, dropdowns } = usePage().props;
@@ -32,31 +35,31 @@ const ActivityIndex = () => {
   }, [selectedProject]);
 
   const getIcon = (title) => {
-    if (title.includes("archived")) {
+    if (title.includes("dihapus")) {
       return <IconArchive size={18} />;
     }
-    if (title.includes("comment")) {
+    if (title.includes("komentar")) {
       return <IconMessage size={18} />;
     }
-    if (title.includes("was changed")) {
+    if (title.includes("diperbarui")) {
       return <IconEdit size={18} />;
     }
-    if (title.includes("Due date")) {
+    if (title.includes("Batas waktu")) {
       return <IconCalendarMonth size={18} />;
     }
-    if (title.includes("Attachment")) {
+    if (title.includes("Lampiran")) {
       return <IconPaperclip size={18} />;
     }
-    if (title.includes("Estimation was set")) {
+    if (title.includes("Estimasi telah diatur")) {
       return <IconClock size={18} />;
     }
-    if (title.includes("was completed")) {
+    if (title.includes("telah selesai")) {
       return <IconCheck size={18} />;
     }
-    if (title.includes("uncompleted")) {
+    if (title.includes("belum selesai")) {
       return <IconX size={18} />;
     }
-    if (title === "New task" || title === "New project" || title.includes("Assigned user")) {
+    if (title === "Permintaan baru" || title === "Periode permintaan baru" || title.includes("Pengguna ditugaskan")) {
       return <IconPlus size={18} />;
     }
   };
@@ -65,16 +68,16 @@ const ActivityIndex = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <div>Pekerjaan Saya</div>
-        <div>Aktivitas Proyek</div>
+        <div> Aktivitas Permintaan</div>
       </Breadcrumbs>
 
       <Title order={1} mb={20}>
-        Aktivitas Proyek
+        Aktivitas Permintaan
       </Title>
 
       <Select
         size="md"
-        placeholder="Select project"
+        placeholder="Pilih permintaan"
         allowDeselect={false}
         value={selectedProject}
         onChange={(value) => setSelectedProject(value)}
@@ -87,7 +90,7 @@ const ActivityIndex = () => {
         Object.keys(groupedActivities).map((date) => (
           <div key={date}>
             <Title order={3} mb="lg">
-              {date}
+              {dayjs(date).format('DD MMMM YYYY')}
             </Title>
             <Timeline active={9999} bulletSize={32} lineWidth={3} mb="xl">
               {groupedActivities[date].map((activity) => (
@@ -130,8 +133,8 @@ const ActivityIndex = () => {
       ) : (
         <Center mih={300}>
           <EmptyWithIcon
-            title="No activities found"
-            subtitle="On projects you have access to"
+            title="Tidak ada aktivitas yang ditemukan"
+            subtitle="Pada permintaan yang dapat Anda akses"
             icon={IconActivity}
           />
         </Center>

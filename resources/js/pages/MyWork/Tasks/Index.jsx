@@ -20,12 +20,12 @@ const TasksIndex = () => {
   return (
     <>
       <Breadcrumbs fz={14} mb={30}>
-        <div>My Work</div>
-        <div>Tasks</div>
+        <div>Pekerjaan Saya</div>
+        <div>Permintaan</div>
       </Breadcrumbs>
 
       <Title order={1} mb={20}>
-        Tasks assigned to you
+         Permintaan ditugaskan ke saya
       </Title>
 
       <Box maw={1000}>
@@ -74,8 +74,8 @@ const TasksIndex = () => {
         ) : (
           <Center mih={300}>
             <EmptyWithIcon
-              title="All caught up!"
-              subtitle="No tasks assigned at the moment"
+              title="Semua sudah terselasaikan!"
+              subtitle="Tidak ada permintaan di tugaskan ke saya saat ini"
               icon={IconRocket}
             />
           </Center>
@@ -85,6 +85,6 @@ const TasksIndex = () => {
   );
 };
 
-TasksIndex.layout = (page) => <Layout title="My Tasks">{page}</Layout>;
+TasksIndex.layout = (page) => <Layout title="Permintaan Saya">{page}</Layout>;
 
 export default TasksIndex;

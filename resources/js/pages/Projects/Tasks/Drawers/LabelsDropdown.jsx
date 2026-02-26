@@ -24,7 +24,7 @@ export default function LabelsDropdown({ items, selected, onChange, ...props }) 
 
   return (
     <Box {...props}>
-      <Input.Label>Labels</Input.Label>
+      <Input.Label>Label</Input.Label>
       <Combobox
         store={combobox}
         onOptionSubmit={handleValueSelect}
@@ -49,7 +49,7 @@ export default function LabelsDropdown({ items, selected, onChange, ...props }) 
                   );
                 })
               ) : (
-                <Input.Placeholder>Select labels</Input.Placeholder>
+                <Input.Placeholder>Pilih label</Input.Placeholder>
               )}
 
               <Combobox.EventsTarget>
