@@ -76,6 +76,10 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
+            'options'        => [
+               // Matikan prepared statements — WAJIB untuk transaction mode
+               PDO::ATTR_EMULATE_PREPARES => true,
+            ],
         ],
 
         'sqlsrv' => [
