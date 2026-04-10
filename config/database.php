@@ -78,7 +78,7 @@ return [
             'sslmode' => 'prefer',
             'options'        => [
                // Matikan prepared statements — WAJIB untuk transaction mode
-               PDO::ATTR_EMULATE_PREPARES => true,
+               // PDO::ATTR_EMULATE_PREPARES => true,
             ],
         ],
 
