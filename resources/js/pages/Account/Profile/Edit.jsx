@@ -35,7 +35,7 @@ const ProfileIndex = () => {
     <>
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>My Profile</Title>
+          <Title order={1}>Profil Saya</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>

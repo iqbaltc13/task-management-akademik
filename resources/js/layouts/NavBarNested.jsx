@@ -38,7 +38,7 @@ export default function Sidebar() {
         visible: can("view projects"),
       },
       {
-        label: "My Work",
+        label: "Aktivitas dan Pelayanan Saya",
         icon: IconLayoutList,
         active: route().current("my-work.*"),
         opened: route().current("my-work.*"),
