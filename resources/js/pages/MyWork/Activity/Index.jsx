@@ -59,7 +59,7 @@ const ActivityIndex = () => {
     if (title.includes("belum selesai")) {
       return <IconX size={18} />;
     }
-    if (title === "Permintaan baru" || title === "Periode permintaan baru" || title.includes("Pengguna ditugaskan")) {
+    if (title === "Pelayanan baru" || title === "Periode pelayanan baru" || title.includes("Pengguna ditugaskan")) {
       return <IconPlus size={18} />;
     }
   };
@@ -68,16 +68,16 @@ const ActivityIndex = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <div>Pekerjaan Saya</div>
-        <div> Aktivitas Permintaan</div>
+        <div> Aktivitas Pelayanan</div>
       </Breadcrumbs>
 
       <Title order={1} mb={20}>
-        Aktivitas Permintaan
+        Aktivitas Pelayanan
       </Title>
 
       <Select
         size="md"
-        placeholder="Pilih permintaan"
+        placeholder="Pilih pelayanan"
         allowDeselect={false}
         value={selectedProject}
         onChange={(value) => setSelectedProject(value)}
@@ -134,7 +134,7 @@ const ActivityIndex = () => {
         <Center mih={300}>
           <EmptyWithIcon
             title="Tidak ada aktivitas yang ditemukan"
-            subtitle="Pada permintaan yang dapat Anda akses"
+            subtitle="Pada pelayanan yang dapat Anda akses"
             icon={IconActivity}
           />
         </Center>

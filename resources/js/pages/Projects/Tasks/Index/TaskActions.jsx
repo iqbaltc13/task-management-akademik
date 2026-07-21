@@ -13,8 +13,8 @@ export default function TaskActions({ task, ...props }) {
   const openArchiveModal = () =>
     openConfirmModal({
       type: "danger",
-      title: "Hapus Permintaan",
-      content: `Apakah ada yakin menghapus permintaan ini?`,
+      title: "Hapus Pelayanan",
+      content: `Apakah ada yakin menghapus pelayanan ini?`,
       confirmLabel: "Hapus",
       confirmProps: { color: "red" },
       onConfirm: () => archiveForm.submit({ preserveScroll: true }),

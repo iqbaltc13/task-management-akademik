@@ -44,7 +44,7 @@ const EditTasksGroupModal = (item) => {
   modals.open({
     title: (
       <Text size="xl" fw={700} mb={-10}>
-        Edit Grup Permintaan
+        Edit Grup Pelayanan
       </Text>
     ),
     centered: true,

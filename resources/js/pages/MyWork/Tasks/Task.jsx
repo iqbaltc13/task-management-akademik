@@ -20,7 +20,7 @@ export default function Task({ task }) {
       wrap="nowrap"
     >
       <Group gap="sm" wrap="nowrap">
-        <Tooltip label="Grup permintaan" openDelay={1000} withArrow>
+        <Tooltip label="Grup pelayanan" openDelay={1000} withArrow>
           <TaskGroupLabel size="sm">{task.task_group.name}</TaskGroupLabel>
         </Tooltip>
         {task.assigned_to_user && (

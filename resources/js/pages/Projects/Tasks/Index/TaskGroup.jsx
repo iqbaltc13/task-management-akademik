@@ -36,7 +36,7 @@ export default function TaskGroup({ group, tasks, ...props }) {
               <TaskGroupActions group={group} className={classes.actions} />
             </Group>
             {!route().params.archived && can("create task") && (
-              <Tooltip label="Tambah Permintaan" openDelay={1000} withArrow>
+              <Tooltip label="Tambah Pelayanan" openDelay={1000} withArrow>
                 <ActionIcon
                   variant="filled"
                   size="md"

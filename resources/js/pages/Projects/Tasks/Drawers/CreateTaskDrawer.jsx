@@ -114,7 +114,7 @@ export function CreateTaskDrawer() {
           ml={25}
           my='sm'
         >
-          Buat Permintaan Baru
+          Buat Pelayanan Baru
         </Text>
       }
       position='right'
@@ -146,8 +146,8 @@ export function CreateTaskDrawer() {
             error={form.errors.name}
           />
           <Select
-            label='Permintaan dari'
-            placeholder='Pilih permintaan dari'
+            label='Pelayanan dari'
+            placeholder='Pilih pelayanan dari'
             required
             searchable
             mt='xl'
@@ -176,7 +176,7 @@ export function CreateTaskDrawer() {
 
           <RichTextEditor
             mt='xl'
-            placeholder='Deskripsi Permintaan'
+            placeholder='Deskripsi Pelayanan'
             height={260}
             onChange={content => updateValue('description', content)}
           />
@@ -225,14 +225,14 @@ export function CreateTaskDrawer() {
               w={170}
               loading={form.processing}
             >
-              Tambah Permintaan
+              Tambah Pelayanan
             </Button>
           </Flex>
         </div>
         <div className={classes.sidebar}>
           <Select
-            label='Grup Permintaan'
-            placeholder='Pilih grup permintaan'
+            label='Grup Pelayanan'
+            placeholder='Pilih grup pelayanan'
             required
             value={form.data.group_id}
             onChange={value => updateValue('group_id', value)}

@@ -82,7 +82,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
           onClick={() => redirectTo('projects.index')}
           fz={14}
         >
-          Periode Permintaan
+          Periode Pelayanan
         </Anchor>
         <div>Edit</div>
       </Breadcrumbs>
@@ -94,7 +94,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
         mb='lg'
       >
         <Grid.Col span='auto'>
-          <Title order={1}>Edit Periode Permintaan</Title>
+          <Title order={1}>Edit Periode Pelayanan</Title>
         </Grid.Col>
         <Grid.Col span='content'></Grid.Col>
       </Grid>
@@ -103,7 +103,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
         <form onSubmit={submit}>
           <TextInput
             label='Nama'
-            placeholder='Nama Periode Permintaan'
+            placeholder='Nama Periode Pelayanan'
             required
             mt='md'
             value={form.data.name}
@@ -113,7 +113,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
 
           <Textarea
             label='Deskripsi'
-            placeholder='Deskripsi Periode Permintaan'
+            placeholder='Deskripsi Periode Pelayanan'
             mt='md'
             autosize
             minRows={4}

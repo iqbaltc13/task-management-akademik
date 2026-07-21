@@ -21,7 +21,7 @@ export default function RecentlyAssignedTasks({ tasks }) {
   return (
     <Card bg="none">
       <Title order={3} ml={15}>
-        Permintaan baru saja diberikan
+        Pelayanan baru saja diberikan
       </Title>
 
       <Divider my={14} />
@@ -62,7 +62,7 @@ export default function RecentlyAssignedTasks({ tasks }) {
         </ScrollArea>
       ) : (
         <Center my={30}>
-          <EmptyWithIcon title="Belum ada permintaan" subtitle="Belum ada permintaan untuk Anda" icon={IconSearch} />
+          <EmptyWithIcon title="Belum ada pelayanan" subtitle="Belum ada pelayanan untuk Anda" icon={IconSearch} />
         </Center>
       )}
     </Card>

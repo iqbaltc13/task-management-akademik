@@ -42,7 +42,7 @@ export default function OverdueTasks({ tasks }) {
                       {task.name}
                     </Text>
                     <Group>
-                      <Tooltip label="Grup permintaan" openDelay={500} withArrow>
+                      <Tooltip label="Grup pelayanan" openDelay={500} withArrow>
                         <TaskGroupLabel>{task.task_group.name}</TaskGroupLabel>
                       </Tooltip>
                       <Text fz={11} c="dimmed">
@@ -62,7 +62,7 @@ export default function OverdueTasks({ tasks }) {
         </ScrollArea>
       ) : (
         <Center my={30}>
-          <EmptyWithIcon title="Semua selesai!" subtitle="Tidak ada permintaan terlambat" icon={IconRocket} />
+          <EmptyWithIcon title="Semua selesai!" subtitle="Tidak ada pelayanan terlambat" icon={IconRocket} />
         </Center>
       )}
     </Card>

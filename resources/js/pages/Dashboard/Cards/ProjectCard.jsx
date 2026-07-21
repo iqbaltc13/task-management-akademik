@@ -43,7 +43,7 @@ export function ProjectCard({ project }) {
           <div>
             <Tooltip label="Completed tasks" openDelay={500} withArrow>
               <Text fz="lg" fw={500} inline span>
-                Permintaan: {project.completed_tasks_count} / {project.all_tasks_count}
+                Pelayanan: {project.completed_tasks_count} / {project.all_tasks_count}
               </Text>
             </Tooltip>
           </div>

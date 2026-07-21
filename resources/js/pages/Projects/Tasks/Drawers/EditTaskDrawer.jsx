@@ -183,7 +183,7 @@ export function EditTaskDrawer() {
             styles={{ separator: { opacity: 0.3 } }}
           >
             <Text size='xs'>{task.project.name}</Text>
-            <Text size='xs'>Permintaan #{task.number}</Text>
+            <Text size='xs'>Pelayanan #{task.number}</Text>
             <Text size='xs'>
               Dibuat oleh {task.created_by_user.name} pada {date(task.created_at)}
             </Text>
@@ -201,8 +201,8 @@ export function EditTaskDrawer() {
               />
 
               <Select
-                label='Permintaan dari'
-                placeholder='Pilih permintaan dari'
+                label='Pelayanan dari'
+                placeholder='Pilih pelayanan dari'
                 mt="md"
                 searchable
                 clearable
@@ -231,7 +231,7 @@ export function EditTaskDrawer() {
               <RichTextEditorWithCreator
                 ref={editorRef}
                 mt='xl'
-                placeholder='Deskripsi permintaan'
+                placeholder='Deskripsi pelayanan'
                 content={data.description}
                 height={260}
                 onChange={content => updateValue('description', content)}
@@ -252,8 +252,8 @@ export function EditTaskDrawer() {
             </div>
             <div className={classes.sidebar}>
               <Select
-                label='Grup Permintaan'
-                placeholder='Pilih grup permintaan'
+                label='Grup Pelayanan'
+                placeholder='Pilih grup Pelayanan'
                 allowDeselect={false}
                 value={data.group_id.toString()}
                 onChange={value => updateValue('group_id', value)}

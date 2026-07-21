@@ -31,7 +31,7 @@ export default function Sidebar() {
         visible: true,
       },
       {
-        label: "Periode Permintaan",
+        label: "Periode Pelayanan",
         icon: IconListDetails,
         link: route("projects.index"),
         active: route().current("projects.*"),
@@ -45,7 +45,7 @@ export default function Sidebar() {
         visible: can("view tasks") || can("view activities"),
         links: [
           {
-            label: "Permintaan",
+            label: "Pelayanan",
             link: route("my-work.tasks.index"),
             active: route().current("my-work.tasks.*"),
             visible: can("view tasks"),
