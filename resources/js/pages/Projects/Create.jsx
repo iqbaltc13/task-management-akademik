@@ -80,7 +80,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
           onClick={() => redirectTo('projects.index')}
           fz={14}
         >
-          Periode Pelayanan
+          Grup Pelayanan
         </Anchor>
         <div>Tambah</div>
       </Breadcrumbs>
@@ -92,7 +92,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
         mb='lg'
       >
         <Grid.Col span='auto'>
-          <Title order={1}>Tambah Periode Pelayanan</Title>
+          <Title order={1}>Tambah Grup Pelayanan</Title>
         </Grid.Col>
         <Grid.Col span='content'></Grid.Col>
       </Grid>
@@ -101,7 +101,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
         <form onSubmit={submit}>
           <TextInput
             label='Nama'
-            placeholder='Nama Periode Pelayanan'
+            placeholder='Nama Grup Pelayanan'
             required
             mt='md'
             value={form.data.name}
@@ -111,7 +111,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
 
           <Textarea
             label='Deskripsi'
-            placeholder='Deskripsi Periode Pelayanan'
+            placeholder='Deskripsi Grup Pelayanan'
             mt='md'
             autosize
             minRows={4}

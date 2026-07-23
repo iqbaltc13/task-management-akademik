@@ -79,7 +79,7 @@ class TaskController extends Controller
         
         (new CreateTask)->create($project, $request->validated());
 
-        return redirect()->route('projects.tasks', $project)->success('Permintaan ditambahkan', 'Permintaan baru berhasil ditambahkan.');
+        return redirect()->route('projects.tasks', $project)->success('Pelayanan ditambahkan', 'Pelayanan baru berhasil ditambahkan.');
     }
 
     public function update(UpdateTaskRequest $request, Project $project, Task $task): JsonResponse
