@@ -137,7 +137,7 @@ export function CreateTaskDrawer() {
       >
         <div className={classes.content}>
           <TextInput
-            label='Nama'
+            label='Nama Pengaju'
             placeholder='Nama Pengaju'
             required
             data-autofocus
@@ -146,8 +146,8 @@ export function CreateTaskDrawer() {
             error={form.errors.name}
           />
           <Select
-            label='Pelayanan dari'
-            placeholder='Pilih pelayanan dari'
+            label='Jabatan Pengaju'
+            placeholder='Pilih jabatan pengaju'
             required
             searchable
             mt='xl'

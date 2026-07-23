@@ -191,7 +191,7 @@ export function EditTaskDrawer() {
           <form className={classes.inner}>
             <div className={classes.content}>
               <TextInput
-                label='Nama'
+                label='Nama Pengaju'
                 placeholder='Nama Pengaju'
                 value={data.name}
                 onChange={e => updateValue('name', e.target.value)}
@@ -201,8 +201,8 @@ export function EditTaskDrawer() {
               />
 
               <Select
-                label='Pelayanan dari'
-                placeholder='Pilih pelayanan dari'
+                label='Jabatan Pengaju'
+                placeholder='Pilih jabatan pengaju'
                 mt="md"
                 searchable
                 clearable
