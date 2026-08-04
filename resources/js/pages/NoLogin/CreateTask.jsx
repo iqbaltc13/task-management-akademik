@@ -10,7 +10,7 @@ import {
 } from '@tabler/icons-react';
 import { Title, Tooltip, UnstyledButton } from '@mantine/core';
 
-import classes from './DoubleNavbar.module.css';
+import classes from "./css/DoubleNavbar.module.css";
 
 const mainLinksMockdata = [
   { icon: IconHome2, label: 'Home' },
