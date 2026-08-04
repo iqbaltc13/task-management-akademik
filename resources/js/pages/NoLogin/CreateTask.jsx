@@ -20,7 +20,7 @@ import { Anchor, Box, Burger,  Button,
 
 import { useDisclosure } from '@mantine/hooks';
 
-import classes from "./css/DoubleHeader.module.css";
+import classes from "./css/HeaderMegaMenu.module.css";
 
 const mainLinksMockdata = [
   { icon: IconHome2, label: 'Home' },
