@@ -19,7 +19,7 @@ import { Anchor, Box, Burger,  Button,
   ScrollArea, SimpleGrid, ScrollAreaTitle,  Text, Tooltip, UnstyledButton, useMantineTheme } from '@mantine/core';
 
 import { useDisclosure } from '@mantine/hooks';
-import classes from "./css/DoubleNavbar.module.css";
+
 import classes from "./css/DoubleHeader.module.css";
 
 const mainLinksMockdata = [
