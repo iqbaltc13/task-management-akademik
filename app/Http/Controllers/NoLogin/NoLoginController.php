@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\NoLogin;
 
+use App\Http\Controllers\Controller;
 use App\Actions\Task\CreateTask;
 use App\Actions\Task\UpdateTask;
 use App\Events\Task\TaskDeleted;
