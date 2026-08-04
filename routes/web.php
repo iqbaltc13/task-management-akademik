@@ -21,9 +21,13 @@ use App\Http\Controllers\Task\GroupController;
 use App\Http\Controllers\Task\TimeLogController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NoLogin\NoLoginController; 
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'dashboard');
+Route::get('no-login/create-permintaan', [NoLoginController::class, 'createPermintaan'])->name('no-login.create-permintaan');
+
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // Dashboard

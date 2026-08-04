@@ -30,11 +30,11 @@ class NoLoginController extends Controller
     public function store(StoreTaskRequest $request, Project $project): RedirectResponse
     {
        
-        $this->authorize('create', [Task::class, $project]);
         
-        (new CreateTask)->create($project, $request->validated());
-
-        return redirect()->route('projects.tasks', $project)->success('Pelayanan ditambahkan', 'Pelayanan baru berhasil ditambahkan.');
     }
-    //
+
+    public function createPermintaan(Request $request)
+    {
+       return Inertia::render('NoLogin/CreateTask', []);  
+    }
 }
