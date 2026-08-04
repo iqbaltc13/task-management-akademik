@@ -9,7 +9,7 @@ import {
   IconUser,
 } from '@tabler/icons-react';
 import { Title, Tooltip, UnstyledButton } from '@mantine/core';
-import { MantineLogo } from '@mantinex/mantine-logo';
+
 import classes from './DoubleNavbar.module.css';
 
 const mainLinksMockdata = [
@@ -79,7 +79,7 @@ export function DoubleNavbar() {
       <div className={classes.wrapper}>
         <div className={classes.aside}>
           <div className={classes.logo}>
-            <MantineLogo type="mark" size={30} />
+            
           </div>
           {mainLinks}
         </div>
