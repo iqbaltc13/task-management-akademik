@@ -86,4 +86,4 @@ const CreateTask = ({}) => {
 }
 
 CreateTask.layout = (page) => <GuestLayoutWithHeaderMenu title="Create Task" children="" >{page}</GuestLayoutWithHeaderMenu>;
-export default Login;
+export default CreateTask;
