@@ -81,8 +81,8 @@ const mockdata = [
   },
 ]
 
-const CreateTask() = ({}) => {
- return ()
+const CreateTaskn= ({}) => {
+ return ();
 }
 
 CreateTask.layout = (page) => <GuestLayoutWithHeaderMenu title="Create Task" children="" >{page}</GuestLayoutWithHeaderMenu>;
