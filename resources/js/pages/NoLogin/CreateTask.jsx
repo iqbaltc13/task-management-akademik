@@ -79,7 +79,7 @@ const mockdata = [
     title: 'Notifications',
     description: 'Combusken battles with the intensely hot flames it spews',
   },
-];
+]
 
 const CreateTask() = ({}) => {
  return ()
