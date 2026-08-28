@@ -1,7 +1,6 @@
 import { Link } from '@inertiajs/react';
 import FlashNotification from "@/components/FlashNotification";
 import { Head } from "@inertiajs/react";
-import { Container } from "@mantine/core";
 import {
   IconBook,
   IconChartPie3,
@@ -97,25 +96,5 @@ export default function GuestLayoutWithHeaderMenu({ title, children }) {
   ));
     
     
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const theme = useMantineTheme();
-
-  const links = mockdata.map((item) => (
-    <UnstyledButton className={classes.subLink} key={item.title}>
-      <Group wrap="nowrap" align="flex-start">
-        <ThemeIcon size={34} variant="default" radius="md">
-          <item.icon size={22} color={theme.colors.blue[6]} />
-        </ThemeIcon>
-        <div>
-          <Text size="sm" fw={500}>
-            {item.title}
-          </Text>
-          <Text size="xs" c="dimmed">
-            {item.description}
-          </Text>
-        </div>
-      </Group>
-    </UnstyledButton>
-  ));
+  
 }
