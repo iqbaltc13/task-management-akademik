@@ -81,9 +81,15 @@ const mockdata = [
   },
 ];
 
-const CreateTask = ({}) => {
- return ();
+export default function CreateTask (){
+return (
+    <>
+      <GuestLayoutWithHeaderMenu   />
+      <Container size="md" py="xl">
+        <Title order={1}>Selamat datang</Title>
+        {/* konten halaman guest kamu di sini */}
+      </Container>
+    </>
+  );
 }
 
-CreateTask.layout = (page) => <GuestLayoutWithHeaderMenu title="Create Task" children="" >{page}</GuestLayoutWithHeaderMenu>;
-export default CreateTask;

@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import FlashNotification from "@/components/FlashNotification";
 import { Head } from "@inertiajs/react";
 import { Container } from "@mantine/core";
@@ -12,10 +13,12 @@ import {
 } from '@tabler/icons-react';
 import {
   Anchor,
+  Autocomplete, 
   Box,
   Burger,
   Button,
   Center,
+  Container,
   Collapse,
   Divider,
   Drawer,
@@ -23,13 +26,17 @@ import {
   HoverCard,
   ScrollArea,
   SimpleGrid,
+  ScrollAreaTitle,
+  Stack,
   Text,
   ThemeIcon,
   UnstyledButton,
   useMantineTheme,
+  rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
+import { IconSearch } from '@tabler/icons-react';
 import classes from './HeaderMegaMenu.module.css';
 
 const mockdata = [
