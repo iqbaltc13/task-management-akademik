@@ -36,7 +36,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { IconSearch } from '@tabler/icons-react';
-import classes from './HeaderMegaMenu.module.css';
+import classes from './css/HeaderMegaMenu.module.css';
 
 const mockdata = [
         {
