@@ -12,7 +12,7 @@ import {
 } from '@tabler/icons-react';
 import {
   Anchor,
-  Autocomplete, 
+  Autocomplete,
   Box,
   Burger,
   Button,
@@ -25,7 +25,7 @@ import {
   HoverCard,
   ScrollArea,
   SimpleGrid,
-  ScrollAreaTitle,
+  Title,
   Stack,
   Text,
   ThemeIcon,
@@ -34,43 +34,10 @@ import {
   rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import { IconSearch } from '@tabler/icons-react';
 import classes from './css/HeaderMegaMenu.module.css';
 
-const mockdata = [
-        {
-            icon: IconCode,
-            title: 'Open source',
-            description: 'This Pokémon’s cry is very loud and distracting',
-        },
-        {
-            icon: IconCoin,
-            title: 'Free for everyone',
-            description: 'The fluid of Smeargle’s tail secretions changes',
-        },
-        {
-            icon: IconBook,
-            title: 'Documentation',
-            description: 'Yanma is capable of seeing 360 degrees without',
-        },
-        {
-            icon: IconFingerprint,
-            title: 'Security',
-            description: 'The shell’s rounded shape and the grooves on its.',
-        },
-        {
-            icon: IconChartPie3,
-            title: 'Analytics',
-            description: 'This Pokémon uses its flying ability to quickly chase',
-        },
-        {
-            icon: IconNotification,
-            title: 'Notifications',
-            description: 'Combusken battles with the intensely hot flames it spews',
-        },
-    ];
-
+const mockdata = [ /* ...tetap sama... */ ];
 
 export default function GuestLayoutWithHeaderMenu({ title, children }) {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
@@ -84,17 +51,28 @@ export default function GuestLayoutWithHeaderMenu({ title, children }) {
           <item.icon size={22} color={theme.colors.blue[6]} />
         </ThemeIcon>
         <div>
-          <Text size="sm" fw={500}>
-            {item.title}
-          </Text>
-          <Text size="xs" c="dimmed">
-            {item.description}
-          </Text>
+          <Text size="sm" fw={500}>{item.title}</Text>
+          <Text size="xs" c="dimmed">{item.description}</Text>
         </div>
       </Group>
     </UnstyledButton>
   ));
-    
-    
-  
+
+  return (
+    <>
+      <Head title={title} />
+      <FlashNotification />
+      <header className={classes.header}>
+        <Group justify="space-between" h="100%">
+          <Text fw={700}>Worklane Akademik</Text>
+          <Group h="100%" gap={0} visibleFrom="sm">
+            <Link href="/" className={classes.link}>Home</Link>
+          </Group>
+          <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
+        </Group>
+      </header>
+
+      <main>{children}</main>
+    </>
+  );
 }

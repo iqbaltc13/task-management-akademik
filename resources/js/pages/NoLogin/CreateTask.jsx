@@ -17,7 +17,7 @@ import {
 } from '@tabler/icons-react';
 import { Anchor, Box, Burger,  Button,
   Center,Container, Divider, Drawer, Group, HoverCard,
-  ScrollArea, SimpleGrid, ScrollAreaTitle,  Text, Tooltip, UnstyledButton, useMantineTheme } from '@mantine/core';
+  ScrollArea, SimpleGrid, Title,  Text, Tooltip, UnstyledButton, useMantineTheme } from '@mantine/core';
 
 import { useDisclosure } from '@mantine/hooks';
 
