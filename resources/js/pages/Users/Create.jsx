@@ -95,8 +95,8 @@ const UserCreate = () => {
           />
 
           <TextInput
-            label="Jabatan"
-            placeholder="Jabatan"
+            label="Bagian"
+            placeholder="Bagian"
             required
             mt="md"
             value={form.data.job_title}
