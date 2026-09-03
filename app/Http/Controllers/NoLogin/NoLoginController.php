@@ -38,4 +38,13 @@ class NoLoginController extends Controller
     {
        return Inertia::render('NoLogin/CreateTask', []);  
     }
+    public function lacakPelayanan(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            // The request is a POST request
+        }
+        if ($request->isMethod('get')) {
+            // The request is a GET request
+            return Inertia::render('NoLogin/LacakPelayanan', []);  
+        }
 }

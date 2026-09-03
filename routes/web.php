@@ -25,8 +25,8 @@ use App\Http\Controllers\NoLogin\NoLoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'dashboard');
-Route::get('no-login/create-permintaan', [NoLoginController::class, 'createPermintaan'])->name('no-login.create-permintaan');
-
+Route::get('no-login/create-permintaan', [NoLoginController::class, 'createPermintaan'])->name('mintaan');
+Route::match(['get', 'post'], 'no-login/lacak-pelayanan', [NoLoginController::class, 'lacakPelayanan'])->name('lacak-pelayanan');
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
