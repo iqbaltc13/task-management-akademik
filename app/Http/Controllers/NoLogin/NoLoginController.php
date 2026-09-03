@@ -47,4 +47,6 @@ class NoLoginController extends Controller
             // The request is a GET request
             return Inertia::render('NoLogin/LacakPelayanan', []);  
         }
+    }
+     
 }
