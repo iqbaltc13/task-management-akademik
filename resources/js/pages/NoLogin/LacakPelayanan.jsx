@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextInput, Button, Stepper, Group, Paper, Title } from '@mantine/core';
-import GuestLayoutWithHeaderMenu from '@/Layouts/GuestLayoutWithHeaderMenu';
+import GuestLayoutWithHeaderMenu from '@/layouts/GuestLayoutWithHeaderMenu';
 
 // urutan status harus sama dengan urutan Stepper.Step di bawah
 const STATUS_STEPS = ['diterima', 'diproses', 'selesai'];
