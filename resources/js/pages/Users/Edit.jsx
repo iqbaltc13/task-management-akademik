@@ -31,6 +31,7 @@ const UserEdit = () => {
     _method: "put",
     avatar: null,
     job_title: item.job_title,
+    job_sub_title: item.job_sub_title || "",
     name: item.name,
     phone: item.phone || "",
     rate: item.rate / 100,
@@ -108,6 +109,17 @@ const UserEdit = () => {
             onChange={(e) => updateValue("job_title", e.target.value)}
             error={form.errors.job_title}
           />
+
+          <TextInput
+            label="Sub Bagian "
+            placeholder="Sub Bagian "
+            mt="md"
+            value={form.data.job_sub_title}
+            onChange={(e) => updateValue("job_sub_title", e.target.value)}
+            error={form.errors.job_sub_title}
+          />
+          
+          <Divider mt="xl" mb="md" label="Login credentials" labelPosition="center" />
 
           <MultiSelect
             label="Peran"

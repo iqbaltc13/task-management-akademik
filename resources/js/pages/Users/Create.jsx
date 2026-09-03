@@ -28,6 +28,7 @@ const UserCreate = () => {
   const [form, submit, updateValue] = useForm("post", route("users.store"), {
     avatar: null,
     job_title: "",
+    job_sub_title: "",
     name: "",
     phone: "",
     rate: 0,
@@ -102,6 +103,15 @@ const UserCreate = () => {
             value={form.data.job_title}
             onChange={(e) => updateValue("job_title", e.target.value)}
             error={form.errors.job_title}
+          />
+
+          <TextInput
+            label="Sub Bagian"
+            placeholder="Sub Bagian"
+            mt="md"
+            value={form.data.job_sub_title}
+            onChange={(e) => updateValue("job_sub_title", e.target.value)}
+            error={form.errors.job_sub_title}
           />
 
           <MultiSelect

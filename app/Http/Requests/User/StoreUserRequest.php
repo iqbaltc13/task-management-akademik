@@ -25,6 +25,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'job_title' => 'required|string',
+            'job_sub_title' => 'nullable|string|nullable',
             'name' => 'required|string',
             'phone' => 'string|nullable',
             'rate' => 'nullable|numeric|min:0',
