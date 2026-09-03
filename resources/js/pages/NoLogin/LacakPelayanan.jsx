@@ -32,7 +32,7 @@ export default function LacakLayanan() {
 
   return (
     <GuestLayoutWithHeaderMenu title="Lacak Pelayanan">
-      <Paper maw={600} mx="auto" mt={50} p="lg" withBorder radius="md">
+      <Paper maw={900} mx="auto" mt={50} p="lg" withBorder radius="md">
         <Title order={3} mb="md">Lacak Status Pelayanan</Title>
 
         <TextInput
