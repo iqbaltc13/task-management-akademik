@@ -25,6 +25,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
 use Illuminate\Support\Carbon;
+use App\Models\TaskGroupUpdateLog;
 
 class Task extends Model implements AuditableContract, Sortable
 {
@@ -177,6 +178,11 @@ class Task extends Model implements AuditableContract, Sortable
     public function activities(): MorphMany
     {
         return $this->morphMany(Activity::class, 'activity_capable');
+    }
+
+    public function groupUpdateLogs(): HasMany
+    {
+        return $this->hasMany(TaskGroupUpdateLog::class);
     }
 
     public function isFixedPrice(): bool
