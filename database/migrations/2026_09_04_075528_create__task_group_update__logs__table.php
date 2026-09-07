@@ -19,9 +19,9 @@ return new class extends Migration
         $this->schema->create($this->table_name, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('task_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('old_group_id')->nullable()->constrained('task_groups')->nullOnDelete();
-            $table->foreignId('new_group_id')->nullable()->constrained('task_groups')->nullOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->string('old_group_id')->nullable()->constrained('task_groups')->nullOnDelete();
+            $table->string('new_group_id')->nullable()->constrained('task_groups')->nullOnDelete();
+            $table->string('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->dateTime('archived_at')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
