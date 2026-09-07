@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Task;
+use App\Models\TaskGroupUpdateLog;
 
 class TaskObserver
 {
@@ -21,6 +22,15 @@ class TaskObserver
         if ($task->assigned_to_user_id !== null) {
             $task->assigned_at = now();
             $task->saveQuietly();
+        }
+
+        if ($task->group_id !== null) {
+            TaskGroupUpdateLog::create([
+                'task_id'      => $task->id,
+                'old_group_id' => null,
+                'new_group_id' => $task->group_id,
+                'user_id'      => auth()->id(),
+            ]);
         }
     }
 
@@ -82,6 +92,30 @@ class TaskObserver
                 'user_id' => auth()->id(),
                 'title' => $task->completed_at ? 'Permintaan telah selesai' : 'Status permintaan diubah menjadi belum selesai',
                 'subtitle' => "\"{$task->name}\" diubah menjadi ".($task->completed_at ? 'telah selesai' : 'belum selesai').' oleh '.auth()->user()->name,
+            ]);
+        }
+        if ($task->isDirty('group_id')) {
+            $oldGroupId = $task->getOriginal('group_id');
+            $oldGroupName = $oldGroupId
+                ? \App\Models\TaskGroup::find($oldGroupId)?->name
+                : null;
+
+            // Catat ke timeline aktivitas umum
+            $task->activities()->create([
+                'project_id' => $task->project_id,
+                'user_id' => auth()->id(),
+                'title' => 'Grup permintaan diperbarui',
+                'subtitle' => $oldGroupName
+                    ? "Dari \"{$oldGroupName}\" menjadi \"{$task->group->name}\" oleh ".auth()->user()->name
+                    : "Diatur ke \"{$task->group->name}\" oleh ".auth()->user()->name,
+            ]);
+
+            // Catat juga ke tabel khusus histori grup
+            TaskGroupUpdateLog::create([
+                'task_id'      => $task->id,
+                'old_group_id' => $oldGroupId,
+                'new_group_id' => $task->group_id,
+                'user_id'      => auth()->id(),
             ]);
         }
     }
