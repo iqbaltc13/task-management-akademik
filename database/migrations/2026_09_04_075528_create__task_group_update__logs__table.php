@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('task_id',255)->constrained()->cascadeOnDelete();
             $table->string('old_group_id',255)->nullable()->constrained('task_groups')->nullOnDelete();
             $table->string('new_group_id',255)->nullable()->constrained('task_groups')->nullOnDelete();
-            $table->string('user_id',255)->nullable()->constrained('users')->nullOnDelete();ß
+            $table->string('user_id',255)->nullable()->constrained('users')->nullOnDelete();
             $table->dateTime('archived_at')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
