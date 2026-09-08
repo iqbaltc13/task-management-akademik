@@ -96,7 +96,7 @@ const useTasksStore = create((set, get) => ({
     const sourceGroupId = +source.droppableId.split("-")[1];
     const destinationGroupId = +destination.droppableId.split("-")[1];
     console.log(get().tasks,sourceGroupId,destinationGroupId,source.index,destination.index);
-    const result = move(get().tasks, sourceGroupId, destinationGroupId, source.index, destination.index);
+    //const result = move(get().tasks, sourceGroupId, destinationGroupId, source.index, destination.index);
 
     const data = {
       ids: result[destinationGroupId].map((i) => i.id),
@@ -105,6 +105,7 @@ const useTasksStore = create((set, get) => ({
       from_index: source.index,
       to_index: destination.index,
     };
+    console.log(data);
 
     axios
       .post(route("projects.tasks.move", [route().params.project]), data, { progress: false })
