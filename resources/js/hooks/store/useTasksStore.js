@@ -95,7 +95,7 @@ const useTasksStore = create((set, get) => ({
   moveTask: (source, destination) => {
     const sourceGroupId = +source.droppableId.split("-")[1];
     const destinationGroupId = +destination.droppableId.split("-")[1];
-
+    console.log(get().tasks,sourceGroupId,destinationGroupId,source.index,destination.index);
     const result = move(get().tasks, sourceGroupId, destinationGroupId, source.index, destination.index);
 
     const data = {
