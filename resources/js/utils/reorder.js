@@ -9,6 +9,7 @@ export const reorder = (list, startIndex, endIndex) => {
 };
 
 export const move = (tasks, sourceGroupId, destinationGroupId, sourceIndex, destinationIndex) => {
+  console.log(tasks,sourceGroupId,destinationGroupId,sourceIndex,destinationIndex);
   const sourceClone = cloneDeep(tasks[sourceGroupId]);
   const destClone = Array.from(tasks[destinationGroupId] || []);
   const [removed] = sourceClone.splice(sourceIndex, 1);
