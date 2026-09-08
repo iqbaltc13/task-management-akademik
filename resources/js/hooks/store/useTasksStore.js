@@ -2,7 +2,7 @@ import createTaskAttachmentsSlice from '@/hooks/store/tasks/TaskAttachmentsSlice
 import createTaskCommentsSlice from '@/hooks/store/tasks/TaskCommentsSlice';
 import createTaskTimeLogsSlice from '@/hooks/store/tasks/TaskTimeLogsSlice';
 import createTaskWebSocketUpdatesSlice from '@/hooks/store/tasks/TaskWebSocketUpdatesSlice';
-import { move, reorder } from '@/utils/reorder';
+import { move, reorder, extractGroupId } from '@/utils/reorder';
 import axios from 'axios';
 import { produce } from "immer";
 import { create } from 'zustand';
@@ -75,8 +75,8 @@ const useTasksStore = create((set, get) => ({
     }));
   },
   reorderTask: (source, destination) => {
-    const sourceGroupId = +source.droppableId.split("-")[1];
-
+    //const sourceGroupId = +source.droppableId.split("-")[1];
+    const sourceGroupId = extractGroupId(source.droppableId);
     const result = reorder(get().tasks[sourceGroupId], source.index, destination.index);
 
     const data = {
@@ -93,9 +93,11 @@ const useTasksStore = create((set, get) => ({
     return set(produce(state => { state.tasks[sourceGroupId] = result }));
   },
   moveTask: (source, destination) => {
-    const sourceGroupId = +source.droppableId.split("-")[1];
-    const destinationGroupId = +destination.droppableId.split("-")[1];
-    console.log(get().tasks,sourceGroupId,destinationGroupId,source.index,destination.index);
+    //const sourceGroupId = +source.droppableId.split("-")[1];
+    //const destinationGroupId = +destination.droppableId.split("-")[1];
+    const sourceGroupId = extractGroupId(source.droppableId);
+    const destinationGroupId = extractGroupId(destination.droppableId);
+    
     const result = move(get().tasks, sourceGroupId, destinationGroupId, source.index, destination.index);
 
     const data = {

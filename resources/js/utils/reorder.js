@@ -8,6 +8,11 @@ export const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
+export const extractGroupId = (droppableId) => {
+  const match = droppableId.match(/^group-(.+)-tasks$/);
+  return match ? match[1] : null;
+};
+
 export const move = (tasks, sourceGroupId, destinationGroupId, sourceIndex, destinationIndex) => {
   console.log(tasks,sourceGroupId,destinationGroupId,sourceIndex,destinationIndex);
   const sourceClone = cloneDeep(tasks[sourceGroupId]);
