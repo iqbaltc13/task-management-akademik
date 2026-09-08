@@ -16,6 +16,7 @@ use App\Models\OwnerCompany;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskGroup;
+use App\Models\TaskGroupUpdateLog;   // ← tambahkan ini
 use App\Models\JobTitle;
 use App\Services\PermissionService;
 use Illuminate\Http\JsonResponse;
@@ -110,10 +111,30 @@ class TaskController extends Controller
     public function move(Request $request, Project $project): JsonResponse
     {
         $this->authorize('reorder', [Task::class, $project]);
-
+        $tasks = Task::whereIn('id', $request->ids)->get();
         Task::setNewOrder($request->ids);
         Task::whereIn('id', $request->ids)->update(['group_id' => $request->to_group_id]);
 
+        $oldGroup = TaskGroup::find($request->from_group_id);
+        $newGroup = TaskGroup::find($request->to_group_id);
+
+        foreach ($tasks as $task) {
+            $task->activities()->create([
+                'project_id' => $task->project_id,
+                'user_id' => auth()->id(),
+                'title' => 'Grup permintaan diperbarui',
+                'subtitle' => $oldGroup
+                    ? "Dari \"{$oldGroup->name}\" menjadi \"{$newGroup->name}\" oleh ".auth()->user()->name
+                    : "Diatur ke \"{$newGroup->name}\" oleh ".auth()->user()->name,
+            ]);
+
+            TaskGroupUpdateLog::create([
+                'task_id'      => $task->id,
+                'old_group_id' => $request->from_group_id,
+                'new_group_id' => $request->to_group_id,
+                'user_id'      => auth()->id(),
+            ]);
+        }
         TaskGroupChanged::dispatch(
             $project->id,
             $request->from_group_id,
