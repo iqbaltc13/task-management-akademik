@@ -51,21 +51,21 @@ export default function ProjectCardActions({ item }) {
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            {can("edit project user access") && (
-              // <Menu.Item
-              //   leftSection={
-              //     <IconUsers
-              //       style={{ width: rem(16), height: rem(16) }}
-              //       stroke={1.5}
-              //       data-ignore-link
-              //     />
-              //   }
-              //   onClick={openUserAccess}
-              //   data-ignore-link
-              // >
-              //   Pengguna ditugaskan
-              // </Menu.Item>
-            )}
+            {/* {can("edit project user access") && (
+              <Menu.Item
+                leftSection={
+                  <IconUsers
+                    style={{ width: rem(16), height: rem(16) }}
+                    stroke={1.5}
+                    data-ignore-link
+                  />
+                }
+                onClick={openUserAccess}
+                data-ignore-link
+              >
+                Pengguna ditugaskan
+              </Menu.Item>
+            )} */}
             {can("edit project") && (
               <Menu.Item
                 leftSection={
