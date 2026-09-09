@@ -76,13 +76,9 @@ class ProjectController extends Controller
             // 2. Perform your database operations
             $project = Project::create(Arr::except($data, ['users']));
             $data['users'] = User::withoutRole(['client'])
-            ->get(['id']);
-            foreach ($data['users'] as $user) {
-                $user->projectUserAccess()->create([
-                    'project_id' => $project->id,
-                ]);
-            }
-            //$project->users()->attach($data['users']);
+            ->pluck('id')->toArray();
+           
+            $project->users()->attach($data['users']);
 
             $project->taskGroups()->createMany([
                 ['name' => 'Diajukan'],
@@ -130,16 +126,31 @@ class ProjectController extends Controller
 
         $data['rate'] *= 100;
 
-        $project->update(Arr::except($data, ['users']));
+        DB::beginTransaction();
+        try {
+            $project->update(Arr::except($data, ['users']));
 
-        //$project->users()->sync($data['users']);
+            //$project->users()->sync($data['users']);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Transaction failed: ' . $e->getMessage());
+            return redirect()->route('projects.index')->error('Grup Permintaan Gagal Diperbarui', 'Grup permintaan gagal diperbarui.');
+        }
 
         return redirect()->route('projects.index')->success('Grup Permintaan Diperbarui', 'Grup permintaan berhasil diperbarui.');
     }
 
     public function destroy(Project $project)
     {
-        $project->archive();
+        DB::beginTransaction();
+        try {
+            $project->archive();
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Transaction failed: ' . $e->getMessage());
+            return redirect()->back()->error('Grup Permintaan Gagal Dihapus', 'Grup permintaan gagal dihapus.');
+        }
 
         return redirect()->back()->success('Grup Permintaan Dihapus', 'Grup permintaan berhasil dihapus.');
     }
@@ -148,32 +159,61 @@ class ProjectController extends Controller
 
     public function restore(string $projectId)
     {
-        $project = Project::withArchived()->findOrFail($projectId);
+        DB::beginTransaction();
+        try {
+            $project = Project::withArchived()->findOrFail($projectId);
 
-        $this->authorize('restore', $project);
+            $this->authorize('restore', $project);
 
-        $project->unArchive();
+            $project->unArchive();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Transaction failed: ' . $e->getMessage());
+            return redirect()->back()->error('Grup Permintaan Gagal Direstorasi', 'Grup permintaan gagal direstorasi.');
+        }
 
         return redirect()->back()->success('Grup Permintaan Direstorasi', 'Grup permintaan berhasil direstorasi.');
     }
 
     public function favoriteToggle(Project $project)
     {
-        request()->user()->toggleFavorite($project);
+        DB::beginTransaction();
+        try {
+            request()->user()->toggleFavorite($project);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Transaction failed: ' . $e->getMessage());
+            return redirect()->back()->error('Grup Permintaan Gagal Ditambahkan', 'Grup permintaan gagal ditambahkan.');
+        }
 
         return redirect()->back();
     }
 
     public function userAccess(Request $request, Project $project)
     {
-        $this->authorize('editUserAccess', $project);
+        
+        DB::beginTransaction();
 
-        $userIds = array_merge(
-            $request->get('users', []),
-            $request->get('clients', [])
-        );
+        try {
+              $userIds = array_merge(
+                    $request->get('users', []),
+                    $request->get('clients', [])
+                );
 
-        (new ProjectService($project))->updateUserAccess($userIds);
+            (new ProjectService($project))->updateUserAccess($userIds);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Transaction failed: ' . $e->getMessage());
+            return redirect()->back()->error('Grup Permintaan Gagal Ditambahkan Akses', 'Grup permintaan gagal ditambahkan akses.');
+        }
+    
+      
 
         return redirect()->back();
     }
