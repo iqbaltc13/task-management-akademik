@@ -67,19 +67,19 @@ class ProjectController extends Controller
         $data['rate'] *= 100;
 
         $project = Project::create(Arr::except($data, ['users']));
-
+        $data['users'] = User::userDropdownValues();
         $project->users()->attach($data['users']);
 
         $project->taskGroups()->createMany([
-            ['name' => 'Backlog'],
-            ['name' => 'Todo'],
-            ['name' => 'In progress'],
-            ['name' => 'QA'],
-            ['name' => 'Done'],
-            ['name' => 'Deployed'],
+            ['name' => 'Diajukan'],
+            ['name' => 'Diproses'],
+            ['name' => 'Tidak Dilanjutakan'],
+            ['name' => 'Ditolak'],
+            ['name' => 'Selesai'],
+            
         ]);
 
-        return redirect()->route('projects.index')->success('Project created', 'A new project was successfully created.');
+        return redirect()->route('projects.index')->success('Grup Permintaan Ditambahkan', 'Grup permintaan berhasil ditambahkan.');
     }
 
     public function edit(Project $project)
@@ -102,17 +102,19 @@ class ProjectController extends Controller
 
         $project->update(Arr::except($data, ['users']));
 
-        $project->users()->sync($data['users']);
+        //$project->users()->sync($data['users']);
 
-        return redirect()->route('projects.index')->success('Project updated', 'The project was successfully updated.');
+        return redirect()->route('projects.index')->success('Grup Permintaan Diperbarui', 'Grup permintaan berhasil diperbarui.');
     }
 
     public function destroy(Project $project)
     {
         $project->archive();
 
-        return redirect()->back()->success('Project archived', 'The project was successfully archived.');
+        return redirect()->back()->success('Grup Permintaan Dihapus', 'Grup permintaan berhasil dihapus.');
     }
+
+
 
     public function restore(string $projectId)
     {
@@ -122,7 +124,7 @@ class ProjectController extends Controller
 
         $project->unArchive();
 
-        return redirect()->back()->success('Project restored', 'The restoring of the project was completed successfully.');
+        return redirect()->back()->success('Grup Permintaan Direstorasi', 'Grup permintaan berhasil direstorasi.');
     }
 
     public function favoriteToggle(Project $project)

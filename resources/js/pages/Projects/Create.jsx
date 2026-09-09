@@ -147,7 +147,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             />
           </DatesProvider>
 
-          <MultiSelect
+          {/* <MultiSelect
             label='Berikan akses kepada pengguna'
             placeholder='Pilih Pengguna'
             mt='md'
@@ -156,7 +156,7 @@ const ProjectCreate = ({ dropdowns: { companies, users, currencies } }) => {
             onChange={values => updateValue('users', values)}
             data={users}
             error={form.errors.users}
-          />
+          /> */}
 
           
 

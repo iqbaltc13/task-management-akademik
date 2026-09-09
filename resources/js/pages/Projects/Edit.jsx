@@ -148,7 +148,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             error={form.errors.client_company_id}
           /> */}
          
-          <MultiSelect
+          {/* <MultiSelect
             label='Berikan akses kepada pengguna'
             placeholder='Pilih Pengguna'
             mt='md'
@@ -157,7 +157,7 @@ const ProjectEdit = ({ dropdowns: { companies, users, currencies } }) => {
             onChange={values => updateValue('users', values)}
             data={users}
             error={form.errors.users}
-          />
+          /> */}
 
           {/* <Select
             label='Default pricing type'
