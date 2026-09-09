@@ -13,6 +13,10 @@ use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
+use DB;
+use Exception;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -66,20 +70,46 @@ class ProjectController extends Controller
 
         $data['rate'] *= 100;
 
-        $project = Project::create(Arr::except($data, ['users']));
-        $data['users'] = User::userDropdownValues();
-        $project->users()->attach($data['users']);
+        DB::beginTransaction();
 
-        $project->taskGroups()->createMany([
-            ['name' => 'Diajukan'],
-            ['name' => 'Diproses'],
-            ['name' => 'Tidak Dilanjutakan'],
-            ['name' => 'Ditolak'],
-            ['name' => 'Selesai'],
+        try {
+            // 2. Perform your database operations
+            $project = Project::create(Arr::except($data, ['users']));
+            $data['users'] = User::withoutRole(['client'])
+            ->get(['id']);
+            foreach ($data['users'] as $user) {
+                $user->projectUserAccess()->create([
+                    'project_id' => $project->id,
+                ]);
+            }
+            //$project->users()->attach($data['users']);
+
+            $project->taskGroups()->createMany([
+                ['name' => 'Diajukan'],
+                ['name' => 'Diproses'],
+                ['name' => 'Tidak Dilanjutakan'],
+                ['name' => 'Ditolak'],
+                ['name' => 'Selesai'],
+                
+            ]);
+
+            // 3. Commit changes if everything succeeds
+            DB::commit();
+
+            return redirect()->route('projects.index')->success('Grup Permintaan Ditambahkan', 'Grup permintaan berhasil ditambahkan.');
+
+        } catch (Exception $e) {
+            // 4. Roll back changes if any query fails
+            DB::rollBack();
+
+            // 5. Handle or log the error
+            Log::error('Transaction failed: ' . $e->getMessage());
             
-        ]);
+            return redirect()->route('projects.index')->error('Grup Permintaan Gagal Ditambahkan', 'Grup permintaan gagal ditambahkan.');
+        }
+       
 
-        return redirect()->route('projects.index')->success('Grup Permintaan Ditambahkan', 'Grup permintaan berhasil ditambahkan.');
+       
     }
 
     public function edit(Project $project)
