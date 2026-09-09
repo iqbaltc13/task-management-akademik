@@ -239,14 +239,14 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
-              {can('edit task') && (
+              {/* {can('edit task') && (
                 <Dropzone
                   mt='xl'
                   selected={task.attachments}
                   onChange={files => uploadAttachments(task, files)}
                   remove={index => deleteAttachment(task, index)}
                 />
-              )}
+              )} */}
 
               {can('view comments') && <Comments task={task} />}
             </div>
@@ -375,7 +375,8 @@ export function EditTaskDrawer() {
                   value: i.id.toString(),
                   label: i.name,
                 }))}
-                readOnly={!can('edit task')}
+                // readOnly={!can('edit task')}
+                readOnly={true}
               />
             </div>
           </form>

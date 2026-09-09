@@ -12,9 +12,9 @@ export default function ProjectCardActions({ item }) {
   const openArchiveModal = () =>
     openConfirmModal({
       type: "danger",
-      title: "Archive project",
-      content: `Are you sure you want to archive this project? This action will prevent users from accessing it.`,
-      confirmLabel: "Archive",
+      title: "Hapus Grup Pelayanan",
+      content: `Apakah anda yakin ingin menghapus grup pelayanan ini?`,
+      confirmLabel: "Hapus",
       confirmProps: { color: "red" },
       onConfirm: () => archiveForm.submit({ preserveScroll: true }),
     });
@@ -22,9 +22,9 @@ export default function ProjectCardActions({ item }) {
   const openRestoreModal = () =>
     openConfirmModal({
       type: "info",
-      title: "Restore project",
-      content: `Are you sure you want to restore this project?`,
-      confirmLabel: "Restore",
+      title: "Restorasi Grup Pelayanan",
+      content: `Apakah anda yakin ingin mengemborasi grup pelayanan ini?`,
+      confirmLabel: "Restorasi",
       confirmProps: { color: "blue" },
       onConfirm: () => restoreForm.submit({ preserveScroll: true }),
     });
