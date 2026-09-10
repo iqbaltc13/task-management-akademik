@@ -62,7 +62,7 @@ class TaskController extends Controller
         return Inertia::render('Projects/Tasks/Index', [
             'project' => $project,
             'usersWithAccessToProject' => PermissionService::usersWithAccessToProject($project),
-            'labels' => Label::get(['id', 'name', 'color']),
+            'labels' => Label::get(['id', 'name', 'color', 'code', 'identity_number']),
             'taskGroups' => $groups,
             'jobTitles' => $jobTitles,
             'groupedTasks' => $groupedTasks,
