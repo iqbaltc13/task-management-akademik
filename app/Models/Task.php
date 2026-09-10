@@ -61,6 +61,8 @@ class Task extends Model implements AuditableContract, Sortable
     protected $searchable = [
         'name',
         'number',
+        'code',
+        'identity_number',
     ];
 
     protected $casts = [
