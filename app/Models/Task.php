@@ -112,9 +112,9 @@ class Task extends Model implements AuditableContract, Sortable
             $query->ordered();
         });
 
-        static::creating(function ($model) {
-            $model->code = 'PMT-' . Carbon::now()->format('YmdHis');
-        });
+        // static::creating(function ($model) {
+        //     $model->code = 'PLYN-' . Carbon::now()->format('YmdHis');
+        // });
     }
 
     public function scopeWithDefault(Builder $query)
