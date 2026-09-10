@@ -44,7 +44,8 @@ class CreateTask
                 'completed_at' => null,
             ]);
 
-            $task->subscribedUsers()->attach($data['subscribed_users'] ?? []);
+            $data['subscribed_users'] = $project->users->pluck('id')->toArray();
+            $task->subscribedUsers()->attach($data['subscribed_users']);
 
             $task->labels()->attach($data['labels'] ?? []);
 

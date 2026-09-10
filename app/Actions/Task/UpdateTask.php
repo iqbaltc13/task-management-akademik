@@ -31,9 +31,9 @@ class UpdateTask
             }
         }
 
-        if ($updateField === 'subscribed_users') {
-            $task->subscribedUsers()->sync($data['subscribed_users']);
-        }
+        // if ($updateField === 'subscribed_users') {
+        //     $task->subscribedUsers()->sync($data['subscribed_users']);
+        // }
 
         if ($updateField === 'labels') {
             $task->labels()->sync($data['labels']);
