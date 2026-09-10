@@ -26,8 +26,20 @@ import LabelsDropdown from './LabelsDropdown';
 import classes from './css/TaskDrawer.module.css';
 import { PricingType } from '@/utils/enums';
 
+function generateServiceCode() {
+  const pad = n => n.toString().padStart(2, '0');
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = pad(now.getMonth() + 1);
+  const d = pad(now.getDate());
+  const H = pad(now.getHours());
+  const i = pad(now.getMinutes());
+  const s = pad(now.getSeconds());
+  return `PLYN-${y}${m}${d}${H}${i}${s}`;
+}
+
 export function CreateTaskDrawer() {
-  let currentUser = "Ella Alvianita Farikha";
+ 
   let initialComments = [];
   const { create, closeCreateTask } = useTaskDrawerStore();
   const {
@@ -41,10 +53,15 @@ export function CreateTaskDrawer() {
   } = usePage().props;
 
   const initial = {
+    code: generateServiceCode(),
     group_id: create.group_id ? create.group_id.toString() : '',
     assigned_to_user_id: '',
     name: '',
+    email: '',
     description: '',
+    final_feedback: '',
+    link_file_requirement: '',
+    link_file_result: '',
     pricing_type: project?.default_pricing_type || PricingType.HOURLY,
     estimation: 0,
     fixed_price: '',
@@ -137,6 +154,14 @@ export function CreateTaskDrawer() {
       >
         <div className={classes.content}>
           <TextInput
+            label='Kode Pelayanan'
+            readOnly
+            value={form.data.code}
+            onChange={() => {}}
+            error={form.errors.code}
+          />
+          
+          <TextInput
             label='Nama Pengaju'
             placeholder='Nama Pengaju'
             required
@@ -145,9 +170,20 @@ export function CreateTaskDrawer() {
             onChange={e => updateValue('name', e.target.value)}
             error={form.errors.name}
           />
+
+           <TextInput
+            mt='xl'
+            type='email'
+            label='Email Pengaju'
+            placeholder='Email Pengaju'
+            value={form.data.email}
+            onChange={e => updateValue('email', e.target.value)}
+            error={form.errors.email}
+          />
+          
           <Select
-            label='Jabatan Pengaju'
-            placeholder='Pilih jabatan pengaju'
+            label='Pengaju Sebagai'
+            placeholder='Pilih pengaju sebagi'
             required
             searchable
             mt='xl'
@@ -174,11 +210,47 @@ export function CreateTaskDrawer() {
             error={form.errors.identity_number}
           />
 
+          <TextInput
+            label='Link File Kebutuhan Pelayanan'
+            placeholder='Link File Kebutuhan Pelayanan'
+            mt='xl'
+            value={form.data.link_file_requirement}
+            onChange={e => updateValue('link_file_requirement', e.target.value)}
+            error={form.errors.link_file_requirement}
+          />
+          <Text
+            fz='sm'
+            fw={500}
+            mt='xl'
+          >
+            Deskripsi Pelayanan
+          </Text>
           <RichTextEditor
             mt='xl'
             placeholder='Deskripsi Pelayanan'
             height={260}
             onChange={content => updateValue('description', content)}
+          />
+
+          <Text
+            fz='sm'
+            fw={500}
+            mt='xl'
+          >
+            Feedback Akhir Pelayanan
+          </Text>
+          <RichTextEditor
+            placeholder='Feedback Akhir Pelayanan'
+            height={260}
+            onChange={content => updateValue('final_feedback', content)}
+          />
+          <TextInput
+            label='Link File Hasil Pelayanan'
+            placeholder='Link File Hasil Pelayanan'
+            mt='xl'
+            value={form.data.link_file_result}
+            onChange={e => updateValue('link_file_result', e.target.value)}
+            error={form.errors.link_file_result}
           />
           {/* <NewCommentForm
             mt='xl'
