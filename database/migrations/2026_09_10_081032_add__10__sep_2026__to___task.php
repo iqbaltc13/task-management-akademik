@@ -11,7 +11,7 @@ return new class extends Migration
      */
    public function __construct()
     {
-        $this->table_name =  'users';
+        $this->table_name =  'tasks';
         $this->schema = Schema::connection($this->getConnection());
     }
 
