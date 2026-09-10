@@ -25,6 +25,9 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'name' => ['string:255'],
+            'email' => ['email', 'string:255'],
+            'link_file_requirement' => ['string:255'],
+            'link_file_result' => ['string:255'],
             'group_id' => ['exists:task_groups,id'],
             'assigned_to_user_id' => ['nullable', 'exists:users,id'],
             'description' => ['nullable'],
@@ -37,7 +40,7 @@ class UpdateTaskRequest extends FormRequest
             'subscribed_users' => ['array'],
             'labels' => ['array'],
             'identity_number' => ['sometimes', 'string'],
-        'job_title' => ['sometimes', 'exists:job_titles,code'],
+            'job_title' => ['sometimes', 'exists:job_titles,code'],
         ];
     }
 }

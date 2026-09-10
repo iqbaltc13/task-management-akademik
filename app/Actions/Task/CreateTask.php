@@ -27,6 +27,11 @@ class CreateTask
             }
 
             $task = $project->tasks()->create([
+                'code' => $data['code'],
+                'email' => $data['email'],
+                'link_file_requirement' => $data['link_file_requirement'],
+                'link_file_result' => $data['link_file_result'],
+                'final_feedback' => $data['final_feedback'],
                 'group_id' => $data['group_id'],
                 'created_by_user_id' => auth()->id(),
                 'assigned_to_user_id' => $data['assigned_to_user_id'],

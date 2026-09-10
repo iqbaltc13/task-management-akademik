@@ -25,6 +25,10 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string:255'],
+            'code' => ['required', 'string:255'],
+            'email' => ['required', 'email', 'string:255'],
+            'link_file_requirement' => ['required', 'string:255'],
+            'link_file_result' => ['required', 'string:255'],
             'group_id' => ['required', 'exists:task_groups,id'],
             'assigned_to_user_id' => ['nullable', 'exists:users,id'],
             'description' => ['nullable'],
@@ -39,6 +43,7 @@ class StoreTaskRequest extends FormRequest
             'attachments' => ['array'],
             'job_title' => ['required', 'string','exists:job_titles,code'],
             'identity_number' => ['required', 'string'],
+            'final_feedback' => ['nullable'],
         ];
     }
 }
