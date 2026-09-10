@@ -30,7 +30,7 @@ export default function TaskCard({ task, index }) {
               c={isOverdue(task) && task.completed_at === null ? "red.7" : ""}
               onClick={() => openEditTask(task)}
             >
-              #{task.number + ": " + task.name}
+              #{task.number + ": " + task.name + " | " + task.code + " | " + task.identity_number}
             </Text>
 
             <Group wrap="nowrap" justify="space-between">
