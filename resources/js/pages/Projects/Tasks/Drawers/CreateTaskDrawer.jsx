@@ -46,7 +46,7 @@ export function CreateTaskDrawer() {
     name: '',
     description: '',
     pricing_type: project?.default_pricing_type || PricingType.HOURLY,
-    estimation: '',
+    estimation: 0,
     fixed_price: '',
     due_on: '',
     hidden_from_clients: false,
@@ -276,7 +276,7 @@ export function CreateTaskDrawer() {
             mt='md'
           />
 
-          <NumberInput
+          {/* <NumberInput
             label='Estimasi Waktu'
             mt='md'
             decimalScale={2}
@@ -287,7 +287,7 @@ export function CreateTaskDrawer() {
             step={0.5}
             suffix=' jam'
             onChange={value => updateValue('estimation', value)}
-          />
+          /> */}
 
           {/* <Select
             label='Pricing type'
@@ -322,14 +322,14 @@ export function CreateTaskDrawer() {
             onChange={event => updateValue('billable', event.currentTarget.checked)}
           /> */}
 
-          {!hasRoles(user, ['client']) && (
+          {/* {!hasRoles(user, ['client']) && (
             <Checkbox
               label='Disembunyikan dari klien'
               mt='md'
               checked={form.data.hidden_from_clients}
               onChange={event => updateValue('hidden_from_clients', event.currentTarget.checked)}
             />
-          )}
+          )} */}
         </div>
       </form>
     </Drawer>

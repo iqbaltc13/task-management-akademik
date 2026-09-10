@@ -298,7 +298,7 @@ export function EditTaskDrawer() {
                 mt='md'
               />
 
-              <NumberInput
+              {/* <NumberInput
                 label='Estimasi Waktu'
                 mt='md'
                 decimalScale={2}
@@ -310,7 +310,7 @@ export function EditTaskDrawer() {
                 suffix=' jam'
                 onChange={value => updateValue('estimation', value)}
                 readOnly={!can('edit task')}
-              />
+              /> */}
 
               {/* <Select
                 label='Pricing type'
@@ -353,7 +353,7 @@ export function EditTaskDrawer() {
                 disabled={!can('edit task')}
               /> */}
 
-              {!hasRoles(user, ['client']) && (
+              {/* {!hasRoles(user, ['client']) && (
                 <Checkbox
                   label='Disembunyikan dari klien'
                   mt='md'
@@ -363,7 +363,7 @@ export function EditTaskDrawer() {
                   }
                   disabled={!can('edit task')}
                 />
-              )}
+              )} */}
 
               <MultiSelect
                 label='Penerima Notifikasi'
