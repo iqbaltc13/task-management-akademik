@@ -20,7 +20,7 @@ const ProjectsIndex = () => {
       <Grid justify="space-between" align="center">
         <Grid.Col span="content">
           <Group>
-            <SearchInput placeholder="Cari Grup Pelayanan" search={search} />
+            <SearchInput placeholder="Cari Periode Pelayanan" search={search} />
             {isAdmin() && <ArchivedFilterButton />}
           </Group>
         </Grid.Col>
@@ -46,7 +46,7 @@ const ProjectsIndex = () => {
       ) : (
         <Center mih={400}>
           <EmptyWithIcon
-            title="Tida ada Grup Pelayanan yang ditemukan"
+            title="Tida ada Periode Pelayanan yang ditemukan"
             subtitle="atau Anda tidak memiliki akses ke proyek mana pun"
             icon={IconSearch}
           />

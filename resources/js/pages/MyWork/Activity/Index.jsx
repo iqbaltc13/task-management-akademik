@@ -59,7 +59,7 @@ const ActivityIndex = () => {
     if (title.includes("belum selesai")) {
       return <IconX size={18} />;
     }
-    if (title === "Pelayanan baru" || title === "Grup Pelayanan baru" || title.includes("Pengguna ditugaskan")) {
+    if (title === "Pelayanan baru" || title === "Periode Pelayanan baru" || title.includes("Pengguna ditugaskan")) {
       return <IconPlus size={18} />;
     }
   };

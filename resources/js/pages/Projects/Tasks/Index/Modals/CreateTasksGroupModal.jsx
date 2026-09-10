@@ -41,7 +41,7 @@ const CreateTasksGroupModal = () => {
   modals.open({
     title: (
       <Text size="xl" fw={700} mb={-10}>
-        Tambah Grup Pelayanan
+        Tambah Periode Pelayanan
       </Text>
     ),
     centered: true,

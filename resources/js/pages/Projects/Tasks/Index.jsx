@@ -105,7 +105,7 @@ const TasksIndex = () => {
                               onClick={CreateTasksGroupModal}
                               style={{ width: "250px" }}
                             >
-                              Tambah {tasksView === "list" ? "Grup Pelayanan" : "group"}
+                              Tambah {tasksView === "list" ? "Periode Pelayanan" : "group"}
                             </Button>
                           )}
                         </div>

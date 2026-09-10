@@ -231,8 +231,8 @@ export function CreateTaskDrawer() {
         </div>
         <div className={classes.sidebar}>
           <Select
-            label='Grup Pelayanan'
-            placeholder='Pilih grup pelayanan'
+            label='Periode Pelayanan'
+            placeholder='Pilih Periode Pelayanan'
             required
             value={form.data.group_id}
             onChange={value => updateValue('group_id', value)}

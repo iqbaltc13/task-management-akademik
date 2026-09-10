@@ -12,8 +12,8 @@ export default function ProjectCardActions({ item }) {
   const openArchiveModal = () =>
     openConfirmModal({
       type: "danger",
-      title: "Hapus Grup Pelayanan",
-      content: `Apakah anda yakin ingin menghapus grup pelayanan ini?`,
+      title: "Hapus Periode Pelayanan",
+      content: `Apakah anda yakin ingin menghapus Periode Pelayanan ini?`,
       confirmLabel: "Hapus",
       confirmProps: { color: "red" },
       onConfirm: () => archiveForm.submit({ preserveScroll: true }),
@@ -22,8 +22,8 @@ export default function ProjectCardActions({ item }) {
   const openRestoreModal = () =>
     openConfirmModal({
       type: "info",
-      title: "Restorasi Grup Pelayanan",
-      content: `Apakah anda yakin ingin mengemborasi grup pelayanan ini?`,
+      title: "Restorasi Periode Pelayanan",
+      content: `Apakah anda yakin ingin mengemborasi Periode Pelayanan ini?`,
       confirmLabel: "Restorasi",
       confirmProps: { color: "blue" },
       onConfirm: () => restoreForm.submit({ preserveScroll: true }),

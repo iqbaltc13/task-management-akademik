@@ -252,8 +252,8 @@ export function EditTaskDrawer() {
             </div>
             <div className={classes.sidebar}>
               <Select
-                label='Grup Pelayanan'
-                placeholder='Pilih grup Pelayanan'
+                label='Periode Pelayanan'
+                placeholder='Pilih Periode Pelayanan'
                 allowDeselect={false}
                 value={data.group_id.toString()}
                 onChange={value => updateValue('group_id', value)}

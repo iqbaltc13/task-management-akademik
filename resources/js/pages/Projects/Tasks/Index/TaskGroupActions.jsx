@@ -17,8 +17,8 @@ export default function TaskGroupActions({ group, ...props }) {
   const openArchiveModal = () =>
     openConfirmModal({
       type: "danger",
-      title: "Hapus Grup Pelayanan",
-      content: `Apakah anda yakin untuk menghapus grup pelayanan ini?`,
+      title: "Hapus Periode Pelayanan",
+      content: `Apakah anda yakin untuk menghapus Periode Pelayanan ini?`,
       confirmLabel: "Hapus",
       confirmProps: { color: "red" },
       onConfirm: () => archiveForm.submit({ preserveScroll: true }),

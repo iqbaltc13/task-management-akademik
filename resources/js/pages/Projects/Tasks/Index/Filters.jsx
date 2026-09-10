@@ -17,7 +17,7 @@ export default function Filters() {
         {groups.length > 0 && (
           <div>
             <Text fz="xs" fw={700} tt="uppercase" mb="sm">
-              Grup Pelayanan
+              Periode Pelayanan
             </Text>
             <Stack justify="flex-start" gap={6}>
               {groups.map((item) => (

@@ -31,7 +31,7 @@ export default function Sidebar() {
         visible: true,
       },
       {
-        label: "Grup Pelayanan",
+        label: "Periode Pelayanan",
         icon: IconListDetails,
         link: route("projects.index"),
         active: route().current("projects.*"),
