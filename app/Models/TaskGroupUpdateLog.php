@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\Task\TaskGroupUpdateLogCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +12,13 @@ class TaskGroupUpdateLog extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'task_group_update_logs';
     protected $guarded = [];
+
+    protected static function booted(): void
+    {
+        static::created(function (TaskGroupUpdateLog $log) {
+            TaskGroupUpdateLogCreated::dispatch($log);
+        });
+    }
 
     public function task()
     {
