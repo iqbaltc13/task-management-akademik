@@ -30,6 +30,7 @@ import { PricingType } from '@/utils/enums';
 
 export function EditTaskDrawer() {
   const editorRef = useRef(null);
+  const feedbackEditorRef = useRef(null);
   const { edit, openEditTask, closeEditTask } = useTaskDrawerStore();
   const { initTaskWebSocket } = useWebSockets();
   const { findTask, updateTaskProperty, complete, deleteAttachment, uploadAttachments } =
@@ -104,6 +105,7 @@ export function EditTaskDrawer() {
       });
       setTimeout(() => {
         editorRef.current?.setContent(task?.description || '');
+        feedbackEditorRef.current?.setContent(task?.final_feedback || '');
       }, 300);
     }
   }, [edit.opened, task]);
