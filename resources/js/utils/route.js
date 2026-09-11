@@ -66,3 +66,22 @@ export const replaceUrlWithoutReload = (url) => {
 export const openInNewTab = (routeName, params = {}) => {
   window.open(route(routeName, params));
 };
+
+export function resolveNotificationLink(link) {
+  const appUrl = import.meta.env.VITE_APP_URL;
+ 
+  if (!appUrl || !link) return link;
+ 
+  try {
+    const target = new URL(link, appUrl);
+    const base = new URL(appUrl);
+ 
+    target.protocol = base.protocol;
+    target.host = base.host;
+ 
+    return target.toString();
+  } catch (e) {
+    // Kalau link tidak valid sebagai URL, kembalikan apa adanya
+    return link;
+  }
+}

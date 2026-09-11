@@ -1,7 +1,7 @@
 import EmptyWithIcon from "@/components/EmptyWithIcon";
 import Notification from "@/components/Notification";
 import useNotificationsStore from "@/hooks/store/useNotificationsStore";
-import { redirectTo, redirectToUrl } from "@/utils/route";
+import { redirectTo, redirectToUrl, resolveNotificationLink } from "@/utils/route";
 import {
   ActionIcon,
   Affix,
@@ -22,7 +22,7 @@ export default function Notifications() {
 
   const open = (notification) => {
     if (notification.read_at === null) markAsRead(notification);
-    redirectToUrl(notification.link);
+    redirectToUrl(resolveNotificationLink(notification.link));
   };
 
   useEffect(() => {

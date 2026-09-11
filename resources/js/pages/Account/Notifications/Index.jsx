@@ -4,7 +4,7 @@ import useNotificationsStore from "@/hooks/store/useNotificationsStore";
 import ContainerBox from "@/layouts/ContainerBox";
 import Layout from "@/layouts/MainLayout";
 import { day, diffForHumans } from "@/utils/datetime";
-import { redirectToUrl } from "@/utils/route";
+import { redirectToUrl, resolveNotificationLink } from "@/utils/route";
 import { usePage } from "@inertiajs/react";
 import { Center, Grid, Group, Stack, Text, Title, UnstyledButton } from "@mantine/core";
 import { IconMessage } from "@tabler/icons-react";
@@ -15,9 +15,9 @@ const NotificationsIndex = () => {
   const { markAsRead } = useNotificationsStore();
   const dates = Object.keys(groups);
 
-  const open = (notification) => {
+   const open = (notification) => {
     if (notification.read_at === null) markAsRead(notification);
-    redirectToUrl(notification.link);
+    redirectToUrl(resolveNotificationLink(notification.link));
   };
 
   return (
