@@ -51,12 +51,17 @@ export function EditTaskDrawer() {
   const task = findTask(edit.task.id);
 
   const [data, setData] = useState({
+    code: '',
     group_id: '',
     assigned_to_user_id: '',
     name: '',
+    email: '',
     identity_number: '',
     job_title: '',
     description: '',
+    final_feedback: '',
+    link_file_requirement: '',
+    link_file_result: '',
     pricing_type: PricingType.HOURLY,
     estimation: 0,
     fixed_price: 0,
@@ -76,12 +81,17 @@ export function EditTaskDrawer() {
   useEffect(() => {
     if (edit.opened) {
       setData({
+        code: task?.code || '',
         group_id: task?.group_id || '',
         assigned_to_user_id: task?.assigned_to_user_id || '',
         name: task?.name || '',
+        email: task?.email || '',
         identity_number: task?.identity_number || '', 
         job_title: task?.job_title || '',
         description: task?.description || '',
+        final_feedback: task?.final_feedback || '',
+        link_file_requirement: task?.link_file_requirement || '',
+        link_file_result: task?.link_file_result || '',
         pricing_type: task?.pricing_type || PricingType.HOURLY,
         estimation: task?.estimation || 0,
         fixed_price: task?.fixed_price ? task.fixed_price / 100 : 0,
@@ -102,7 +112,15 @@ export function EditTaskDrawer() {
     setData({ ...data, [field]: value });
 
     const dropdowns = ['labels', 'subscribed_users'];
-    const onBlurInputs = ['name', 'description', 'fixed_price'];
+    const onBlurInputs = [
+      'name',
+      'email',
+      'description',
+      'final_feedback',
+      'link_file_requirement',
+      'link_file_result',
+      'fixed_price',
+    ];
 
     if (dropdowns.includes(field)) {
       const options = {
@@ -190,6 +208,11 @@ export function EditTaskDrawer() {
           </Breadcrumbs>
           <form className={classes.inner}>
             <div className={classes.content}>
+               <TextInput
+                label='Kode Pelayanan'
+                value={data.code}
+                readOnly
+              />
               <TextInput
                 label='Nama Pengaju'
                 placeholder='Nama Pengaju'
@@ -201,8 +224,8 @@ export function EditTaskDrawer() {
               />
 
               <Select
-                label='Jabatan Pengaju'
-                placeholder='Pilih jabatan pengaju'
+                label='Pengaju Sebagai'
+              placeholder='Pilih pengaju sebagai'
                 mt="md"
                 searchable
                 clearable
@@ -236,6 +259,42 @@ export function EditTaskDrawer() {
                 height={260}
                 onChange={content => updateValue('description', content)}
                 onBlur={() => onBlurUpdate('description')}
+                readOnly={!can('edit task')}
+              />
+              <Text
+                fz='sm'
+                fw={500}
+                mt='xl'
+              >
+                Feedback Akhir Pelayanan
+              </Text>
+              <RichTextEditorWithCreator
+                ref={feedbackEditorRef}
+                placeholder='Feedback Akhir Pelayanan'
+                content={data.final_feedback}
+                height={260}
+                onChange={content => updateValue('final_feedback', content)}
+                onBlur={() => onBlurUpdate('final_feedback')}
+                readOnly={!can('edit task')}
+              />
+ 
+              <TextInput
+                label='Link File Kebutuhan Pelayanan'
+                placeholder='Link File Kebutuhan Pelayanan'
+                mt='xl'
+                value={data.link_file_requirement}
+                onChange={e => updateValue('link_file_requirement', e.target.value)}
+                onBlur={() => onBlurUpdate('link_file_requirement')}
+                readOnly={!can('edit task')}
+              />
+ 
+              <TextInput
+                label='Link File Hasil Pelayanan'
+                placeholder='Link File Hasil Pelayanan'
+                mt='xl'
+                value={data.link_file_result}
+                onChange={e => updateValue('link_file_result', e.target.value)}
+                onBlur={() => onBlurUpdate('link_file_result')}
                 readOnly={!can('edit task')}
               />
 

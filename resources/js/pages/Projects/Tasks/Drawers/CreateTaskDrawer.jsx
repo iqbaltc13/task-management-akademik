@@ -183,7 +183,7 @@ export function CreateTaskDrawer() {
           
           <Select
             label='Pengaju Sebagai'
-            placeholder='Pilih pengaju sebagi'
+            placeholder='Pilih pengaju sebagai'
             required
             searchable
             mt='xl'
