@@ -1,43 +1,42 @@
 import { useState } from 'react';
 import { TextInput, Button, Stepper, Group, Paper, Title, Text, Stack } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
+import axios from 'axios';
 import GuestLayoutWithHeaderMenu from '@/layouts/GuestLayoutWithHeaderMenu';
 
-// urutan status harus sama dengan urutan Stepper.Step di bawah
 const STATUS_STEPS = ['diterima', 'diproses', 'selesai'];
 
 export default function LacakLayanan() {
   const [nomor, setNomor] = useState('');
-  const [tracking, setTracking] = useState(null); // null = belum submit sama sekali
+  const [tracking, setTracking] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
- const handleLacak = async () => {
+  const handleLacak = async () => {
     if (!nomor) return;
     setLoading(true);
+    setError(null);
     try {
-      // Ganti bagian ini dengan request ke backend Laravel kamu, contoh:
-      // const res = await axios.get(`/api/pelayanan/lacak/${nomor}`);
-      // const data = res.data;
-
-      // dummy sementara, hapus setelah endpoint asli siap:
-      const data = {
-        status: 'diproses',
-        keterangan: 'Berkas sedang diverifikasi oleh petugas terkait.',
-        berkasUrl: null, // isi dengan URL berkas kalau sudah tersedia (status "selesai")
-      };
-
-      setTracking(data);
+      const res = await axios.post(route('lacak-pelayanan'), { code: nomor });
+      setTracking(res.data);
+    } catch (e) {
+      setTracking(null);
+      setError(e.response?.data?.message || 'Terjadi kesalahan, coba lagi.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleDownload = () => {
-    if (!tracking?.berkasUrl) return;
-    window.location.href = tracking.berkasUrl;
+    if (!tracking?.link_file_result) return;
+    window.location.href = tracking.link_file_result;
   };
 
-  // index step aktif, -1 kalau belum ada data (Stepper jadi semua inactive)
-  const activeStep = tracking ? STATUS_STEPS.indexOf(tracking.status) : -1;
+  const isDitolak = tracking?.status === 'ditolak';
+  const activeStep = tracking
+    ? (isDitolak ? 2 : STATUS_STEPS.indexOf(tracking.status))
+    : -1;
+  const showDownload = tracking && (tracking.status === 'selesai' || tracking.status === 'ditolak');
 
   return (
     <GuestLayoutWithHeaderMenu title="Lacak Pelayanan">
@@ -49,6 +48,7 @@ export default function LacakLayanan() {
           placeholder="Masukkan nomor pelayanan/permintaan"
           value={nomor}
           onChange={(e) => setNomor(e.currentTarget.value)}
+          error={error}
         />
 
         <Group justify="flex-end" mt="md">
@@ -58,31 +58,37 @@ export default function LacakLayanan() {
         </Group>
 
         {tracking && (
-           <Stack mt={40} gap="lg">
-            <Stepper active={activeStep} allowNextStepsSelect={false}>
+          <Stack mt={40} gap="lg">
+            <Stepper active={activeStep} allowNextStepsSelect={false} color={isDitolak ? 'red' : 'blue'}>
               <Stepper.Step label="Diterima" description="Permintaan diterima" />
               <Stepper.Step label="Diproses" description="Sedang diproses" />
-              <Stepper.Step label="Selesai" description="Pelayanan selesai" />
+              <Stepper.Step
+                label={isDitolak ? 'Ditolak' : 'Selesai'}
+                description={isDitolak ? 'Permintaan ditolak' : 'Pelayanan selesai'}
+                color={isDitolak ? 'red' : undefined}
+                completedIcon={isDitolak ? <IconX size={18} /> : undefined}
+              />
             </Stepper>
 
             <div>
               <Text fw={500} size="sm" mb={4}>Keterangan</Text>
               <Text size="sm" c="dimmed">
-                {tracking.keterangan || 'Belum ada keterangan untuk permintaan ini.'}
+                {tracking.final_feedback || 'Belum ada keterangan untuk permintaan ini.'}
               </Text>
             </div>
 
-            <Button
-              fullWidth
-              size="md"
-              variant="light"
-              disabled={!tracking.berkasUrl}
-              onClick={handleDownload}
-            >
-              Download Berkas
-            </Button>
+            {showDownload && (
+              <Button
+                fullWidth
+                size="md"
+                variant="light"
+                disabled={!tracking.link_file_result}
+                onClick={handleDownload}
+              >
+                Download Berkas
+              </Button>
+            )}
           </Stack>
-          
         )}
       </Paper>
     </GuestLayoutWithHeaderMenu>

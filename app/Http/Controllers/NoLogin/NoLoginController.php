@@ -24,6 +24,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Support\TaskStatusMapper;
 
 class NoLoginController extends Controller
 {
@@ -41,12 +42,33 @@ class NoLoginController extends Controller
     public function lacakPelayanan(Request $request)
     {
         if ($request->isMethod('post')) {
-            // The request is a POST request
+            $request->validate([
+                'code' => 'required|string',
+            ]);
+
+            $task = Task::where('code', $request->code)->first();
+
+            if (! $task) {
+                return response()->json([
+                    'message' => 'Kode permintaan tidak ditemukan.',
+                ], 404);
+            }
+
+            $task->load('taskGroup');
+
+            return response()->json([
+                'code' => $task->code,
+                'status' => TaskStatusMapper::map($task->taskGroup?->name),
+                'final_feedback' => $task->final_feedback,
+                'link_file_result' => $task->link_file_result,
+            ]);
         }
+
         if ($request->isMethod('get')) {
-            // The request is a GET request
-            return Inertia::render('NoLogin/LacakPelayanan', []);  
+            return Inertia::render('NoLogin/LacakPelayanan', []);
         }
     }
+
+    
      
 }
