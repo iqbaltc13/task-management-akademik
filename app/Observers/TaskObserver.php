@@ -106,8 +106,8 @@ class TaskObserver
                 'user_id' => auth()->id(),
                 'title' => 'Grup permintaan diperbarui',
                 'subtitle' => $oldGroupName
-                    ? "Dari \"{$oldGroupName}\" menjadi \"{$task->group->name}\" oleh ".auth()->user()->name
-                    : "Diatur ke \"{$task->group->name}\" oleh ".auth()->user()->name,
+                    ? "Dari \"{$oldGroupName}\" menjadi \"{$task->taskGroup->name}\" oleh ".auth()->user()->name
+                    : "Diatur ke \"{$task->taskGroup->name}\" oleh ".auth()->user()->name,
             ]);
 
             // Catat juga ke tabel khusus histori grup
