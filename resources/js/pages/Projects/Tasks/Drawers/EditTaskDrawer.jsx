@@ -225,6 +225,16 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
 
+              <TextInput
+                label='Email Pengaju'
+                placeholder='Email Pengaju'
+                type='email'
+                mt='xl'
+                value={data.email}
+                onChange={e => updateValue('email', e.target.value)}
+                onBlur={() => onBlurUpdate('email')}
+                readOnly={!can('edit task')}
+              />
               <Select
                 label='Pengaju Sebagai'
               placeholder='Pilih pengaju sebagai'
