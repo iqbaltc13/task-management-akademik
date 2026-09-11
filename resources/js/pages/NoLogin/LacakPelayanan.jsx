@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextInput, Button, Stepper, Group, Paper, Title } from '@mantine/core';
+import { TextInput, Button, Stepper, Group, Paper, Title, Text, Stack } from '@mantine/core';
 import GuestLayoutWithHeaderMenu from '@/layouts/GuestLayoutWithHeaderMenu';
 
 // urutan status harus sama dengan urutan Stepper.Step di bawah
@@ -10,7 +10,7 @@ export default function LacakLayanan() {
   const [tracking, setTracking] = useState(null); // null = belum submit sama sekali
   const [loading, setLoading] = useState(false);
 
-  const handleLacak = async () => {
+ const handleLacak = async () => {
     if (!nomor) return;
     setLoading(true);
     try {
@@ -19,12 +19,21 @@ export default function LacakLayanan() {
       // const data = res.data;
 
       // dummy sementara, hapus setelah endpoint asli siap:
-      const data = { status: 'diproses' };
+      const data = {
+        status: 'diproses',
+        keterangan: 'Berkas sedang diverifikasi oleh petugas terkait.',
+        berkasUrl: null, // isi dengan URL berkas kalau sudah tersedia (status "selesai")
+      };
 
       setTracking(data);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDownload = () => {
+    if (!tracking?.berkasUrl) return;
+    window.location.href = tracking.berkasUrl;
   };
 
   // index step aktif, -1 kalau belum ada data (Stepper jadi semua inactive)
@@ -49,11 +58,31 @@ export default function LacakLayanan() {
         </Group>
 
         {tracking && (
-          <Stepper active={activeStep} mt={40} allowNextStepsSelect={false}>
-            <Stepper.Step label="Diterima" description="Permintaan diterima" />
-            <Stepper.Step label="Diproses" description="Sedang diproses" />
-            <Stepper.Step label="Selesai" description="Pelayanan selesai" />
-          </Stepper>
+           <Stack mt={40} gap="lg">
+            <Stepper active={activeStep} allowNextStepsSelect={false}>
+              <Stepper.Step label="Diterima" description="Permintaan diterima" />
+              <Stepper.Step label="Diproses" description="Sedang diproses" />
+              <Stepper.Step label="Selesai" description="Pelayanan selesai" />
+            </Stepper>
+
+            <div>
+              <Text fw={500} size="sm" mb={4}>Keterangan</Text>
+              <Text size="sm" c="dimmed">
+                {tracking.keterangan || 'Belum ada keterangan untuk permintaan ini.'}
+              </Text>
+            </div>
+
+            <Button
+              fullWidth
+              size="md"
+              variant="light"
+              disabled={!tracking.berkasUrl}
+              onClick={handleDownload}
+            >
+              Download Berkas
+            </Button>
+          </Stack>
+          
         )}
       </Paper>
     </GuestLayoutWithHeaderMenu>
