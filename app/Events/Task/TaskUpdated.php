@@ -31,8 +31,8 @@ class TaskUpdated implements ShouldBroadcast
         $this->task = $task->loadDefault();
 
         $this->taskId = $task->id;
-        $this->property = $updateField;
-        $this->value = $this->task->toArray()[$updateField];
+        $this->updateField = $updateField;
+        $this->value = $updateField instanceof string ? $this->task->toArray()[$updateField] : [];
 
         $this->dontBroadcastToCurrentUser();
     }
