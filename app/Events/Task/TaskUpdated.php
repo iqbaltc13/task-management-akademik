@@ -17,7 +17,7 @@ class TaskUpdated implements ShouldBroadcast
 
     public string $taskId;
 
-    public string $property;
+    public string $;
 
     public mixed $value;
 
@@ -26,7 +26,7 @@ class TaskUpdated implements ShouldBroadcast
      */
     public function __construct(
         Task $task,
-        string $updateField,
+        $updateField,
     ) {
         $this->task = $task->loadDefault();
 
