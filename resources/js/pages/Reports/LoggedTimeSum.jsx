@@ -72,7 +72,7 @@ const LoggedTimeSum = () => {
           <Group justify='space-between'>
             <Group gap='xl'>
               <MultiSelect
-                placeholder={form.data.projects.length ? null : 'Pilih Proyek'}
+                placeholder={form.data.projects.length ? null : 'Pilih Periode Pelayanan'}
                 required
                 w={220}
                 value={form.data.projects}
