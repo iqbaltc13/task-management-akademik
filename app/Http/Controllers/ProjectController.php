@@ -146,6 +146,8 @@ class ProjectController extends Controller
         DB::beginTransaction();
         try {
             $project->archive();
+
+            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Transaction failed: ' . $e->getMessage());
