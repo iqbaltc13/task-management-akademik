@@ -131,7 +131,7 @@ class ProjectController extends Controller
             $project->update(Arr::except($data, ['users']));
 
             //$project->users()->sync($data['users']);
-
+            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Transaction failed: ' . $e->getMessage());
