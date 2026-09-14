@@ -41,6 +41,7 @@ class UpdateTaskRequest extends FormRequest
             'labels' => ['array'],
             'identity_number' => ['sometimes', 'string'],
             'job_title' => ['sometimes', 'exists:job_titles,code'],
+            'final_feedback' => ['nullable'],
         ];
     }
 }
