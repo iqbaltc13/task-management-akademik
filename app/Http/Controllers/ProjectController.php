@@ -92,7 +92,7 @@ class ProjectController extends Controller
             // 3. Commit changes if everything succeeds
             DB::commit();
 
-            return redirect()->route('projects.index')->success('Grup Permintaan Ditambahkan', 'Grup permintaan berhasil ditambahkan.');
+            return redirect()->route('projects.index')->success('Periode Pelayanan Ditambahkan', 'Periode Pelayanan berhasil ditambahkan.');
 
         } catch (Exception $e) {
             // 4. Roll back changes if any query fails
@@ -101,7 +101,7 @@ class ProjectController extends Controller
             // 5. Handle or log the error
             Log::error('Transaction failed: ' . $e->getMessage());
             
-            return redirect()->route('projects.index')->error('Grup Permintaan Gagal Ditambahkan', 'Grup permintaan gagal ditambahkan.');
+            return redirect()->route('projects.index')->error('Periode Pelayanan Gagal Ditambahkan', 'Periode Pelayanan gagal ditambahkan.');
         }
        
 
@@ -135,10 +135,10 @@ class ProjectController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Transaction failed: ' . $e->getMessage());
-            return redirect()->route('projects.index')->error('Grup Permintaan Gagal Diperbarui', 'Grup permintaan gagal diperbarui.');
+            return redirect()->route('projects.index')->error('Periode Pelayanan Gagal Diperbarui', 'Periode Pelayanan gagal diperbarui.');
         }
 
-        return redirect()->route('projects.index')->success('Grup Permintaan Diperbarui', 'Grup permintaan berhasil diperbarui.');
+        return redirect()->route('projects.index')->success('Periode Pelayanan Diperbarui', 'Periode Pelayanan berhasil diperbarui.');
     }
 
     public function destroy(Project $project)
@@ -151,10 +151,10 @@ class ProjectController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Transaction failed: ' . $e->getMessage());
-            return redirect()->back()->error('Grup Permintaan Gagal Dihapus', 'Grup permintaan gagal dihapus.');
+            return redirect()->back()->error('Periode Pelayanan Gagal Dihapus', 'Periode Pelayanan gagal dihapus.');
         }
 
-        return redirect()->back()->success('Grup Permintaan Dihapus', 'Grup permintaan berhasil dihapus.');
+        return redirect()->back()->success('Periode Pelayanan Dihapus', 'Periode Pelayanan berhasil dihapus.');
     }
 
 
@@ -173,10 +173,10 @@ class ProjectController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Transaction failed: ' . $e->getMessage());
-            return redirect()->back()->error('Grup Permintaan Gagal Direstorasi', 'Grup permintaan gagal direstorasi.');
+            return redirect()->back()->error('Periode Pelayanan Gagal Direstorasi', 'Periode Pelayanan gagal direstorasi.');
         }
 
-        return redirect()->back()->success('Grup Permintaan Direstorasi', 'Grup permintaan berhasil direstorasi.');
+        return redirect()->back()->success('Periode Pelayanan Direstorasi', 'Periode Pelayanan berhasil direstorasi.');
     }
 
     public function favoriteToggle(Project $project)
@@ -189,7 +189,7 @@ class ProjectController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Transaction failed: ' . $e->getMessage());
-            return redirect()->back()->error('Grup Permintaan Gagal Ditambahkan', 'Grup permintaan gagal ditambahkan.');
+            return redirect()->back()->error('Periode Pelayanan Gagal Ditambahkan', 'Periode Pelayanan gagal ditambahkan.');
         }
 
         return redirect()->back();
@@ -212,7 +212,7 @@ class ProjectController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Transaction failed: ' . $e->getMessage());
-            return redirect()->back()->error('Grup Permintaan Gagal Ditambahkan Akses', 'Grup permintaan gagal ditambahkan akses.');
+            return redirect()->back()->error('Periode Pelayanan Gagal Ditambahkan Akses', 'Periode Pelayanan gagal ditambahkan akses.');
         }
     
       
