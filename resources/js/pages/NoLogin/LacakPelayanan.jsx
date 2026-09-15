@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextInput, Button, Stepper, Group, Paper, Title, Text, Stack } from '@mantine/core';
+import { TextInput, Button, Stepper, Group, Paper, Title, Text, Stack, TypographyStylesProvider } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 import axios from 'axios';
 import GuestLayoutWithHeaderMenu from '@/layouts/GuestLayoutWithHeaderMenu';
@@ -70,11 +70,17 @@ export default function LacakLayanan() {
               />
             </Stepper>
 
-            <div>
+             <div>
               <Text fw={500} size="sm" mb={4}>Keterangan</Text>
-              <Text size="sm" c="dimmed">
-                {tracking.final_feedback || 'Belum ada keterangan untuk permintaan ini.'}
-              </Text>
+              {tracking.final_feedback ? (
+                <TypographyStylesProvider p={0} fz="sm" c="dimmed">
+                  <div dangerouslySetInnerHTML={{ __html: tracking.final_feedback }} />
+                </TypographyStylesProvider>
+              ) : (
+                <Text size="sm" c="dimmed">
+                  Belum ada keterangan untuk permintaan ini.
+                </Text>
+              )}
             </div>
 
             {showDownload && (
