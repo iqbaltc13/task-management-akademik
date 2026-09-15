@@ -3,6 +3,7 @@ import { TextInput, Button, Stepper, Group, Paper, Title, Text, Stack, Typograph
 import { IconX } from '@tabler/icons-react';
 import axios from 'axios';
 import GuestLayoutWithHeaderMenu from '@/layouts/GuestLayoutWithHeaderMenu';
+import { date } from '@/utils/datetime';
 
 const STATUS_STEPS = ['diterima', 'diproses', 'selesai'];
 
@@ -60,17 +61,46 @@ export default function LacakLayanan() {
         {tracking && (
           <Stack mt={40} gap="lg">
             <Stepper active={activeStep} allowNextStepsSelect={false} color={isDitolak ? 'red' : 'blue'}>
-              <Stepper.Step label="Diterima" description="Permintaan diterima" />
-              <Stepper.Step label="Diproses" description="Sedang diproses" />
+              <Stepper.Step
+                label="Diterima"
+                description={
+                  <>
+                    Permintaan diterima
+                    {tracking.dates?.diterima && (
+                      <Text size="xs" c="dimmed" mt={2}>{date(tracking.dates.diterima)}</Text>
+                    )}
+                  </>
+                }
+              />
+              <Stepper.Step
+                label="Diproses"
+                description={
+                  <>
+                    Sedang diproses
+                    {tracking.dates?.diproses && (
+                      <Text size="xs" c="dimmed" mt={2}>{date(tracking.dates.diproses)}</Text>
+                    )}
+                  </>
+                }
+              />
               <Stepper.Step
                 label={isDitolak ? 'Ditolak' : 'Selesai'}
-                description={isDitolak ? 'Permintaan ditolak' : 'Pelayanan selesai'}
+                description={
+                  <>
+                    {isDitolak ? 'Permintaan ditolak' : 'Pelayanan selesai'}
+                    {(isDitolak ? tracking.dates?.ditolak : tracking.dates?.selesai) && (
+                      <Text size="xs" c="dimmed" mt={2}>
+                        {date(isDitolak ? tracking.dates.ditolak : tracking.dates.selesai)}
+                      </Text>
+                    )}
+                  </>
+                }
                 color={isDitolak ? 'red' : undefined}
                 completedIcon={isDitolak ? <IconX size={18} /> : undefined}
               />
             </Stepper>
 
-             <div>
+            <div>
               <Text fw={500} size="sm" mb={4}>Keterangan</Text>
               {tracking.final_feedback ? (
                 <TypographyStylesProvider p={0} fz="sm" c="dimmed">

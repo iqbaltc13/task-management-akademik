@@ -39,31 +39,49 @@ class NoLoginController extends Controller
     {
        return Inertia::render('NoLogin/CreateTask', []);  
     }
-    public function lacakPelayanan(Request $request)
+     public function lacakPelayanan(Request $request)
     {
         if ($request->isMethod('post')) {
             $request->validate([
                 'code' => 'required|string',
             ]);
-
+ 
             $task = Task::where('code', $request->code)->first();
-
+ 
             if (! $task) {
                 return response()->json([
                     'message' => 'Kode permintaan tidak ditemukan.',
                 ], 404);
             }
-
-            $task->load('taskGroup');
-
+ 
+            $task->load(['taskGroup', 'groupUpdateLogs' => function ($query) {
+                $query->with('newGroup')->orderBy('created_at');
+            }]);
+ 
+            $dates = [
+                'diterima' => $task->created_at,
+                'diproses' => null,
+                'selesai' => null,
+                'ditolak' => null,
+            ];
+ 
+            foreach ($task->groupUpdateLogs as $log) {
+                $status = TaskStatusMapper::map($log->newGroup?->name);
+ 
+                if (array_key_exists($status, $dates) && $dates[$status] === null) {
+                    $dates[$status] = $log->created_at;
+                }
+            }
+ 
             return response()->json([
                 'code' => $task->code,
                 'status' => TaskStatusMapper::map($task->taskGroup?->name),
                 'final_feedback' => $task->final_feedback,
                 'link_file_result' => $task->link_file_result,
+                'dates' => $dates,
             ]);
         }
-
+ 
         if ($request->isMethod('get')) {
             return Inertia::render('NoLogin/LacakPelayanan', []);
         }
