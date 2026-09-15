@@ -66,7 +66,7 @@ class NoLoginController extends Controller
             ];
  
             foreach ($task->groupUpdateLogs as $log) {
-                $status = TaskStatusMapper::map($log->newGroup?->name);
+                $status = TaskStatusMapper::map(strtolower($log->newGroup?->name));
  
                 if (array_key_exists($status, $dates) && $dates[$status] === null) {
                     $dates[$status] = $log->created_at;
