@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TaskGroupUpdateLog extends Model
 {
     use HasFactory, SoftDeletes;
+    const DELETED_AT = 'archived_at';
     protected $table = 'task_group_update_logs';
     protected $guarded = [];
 
