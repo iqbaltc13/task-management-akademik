@@ -251,8 +251,8 @@ export function EditTaskDrawer() {
               />
 
               <TextInput
-                label='Nomor Identitas'
-                placeholder='Nomor Identitas Pemohon'
+                label='NIM / Nomor Identitas lain'
+                placeholder='NIM / Nomor Identitas lain Pemohon'
                 mt="xl"
                 value={data.identity_number}
                 onChange={e => updateValue('identity_number', e.target.value)}
@@ -323,8 +323,8 @@ export function EditTaskDrawer() {
             </div>
             <div className={classes.sidebar}>
               <Select
-                label='Periode Pelayanan'
-                placeholder='Pilih Periode Pelayanan'
+                label='Status Pelayanan'
+                placeholder='Pilih Status Pelayanan'
                 allowDeselect={false}
                 value={data.group_id.toString()}
                 onChange={value => updateValue('group_id', value)}

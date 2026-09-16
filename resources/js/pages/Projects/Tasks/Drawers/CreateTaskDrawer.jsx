@@ -200,8 +200,8 @@ export function CreateTaskDrawer() {
           />
 
           <TextInput
-            label='Nomor Identitas'
-            placeholder='Nomor Identitas Pemohon'
+            label='NIM / Nomor Identitas lain'
+            placeholder='NIM / Nomor Identitas lain Pemohon'
             required
              mt='xl'
             data-autofocus
@@ -303,8 +303,8 @@ export function CreateTaskDrawer() {
         </div>
         <div className={classes.sidebar}>
           <Select
-            label='Periode Pelayanan'
-            placeholder='Pilih Periode Pelayanan'
+            label='Status Pelayanan'
+            placeholder='Pilih Status Pelayanan'
             required
             value={form.data.group_id}
             onChange={value => updateValue('group_id', value)}
