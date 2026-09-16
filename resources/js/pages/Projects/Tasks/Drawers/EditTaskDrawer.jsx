@@ -216,8 +216,8 @@ export function EditTaskDrawer() {
                 readOnly
               />
               <TextInput
-                label='Nama Pengaju'
-                placeholder='Nama Pengaju'
+                label='Nama Pemohon'
+                placeholder='Nama Pemohon'
                 value={data.name}
                 onChange={e => updateValue('name', e.target.value)}
                 onBlur={() => onBlurUpdate('name')}
@@ -226,8 +226,8 @@ export function EditTaskDrawer() {
               />
 
               <TextInput
-                label='Email Pengaju'
-                placeholder='Email Pengaju'
+                label='Email Pemohon'
+                placeholder='Email Pemohon'
                 type='email'
                 mt='xl'
                 value={data.email}
@@ -236,8 +236,8 @@ export function EditTaskDrawer() {
                 readOnly={!can('edit task')}
               />
               <Select
-                label='Pengaju Sebagai'
-              placeholder='Pilih pengaju sebagai'
+                label='Pemohon Sebagai'
+              placeholder='Pilih pemohon sebagai'
                 mt="md"
                 searchable
                 clearable
@@ -252,7 +252,7 @@ export function EditTaskDrawer() {
 
               <TextInput
                 label='Nomor Identitas'
-                placeholder='Nomor Identitas Pengaju'
+                placeholder='Nomor Identitas Pemohon'
                 mt="xl"
                 value={data.identity_number}
                 onChange={e => updateValue('identity_number', e.target.value)}

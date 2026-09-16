@@ -162,8 +162,8 @@ export function CreateTaskDrawer() {
           />
           
           <TextInput
-            label='Nama Pengaju'
-            placeholder='Nama Pengaju'
+            label='Nama Pemohon'
+            placeholder='Nama Pemohon'
             required
             data-autofocus
             value={form.data.name}
@@ -174,16 +174,16 @@ export function CreateTaskDrawer() {
            <TextInput
             mt='xl'
             type='email'
-            label='Email Pengaju'
-            placeholder='Email Pengaju'
+            label='Email Pemohon'
+            placeholder='Email Pemohon'
             value={form.data.email}
             onChange={e => updateValue('email', e.target.value)}
             error={form.errors.email}
           />
           
           <Select
-            label='Pengaju Sebagai'
-            placeholder='Pilih pengaju sebagai'
+            label='Pemohon Sebagai'
+            placeholder='Pilih pemohon sebagai'
             required
             searchable
             mt='xl'
@@ -201,7 +201,7 @@ export function CreateTaskDrawer() {
 
           <TextInput
             label='Nomor Identitas'
-            placeholder='Nomor Identitas Pengaju'
+            placeholder='Nomor Identitas Pemohon'
             required
              mt='xl'
             data-autofocus
