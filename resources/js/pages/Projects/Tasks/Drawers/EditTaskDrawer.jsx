@@ -289,7 +289,6 @@ export function EditTaskDrawer() {
                 onBlur={() => onBlurUpdate('final_feedback')}
                 readOnly={!can('edit task')}
               />
- 
               <TextInput
                 label='Link File Kebutuhan Pelayanan'
                 placeholder='Link File Kebutuhan Pelayanan'
@@ -338,6 +337,7 @@ export function EditTaskDrawer() {
               <Select
                 label='Penerima Tugas'
                 placeholder='Pilih penerima tugas'
+                required
                 searchable
                 mt='md'
                 value={data.assigned_to_user_id?.toString()}
@@ -346,6 +346,7 @@ export function EditTaskDrawer() {
                   value: i.id.toString(),
                   label: i.name,
                 }))}
+                error={!data.assigned_to_user_id}
                 readOnly={!can('edit task')}
               />
 

@@ -318,6 +318,7 @@ export function CreateTaskDrawer() {
           <Select
             label='Penerima Tugas'
             placeholder='Pilih penerima tugas'
+            required
             searchable
             mt='md'
             value={form.data.assigned_to_user_id}

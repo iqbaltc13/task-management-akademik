@@ -26,10 +26,10 @@ class UpdateTaskRequest extends FormRequest
         return [
             'name' => ['string:255'],
             'email' => ['email', 'string:255'],
-            'link_file_requirement' => ['string:255'],
-            'link_file_result' => ['string:255'],
+            'link_file_requirement' => ['nullable', 'string:255'],
+            'link_file_result' => ['nullable', 'string:255'],
             'group_id' => ['exists:task_groups,id'],
-            'assigned_to_user_id' => ['nullable', 'exists:users,id'],
+            'assigned_to_user_id' => ['required', 'exists:users,id'],
             'description' => ['nullable'],
             'estimation' => ['nullable'],
             'pricing_type' => ['string', Rule::enum(PricingType::class)],
