@@ -29,7 +29,16 @@ class TaskPolicy
      */
     public function update(User $user, Task $task, Project $project): bool
     {
-        return $user->hasPermissionTo('edit task') && $user->hasProjectAccess($project);
+        if (! $user->hasProjectAccess($project)) {
+            return false;
+        }
+
+        if ($user->hasPermissionTo('edit task')) {
+            return true;
+        }
+
+        return $user->id === $task->created_by_user_id
+            || $user->id === $task->assigned_to_user_id;
     }
 
     /**
