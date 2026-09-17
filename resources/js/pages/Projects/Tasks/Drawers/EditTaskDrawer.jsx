@@ -55,6 +55,11 @@ export function EditTaskDrawer() {
 
   const task = findTask(edit.task.id);
 
+  const canEditTask =
+    can('edit task') ||
+    (task && user?.id === task.created_by_user_id) ||
+    (task && user?.id === task.assigned_to_user_id);
+
   const [data, setData] = useState({
     code: '',
     group_id: '',
@@ -144,7 +149,7 @@ export function EditTaskDrawer() {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    if (!can('edit task') || submitting) return;
+    if (!canEditTask || submitting) return;
 
     const original = originalDataRef.current || {};
 
@@ -237,7 +242,7 @@ export function EditTaskDrawer() {
             <Text size='xs'>{task.project.name}</Text>
             <Text size='xs'>Pelayanan #{task.number}</Text>
             <Text size='xs'>
-              Diterima oleh {task.created_by_user.name} pada {date(task.created_at)}
+              Dibuat oleh {task.created_by_user.name} pada {date(task.created_at)}
             </Text>
           </Breadcrumbs>
           <form className={classes.inner} onSubmit={handleSubmit}>
@@ -254,13 +259,15 @@ export function EditTaskDrawer() {
                 mt='xl'
                 value={task.created_by_user?.name || ''}
               />
+
               <TextInput
                 label='Nama Pemohon'
                 placeholder='Nama Pemohon'
+                mt='xl'
                 value={data.name}
                 onChange={e => updateValue('name', e.target.value)}
                 error={data.name.length === 0}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
 
               <TextInput
@@ -270,7 +277,7 @@ export function EditTaskDrawer() {
                 mt='xl'
                 value={data.email}
                 onChange={e => updateValue('email', e.target.value)}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
               <Select
                 label='Pemohon Sebagai'
@@ -284,7 +291,7 @@ export function EditTaskDrawer() {
                   value: job.code, // 🔑 HARUS code
                   label: job.name,
                 }))}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
 
               <TextInput
@@ -294,7 +301,7 @@ export function EditTaskDrawer() {
                 value={data.identity_number}
                 onChange={e => updateValue('identity_number', e.target.value)}
                 error={!data.identity_number}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
 
               
@@ -306,7 +313,7 @@ export function EditTaskDrawer() {
                 content={data.description}
                 height={260}
                 onChange={content => updateValue('description', content)}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
               <Text
                 fz='sm'
@@ -321,7 +328,7 @@ export function EditTaskDrawer() {
                 content={data.final_feedback}
                 height={260}
                 onChange={content => updateValue('final_feedback', content)}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
  
               <TextInput
@@ -330,7 +337,7 @@ export function EditTaskDrawer() {
                 mt='xl'
                 value={data.link_file_requirement}
                 onChange={e => updateValue('link_file_requirement', e.target.value)}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
  
               <TextInput
@@ -339,10 +346,10 @@ export function EditTaskDrawer() {
                 mt='xl'
                 value={data.link_file_result}
                 onChange={e => updateValue('link_file_result', e.target.value)}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
 
-              {/* {can('edit task') && (
+              {/* {canEditTask && (
                 <Dropzone
                   mt='xl'
                   selected={task.attachments}
@@ -364,7 +371,7 @@ export function EditTaskDrawer() {
                   Batal
                 </Button>
 
-                {can('edit task') && (
+                {canEditTask && (
                   <Button
                     type='submit'
                     w={170}
@@ -386,7 +393,7 @@ export function EditTaskDrawer() {
                   value: i.id.toString(),
                   label: i.name,
                 }))}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
 
               <Select
@@ -400,7 +407,7 @@ export function EditTaskDrawer() {
                   value: i.id.toString(),
                   label: i.name,
                 }))}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
 
               <DateInput
@@ -413,7 +420,7 @@ export function EditTaskDrawer() {
                 placeholder='Pilih batas waktu'
                 value={data.due_on}
                 onChange={value => updateValue('due_on', value)}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               />
 
               <LabelsDropdown
@@ -434,7 +441,7 @@ export function EditTaskDrawer() {
                 step={0.5}
                 suffix=' jam'
                 onChange={value => updateValue('estimation', value)}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               /> */}
 
               {/* <Select
@@ -444,7 +451,7 @@ export function EditTaskDrawer() {
                 value={data.pricing_type}
                 onChange={value => updateValue('pricing_type', value)}
                 data={pricingTypes}
-                readOnly={!can('edit task')}
+                readOnly={!canEditTask}
               /> */}
 
               {/* {isFixedPrice && (can('view time logs') || can('add time log')) && (
@@ -458,7 +465,7 @@ export function EditTaskDrawer() {
                   allowNegative={false}
                   onChange={value => updateValue('fixed_price', value)}
                   prefix={currencySymbol}
-                  readOnly={!can('edit task')}
+                  readOnly={!canEditTask}
                 />
               )} */}
 
@@ -474,7 +481,7 @@ export function EditTaskDrawer() {
                 mt='xl'
                 checked={data.billable}
                 onChange={event => updateValue('billable', event.currentTarget.checked)}
-                disabled={!can('edit task')}
+                disabled={!canEditTask}
               /> */}
 
               {/* {!hasRoles(user, ['client']) && (
@@ -485,7 +492,7 @@ export function EditTaskDrawer() {
                   onChange={event =>
                     updateValue('hidden_from_clients', event.currentTarget.checked)
                   }
-                  disabled={!can('edit task')}
+                  disabled={!canEditTask}
                 />
               )} */}
 
@@ -499,7 +506,7 @@ export function EditTaskDrawer() {
                   value: i.id.toString(),
                   label: i.name,
                 }))}
-                // readOnly={!can('edit task')}
+                // readOnly={!canEditTask}
                 readOnly={true}
               />
             </div>
