@@ -179,6 +179,9 @@ export function EditTaskDrawer() {
       }
 
       router.visit(route('projects.tasks', task.project_id));
+    } catch (e) {
+      // Alert dengan pesan asli dari backend sudah ditampilkan oleh updateTaskProperty.
+      // Berhenti di sini: jangan lanjut ke field berikutnya, jangan redirect.
     } finally {
       setSubmitting(false);
     }
