@@ -59,7 +59,9 @@ const useTasksStore = create((set, get) => ({
       }));
     } catch (e) {
       console.error(e);
-      alert("Failed to save task property change");
+      const message = e.response?.data?.message || "Failed to save task property change";
+      alert(message);
+      throw e;
     }
   },
   complete: (task, checked) => {
