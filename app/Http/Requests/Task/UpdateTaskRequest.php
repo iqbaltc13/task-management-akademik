@@ -29,7 +29,7 @@ class UpdateTaskRequest extends FormRequest
             'link_file_requirement' => ['nullable', 'string:255'],
             'link_file_result' => ['nullable', 'string:255'],
             'group_id' => ['exists:task_groups,id'],
-            'assigned_to_user_id' => ['required', 'exists:users,id'],
+            'assigned_to_user_id' => ['sometimes', 'required', 'exists:users,id'],
             'description' => ['nullable'],
             'estimation' => ['nullable'],
             'pricing_type' => ['string', Rule::enum(PricingType::class)],
