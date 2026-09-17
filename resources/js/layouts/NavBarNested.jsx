@@ -38,7 +38,7 @@ export default function Sidebar() {
         visible: can("view projects"),
       },
       {
-        label: "Aktivitas dan Pelayanan Saya",
+        label: "Laporan,Aktivitas, dan Pelayanan Saya",
         icon: IconLayoutList,
         active: route().current("my-work.*"),
         opened: route().current("my-work.*"),
@@ -88,28 +88,28 @@ export default function Sidebar() {
         active: route().current("users.*"),
         visible: can("view users"),
       },
-      {
-        label: "Laporan",
-        icon: IconReportAnalytics,
-        active: route().current("reports.*"),
-        opened: route().current("reports.*"),
-        visible: can("view logged time sum report") || can("view daily logged time report") || can("view fixed price sum report"),
-        links: [
-          {
-            label: "Laporan Ringkasan Waktu Total ",
-            link: route("reports.logged-time.sum"),
-            active: route().current("reports.logged-time.sum"),
-            visible: can("view logged time sum report"),
-          },
-          {
-            label: "Laporan Waktu Tercatat Harian",
-            link: route("reports.logged-time.daily"),
-            active: route().current("reports.logged-time.daily"),
-            visible: can("view daily logged time report"),
-          },
+      // {
+      //   label: "Laporan",
+      //   icon: IconReportAnalytics,
+      //   active: route().current("reports.*"),
+      //   opened: route().current("reports.*"),
+      //   visible: can("view logged time sum report") || can("view daily logged time report") || can("view fixed price sum report"),
+      //   links: [
+      //     {
+      //       label: "Laporan Ringkasan Waktu Total ",
+      //       link: route("reports.logged-time.sum"),
+      //       active: route().current("reports.logged-time.sum"),
+      //       visible: can("view logged time sum report"),
+      //     },
+      //     {
+      //       label: "Laporan Waktu Tercatat Harian",
+      //       link: route("reports.logged-time.daily"),
+      //       active: route().current("reports.logged-time.daily"),
+      //       visible: can("view daily logged time report"),
+      //     },
           
-        ],
-      },
+      //   ],
+      // },
       {
         label: "Pengaturan",
         icon: IconSettings,
