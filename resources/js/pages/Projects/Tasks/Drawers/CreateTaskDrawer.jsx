@@ -160,7 +160,12 @@ export function CreateTaskDrawer() {
             onChange={() => {}}
             error={form.errors.code}
           />
-          
+          <TextInput
+            label='Penerima Pelayanan'
+            readOnly
+            mt='xl'
+            value={user.name}
+          />
           <TextInput
             label='Nama Pemohon'
             placeholder='Nama Pemohon'

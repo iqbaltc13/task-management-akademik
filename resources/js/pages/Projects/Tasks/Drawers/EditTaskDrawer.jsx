@@ -237,7 +237,7 @@ export function EditTaskDrawer() {
             <Text size='xs'>{task.project.name}</Text>
             <Text size='xs'>Pelayanan #{task.number}</Text>
             <Text size='xs'>
-              Dibuat oleh {task.created_by_user.name} pada {date(task.created_at)}
+              Diterima oleh {task.created_by_user.name} pada {date(task.created_at)}
             </Text>
           </Breadcrumbs>
           <form className={classes.inner} onSubmit={handleSubmit}>
@@ -246,6 +246,13 @@ export function EditTaskDrawer() {
                 label='Kode Pelayanan'
                 value={data.code}
                 readOnly
+              />
+
+              <TextInput
+                label='Penerima Pelayanan'
+                readOnly
+                mt='xl'
+                value={task.created_by_user?.name || ''}
               />
               <TextInput
                 label='Nama Pemohon'
