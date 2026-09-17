@@ -5,12 +5,14 @@ import useTasksStore from '@/hooks/store/useTasksStore';
 import useWebSockets from '@/hooks/useWebSockets';
 import { date } from '@/utils/datetime';
 import { hasRoles } from '@/utils/user';
-import { usePage } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import RichTextEditorWithCreator from '@/components/RichTextEditorWithCreator';
 import {
   Breadcrumbs,
+  Button,
   Checkbox,
   Drawer,
+  Flex,
   Group,
   MultiSelect,
   NumberInput,
@@ -31,6 +33,8 @@ import { PricingType } from '@/utils/enums';
 export function EditTaskDrawer() {
   const editorRef = useRef(null);
   const feedbackEditorRef = useRef(null);
+  const originalDataRef = useRef(null);
+  const [submitting, setSubmitting] = useState(false);
   const { edit, openEditTask, closeEditTask } = useTaskDrawerStore();
   const { initTaskWebSocket } = useWebSockets();
   const { findTask, updateTaskProperty, complete, deleteAttachment, uploadAttachments } =
@@ -81,7 +85,7 @@ export function EditTaskDrawer() {
 
   useEffect(() => {
     if (edit.opened) {
-      setData({
+      const initialData = {
         code: task?.code || '',
         group_id: task?.group_id || '',
         assigned_to_user_id: task?.assigned_to_user_id || '',
@@ -102,7 +106,9 @@ export function EditTaskDrawer() {
         billable: task?.billable !== undefined ? task.billable : true,
         subscribed_users: (task?.subscribed_users || []).map(i => i.id.toString()),
         labels: (task?.labels || []).map(i => i.id),
-      });
+      };
+      setData(initialData);
+      originalDataRef.current = initialData;
       setTimeout(() => {
         editorRef.current?.setContent(task?.description || '');
         feedbackEditorRef.current?.setContent(task?.final_feedback || '');
@@ -111,39 +117,65 @@ export function EditTaskDrawer() {
   }, [edit.opened, task]);
 
   const updateValue = (field, value) => {
-    setData({ ...data, [field]: value });
-
-    const dropdowns = ['labels', 'subscribed_users'];
-    const onBlurInputs = [
-      'name',
-      'email',
-      'description',
-      'final_feedback',
-      'link_file_requirement',
-      'link_file_result',
-      'fixed_price',
-    ];
-
-    if (dropdowns.includes(field)) {
-      const options = {
-        labels: value.map(id => labels.find(i => i.id === id)),
-        subscribed_users: value.map(id =>
-          usersWithAccessToProject.find(i => i.id.toString() === id)
-        ),
-      };
-      updateTaskProperty(task, field, value, options[field]);
-    } else if (!onBlurInputs.includes(field)) {
-      updateTaskProperty(task, field, value);
-    }
+    setData(prev => ({ ...prev, [field]: value }));
   };
 
-  const onBlurUpdate = property => {
-    if (data.name.length > 0) {
-      if (property === 'fixed_price') {
-        updateTaskProperty(task, property, data[property] * 100);
-      } else {
-        updateTaskProperty(task, property, data[property]);
+  const isDueOnEqual = (a, b) => {
+    const aStr = a ? dayjs(a).format('YYYY-MM-DD') : '';
+    const bStr = b ? dayjs(b).format('YYYY-MM-DD') : '';
+    return aStr === bStr;
+  };
+
+  const EDITABLE_FIELDS = [
+    'group_id',
+    'assigned_to_user_id',
+    'name',
+    'email',
+    'identity_number',
+    'job_title',
+    'description',
+    'final_feedback',
+    'link_file_requirement',
+    'link_file_result',
+    'due_on',
+    'labels',
+  ];
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+
+    if (!can('edit task') || submitting) return;
+
+    const original = originalDataRef.current || {};
+
+    const changedFields = EDITABLE_FIELDS.filter(field => {
+      if (field === 'due_on') return !isDueOnEqual(data.due_on, original.due_on);
+      if (field === 'labels') return JSON.stringify(data.labels) !== JSON.stringify(original.labels);
+      return data[field] !== original[field];
+    });
+
+    if (changedFields.length === 0) {
+      closeEditTask();
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      for (const field of changedFields) {
+        const options = field === 'labels'
+          ? data.labels.map(id => labels.find(i => i.id === id))
+          : null;
+
+        const value = field === 'due_on'
+          ? (data.due_on ? dayjs(data.due_on).format('YYYY-MM-DD') : null)
+          : data[field];
+
+        await updateTaskProperty(task, field, value, options);
       }
+
+      router.visit(route('projects.tasks', task.project_id));
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -208,7 +240,7 @@ export function EditTaskDrawer() {
               Dibuat oleh {task.created_by_user.name} pada {date(task.created_at)}
             </Text>
           </Breadcrumbs>
-          <form className={classes.inner}>
+          <form className={classes.inner} onSubmit={handleSubmit}>
             <div className={classes.content}>
                <TextInput
                 label='Kode Pelayanan'
@@ -220,7 +252,6 @@ export function EditTaskDrawer() {
                 placeholder='Nama Pemohon'
                 value={data.name}
                 onChange={e => updateValue('name', e.target.value)}
-                onBlur={() => onBlurUpdate('name')}
                 error={data.name.length === 0}
                 readOnly={!can('edit task')}
               />
@@ -232,7 +263,6 @@ export function EditTaskDrawer() {
                 mt='xl'
                 value={data.email}
                 onChange={e => updateValue('email', e.target.value)}
-                onBlur={() => onBlurUpdate('email')}
                 readOnly={!can('edit task')}
               />
               <Select
@@ -256,7 +286,6 @@ export function EditTaskDrawer() {
                 mt="xl"
                 value={data.identity_number}
                 onChange={e => updateValue('identity_number', e.target.value)}
-                onBlur={() => onBlurUpdate('identity_number')}
                 error={!data.identity_number}
                 readOnly={!can('edit task')}
               />
@@ -270,7 +299,6 @@ export function EditTaskDrawer() {
                 content={data.description}
                 height={260}
                 onChange={content => updateValue('description', content)}
-                onBlur={() => onBlurUpdate('description')}
                 readOnly={!can('edit task')}
               />
               <Text
@@ -286,16 +314,15 @@ export function EditTaskDrawer() {
                 content={data.final_feedback}
                 height={260}
                 onChange={content => updateValue('final_feedback', content)}
-                onBlur={() => onBlurUpdate('final_feedback')}
                 readOnly={!can('edit task')}
               />
+ 
               <TextInput
                 label='Link File Kebutuhan Pelayanan'
                 placeholder='Link File Kebutuhan Pelayanan'
                 mt='xl'
                 value={data.link_file_requirement}
                 onChange={e => updateValue('link_file_requirement', e.target.value)}
-                onBlur={() => onBlurUpdate('link_file_requirement')}
                 readOnly={!can('edit task')}
               />
  
@@ -305,7 +332,6 @@ export function EditTaskDrawer() {
                 mt='xl'
                 value={data.link_file_result}
                 onChange={e => updateValue('link_file_result', e.target.value)}
-                onBlur={() => onBlurUpdate('link_file_result')}
                 readOnly={!can('edit task')}
               />
 
@@ -319,6 +345,28 @@ export function EditTaskDrawer() {
               )} */}
 
               {can('view comments') && <Comments task={task} />}
+
+              <Flex justify='space-between' mt='xl'>
+                <Button
+                  type='button'
+                  variant='transparent'
+                  w={100}
+                  disabled={submitting}
+                  onClick={closeEditTask}
+                >
+                  Batal
+                </Button>
+
+                {can('edit task') && (
+                  <Button
+                    type='submit'
+                    w={170}
+                    loading={submitting}
+                  >
+                    Update Pelayanan
+                  </Button>
+                )}
+              </Flex>
             </div>
             <div className={classes.sidebar}>
               <Select
@@ -337,7 +385,6 @@ export function EditTaskDrawer() {
               <Select
                 label='Penerima Tugas'
                 placeholder='Pilih penerima tugas'
-                required
                 searchable
                 mt='md'
                 value={data.assigned_to_user_id?.toString()}
@@ -346,7 +393,6 @@ export function EditTaskDrawer() {
                   value: i.id.toString(),
                   label: i.name,
                 }))}
-                error={!data.assigned_to_user_id}
                 readOnly={!can('edit task')}
               />
 
@@ -404,7 +450,6 @@ export function EditTaskDrawer() {
                   min={0}
                   allowNegative={false}
                   onChange={value => updateValue('fixed_price', value)}
-                  onBlur={() => onBlurUpdate('fixed_price')}
                   prefix={currencySymbol}
                   readOnly={!can('edit task')}
                 />
