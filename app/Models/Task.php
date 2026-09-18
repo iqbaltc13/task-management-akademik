@@ -92,6 +92,9 @@ class Task extends Model implements AuditableContract, Sortable
         'labels:id,name,color',
         'attachments',
         'timeLogs.user:id,name',
+        'assignedUserUpdateLogs.newAssignedUser:id,name',   // ← tambahkan
+        'assignedUserUpdateLogs.oldAssignedUser:id,name',
+    
     ];
 
     public function filters(): array
@@ -185,6 +188,11 @@ class Task extends Model implements AuditableContract, Sortable
     public function groupUpdateLogs(): HasMany
     {
         return $this->hasMany(TaskGroupUpdateLog::class);
+    }
+
+    public function assignedUserUpdateLogs(): HasMany
+    {
+        return $this->hasMany(TaskAssignedUserUpdateLog::class)->oldest();
     }
 
     public function isFixedPrice(): bool

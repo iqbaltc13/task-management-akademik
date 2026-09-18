@@ -7,6 +7,8 @@ import { date } from '@/utils/datetime';
 import { hasRoles } from '@/utils/user';
 import { usePage, router } from '@inertiajs/react';
 import RichTextEditorWithCreator from '@/components/RichTextEditorWithCreator';
+import AssigneeHistoryStepper from './AssigneeHistoryStepper';
+
 import {
   Breadcrumbs,
   Button,
@@ -59,6 +61,11 @@ export function EditTaskDrawer() {
     can('edit task') ||
     (task && user?.id === task.created_by_user_id) ||
     (task && user?.id === task.assigned_to_user_id);
+
+  const assignedUserLogs = task?.assigned_user_update_logs || [];
+  const latestAssigneeLog = assignedUserLogs[assignedUserLogs.length - 1];
+  const canEditAssigneeFeedback =
+  latestAssigneeLog && user?.id?.toString() === latestAssigneeLog.new_assigned_to_user_id?.toString();
 
   const [data, setData] = useState({
     code: '',
@@ -117,10 +124,15 @@ export function EditTaskDrawer() {
       setTimeout(() => {
         editorRef.current?.setContent(task?.description || '');
         feedbackEditorRef.current?.setContent(task?.final_feedback || '');
+        const logs = task?.assigned_user_update_logs || [];
+        const latestLog = logs[logs.length - 1];
+        setAssigneeFeedback(latestLog?.feedback || '');
       }, 300);
     }
   }, [edit.opened, task]);
-
+  const [assigneeFeedback, setAssigneeFeedback] = useState('');
+  const [savingFeedback, setSavingFeedback] = useState(false);
+  const { updateAssigneeFeedback } = useTasksStore();
   const updateValue = (field, value) => {
     setData(prev => ({ ...prev, [field]: value }));
   };
@@ -184,6 +196,16 @@ export function EditTaskDrawer() {
       // Berhenti di sini: jangan lanjut ke field berikutnya, jangan redirect.
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleSaveAssigneeFeedback = async () => {
+    if (!canEditAssigneeFeedback || savingFeedback) return;
+    setSavingFeedback(true);
+    try {
+      await updateAssigneeFeedback(task, assigneeFeedback);
+    } finally {
+      setSavingFeedback(false);
     }
   };
 
@@ -318,6 +340,39 @@ export function EditTaskDrawer() {
                 onChange={content => updateValue('description', content)}
                 readOnly={!canEditTask}
               />
+
+              <Text fz='sm' fw={500} mt='xl'>
+                Feedback Penerima Tugas
+              </Text>
+              {assignedUserLogs.slice(0, -1).map((log) => (
+                log.feedback ? (
+                  <div key={log.id} className={classes.inner}>
+                    <Text size="xs" c="dimmed" mt="sm">{log.new_assigned_user?.name}</Text>
+                    <Text size="sm">{log.feedback}</Text>
+                  </div>
+                ) : null
+              ))}
+              <Textarea
+                placeholder='Feedback dari penerima tugas'
+                minRows={4}
+                autosize
+                mt='xs'
+                value={assigneeFeedback}
+                onChange={(e) => setAssigneeFeedback(e.target.value)}
+                readOnly={!canEditAssigneeFeedback}
+              />
+              {canEditAssigneeFeedback && (
+                <Button
+                  size="xs"
+                  variant="light"
+                  mt="xs"
+                  loading={savingFeedback}
+                  onClick={handleSaveAssigneeFeedback}
+                >
+                  Simpan Feedback
+                </Button>
+              )}
+
               <Text
                 fz='sm'
                 fw={500}
@@ -512,6 +567,11 @@ export function EditTaskDrawer() {
                 // readOnly={!canEditTask}
                 readOnly={true}
               />
+
+              <Text fz='sm' fw={500} mt='lg'>
+                Riwayat Penerima Tugas
+              </Text>
+              <AssigneeHistoryStepper logs={assignedUserLogs} />
             </div>
           </form>
         </>

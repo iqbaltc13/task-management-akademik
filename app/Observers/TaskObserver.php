@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Task;
 use App\Models\TaskGroupUpdateLog;
+use App\Models\TaskAssignedUserUpdateLog;
 
 class TaskObserver
 {
@@ -22,6 +23,12 @@ class TaskObserver
         if ($task->assigned_to_user_id !== null) {
             $task->assigned_at = now();
             $task->saveQuietly();
+            TaskAssignedUserUpdateLog::create([
+                'task_id' => $task->id,
+                'old_assigned_to_user_id' => null,
+                'new_assigned_to_user_id' => $task->assigned_to_user_id,
+                'changed_by_user_id' => auth()->id(),
+            ]);
         }
 
         if ($task->group_id !== null) {
@@ -67,6 +74,12 @@ class TaskObserver
 
             $task->assigned_at = now();
             $task->saveQuietly();
+            TaskAssignedUserUpdateLog::create([
+                'task_id' => $task->id,
+                'old_assigned_to_user_id' => $task->getOriginal('assigned_to_user_id'),
+                'new_assigned_to_user_id' => $task->assigned_to_user_id,
+                'changed_by_user_id' => auth()->id(),
+            ]);
         }
         if ($task->isDirty('due_on')) {
             $task->activities()->create([

@@ -60,7 +60,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('{project}/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete')->scopeBindings();
         Route::post('{project}/tasks/reorder', [TaskController::class, 'reorder'])->name('tasks.reorder');
         Route::post('{project}/tasks/move', [TaskController::class, 'move'])->name('tasks.move');
-
+        Route::put('{project}/tasks/{task}/assignee-feedback', [TaskController::class, 'updateAssigneeFeedback'])
+        ->name('tasks.assignee-feedback')
+        ->scopeBindings();
         // ATTACHMENTS
         Route::group(['prefix' => '{project}/tasks/{task}', 'as' => 'tasks.'], function () {
             Route::post('attachments/upload', [AttachmentController::class, 'store'])->name('attachments.upload');

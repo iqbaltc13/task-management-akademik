@@ -92,6 +92,7 @@ class TaskController extends Controller
         return response()->json();
     }
 
+
     public function reorder(Request $request, Project $project): JsonResponse
     {
         $this->authorize('reorder', [Task::class, $project]);
@@ -177,5 +178,20 @@ class TaskController extends Controller
         TaskRestored::dispatch($task);
 
         return redirect()->back()->success('Permintaan dipulihkan', 'pemulihan permintaan berhasil.');
+    }
+
+    public function updateAssigneeFeedback(Request $request, Project $project, Task $task): JsonResponse
+    {
+        $request->validate(['feedback' => 'nullable|string']);
+
+        $latestLog = $task->assignedUserUpdateLogs()->latest('created_at')->first();
+
+        if (! $latestLog || (string) $latestLog->new_assigned_to_user_id !== (string) auth()->id()) {
+            abort(403, 'Hanya penerima tugas saat ini yang bisa mengisi feedback ini.');
+        }
+
+        $latestLog->update(['feedback' => $request->feedback]);
+
+        return response()->json(['feedback' => $latestLog->feedback]);
     }
 }

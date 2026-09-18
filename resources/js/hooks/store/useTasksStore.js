@@ -64,6 +64,19 @@ const useTasksStore = create((set, get) => ({
       throw e;
     }
   },
+  updateAssigneeFeedback: async (task, feedback) => {
+    try {
+      const res = await axios.put(
+        route('projects.tasks.assignee-feedback', [task.project_id, task.id]),
+        { feedback },
+      );
+      return res.data.feedback;
+    } catch (e) {
+      console.error(e);
+      alert('Gagal menyimpan feedback penerima tugas');
+      throw e;
+    }
+  },
   complete: (task, checked) => {
     const newState = checked ? true : null;
     const index = get().tasks[task.group_id].findIndex((i) => i.id === task.id);
