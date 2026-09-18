@@ -352,7 +352,7 @@ export function EditTaskDrawer() {
                   </div>
                 ) : null
               ))}
-              <Textarea
+              <RichTextEditorWithCreator
                 placeholder='Feedback dari penerima tugas'
                 minRows={4}
                 autosize
