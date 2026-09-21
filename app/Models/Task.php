@@ -192,7 +192,7 @@ class Task extends Model implements AuditableContract, Sortable
 
     public function assignedUserUpdateLogs(): HasMany
     {
-        return $this->hasMany(TaskAssignedUserUpdateLog::class)->oldest();
+        return $this->hasMany(TaskAssignedUserUpdateLog::class)->orderBy('id');
     }
 
     public function isFixedPrice(): bool

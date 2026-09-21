@@ -184,7 +184,7 @@ class TaskController extends Controller
     {
         $request->validate(['feedback' => 'nullable|string']);
 
-        $latestLog = $task->assignedUserUpdateLogs()->latest('created_at')->first();
+        $latestLog = $task->assignedUserUpdateLogs()->orderByDesc('id')->first();
 
         if (! $latestLog || (string) $latestLog->new_assigned_to_user_id !== (string) auth()->id()) {
             abort(403, 'Hanya penerima tugas saat ini yang bisa mengisi feedback ini.');
