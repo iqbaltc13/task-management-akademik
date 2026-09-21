@@ -89,7 +89,11 @@ class TaskController extends Controller
 
         (new UpdateTask)->update($task, $request->validated());
 
-        return response()->json();
+        return response()->json([
+            'assigned_user_update_logs' => $task->assignedUserUpdateLogs()
+                ->with(['newAssignedUser:id,name', 'oldAssignedUser:id,name'])
+                ->get(),
+        ]);
     }
 
 

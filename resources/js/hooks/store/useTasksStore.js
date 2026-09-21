@@ -36,32 +36,31 @@ const useTasksStore = create((set, get) => ({
   },
   updateTaskProperty: async (task, property, value, options = null) => {
     try {
-      await axios
-        .put(
-          route("projects.tasks.update", [task.project_id, task.id]),
-          { [property]: value },
-          { progress: false },
-        );
+      const res = await axios.put(
+        route("projects.tasks.update", [task.project_id, task.id]),
+        { [property]: value },
+        { progress: false },
+      );
 
       return set(produce(state => {
         const index = state.tasks[task.group_id].findIndex((i) => i.id === task.id);
 
         if (property === 'group_id' && task.group_id !== value) {
           const result = move(state.tasks, task.group_id, value, index, 0);
-
           state.tasks[task.group_id] = result[task.group_id];
           state.tasks[value] = result[value];
-
           state.tasks[value][0][property] = value;
         } else {
           state.tasks[task.group_id][index][property] = options || value;
         }
+
+        if (property === 'assigned_to_user_id' && res.data?.assigned_user_update_logs) {
+          state.tasks[task.group_id][index].assigned_user_update_logs = res.data.assigned_user_update_logs;
+        }
       }));
     } catch (e) {
       console.error(e);
-      const message = e.response?.data?.message || "Failed to save task property change";
-      alert(message);
-      throw e;
+      alert("Failed to save task property change");
     }
   },
   updateAssigneeFeedback: async (task, feedback) => {
