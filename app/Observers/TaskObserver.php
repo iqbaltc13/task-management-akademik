@@ -71,15 +71,15 @@ class TaskObserver
                     ? "\"{$task->name}\" ditugaskan ke {$task->assignedToUser->name} oleh ".auth()->user()->name
                     : "pada permintaan \"{$task->name}\" oleh ".auth()->user()->name,
             ]);
-
-            $task->assigned_at = now();
-            $task->saveQuietly();
             TaskAssignedUserUpdateLog::create([
                 'task_id' => $task->id,
                 'old_assigned_to_user_id' => $task->getOriginal('assigned_to_user_id'),
                 'new_assigned_to_user_id' => $task->assigned_to_user_id,
                 'changed_by_user_id' => auth()->id(),
             ]);
+            $task->assigned_at = now();
+            $task->saveQuietly();
+            
         }
         if ($task->isDirty('due_on')) {
             $task->activities()->create([
