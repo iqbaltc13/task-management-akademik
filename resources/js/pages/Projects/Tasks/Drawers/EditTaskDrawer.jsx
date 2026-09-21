@@ -342,26 +342,38 @@ export function EditTaskDrawer() {
                 onChange={content => updateValue('description', content)}
                 readOnly={!canEditTask}
               />
+              {assignedUserLogs.map((log, idx) => {
+                const isLatest = idx === assignedUserLogs.length - 1;
+                const canEditThis = isLatest && canEditAssigneeFeedback;
+                const assigneeName = log.new_assigned_user?.name || '(tidak diketahui)';
 
-              <Text fz='sm' fw={500} mt='xl'>
-                Feedback Penerima Tugas
-              </Text>
-              {assignedUserLogs.slice(0, -1).map((log) => (
-                log.feedback ? (
-                  <div key={log.id} className={classes.inner}>
-                    <Text size="xs" c="dimmed" mt="sm">{log.new_assigned_user?.name}</Text>
-                    <Text size="sm">{log.feedback}</Text>
+                return (
+                  <div key={log.id}>
+                    <Text fz='sm' fw={500} mt='xl'>
+                      Feedback Penerima Tugas ({assigneeName})
+                    </Text>
+                    <RichTextEditorWithCreator
+                      ref={isLatest ? assigneeFeedbackEditorRef : null}
+                      placeholder='Feedback dari penerima tugas'
+                      content={isLatest ? assigneeFeedback : (log.feedback || '')}
+                      height={160}
+                      onChange={isLatest ? (content) => setAssigneeFeedback(content) : undefined}
+                      readOnly={!canEditThis}
+                    />
+                    {canEditThis && (
+                      <Button
+                        size="xs"
+                        variant="light"
+                        mt="xs"
+                        loading={savingFeedback}
+                        onClick={handleSaveAssigneeFeedback}
+                      >
+                        Simpan Feedback
+                      </Button>
+                    )}
                   </div>
-                ) : null
-              ))}
-              <RichTextEditorWithCreator
-                ref={assigneeFeedbackEditorRef}
-                placeholder='Feedback dari penerima tugas'
-                content={assigneeFeedback}
-                height={200}
-                onChange={content => setAssigneeFeedback(content)}
-                readOnly={!canEditAssigneeFeedback}
-              />
+                );
+              })}
               {canEditAssigneeFeedback && (
                 <Button
                   size="xs"
