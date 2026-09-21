@@ -35,6 +35,7 @@ import { PricingType } from '@/utils/enums';
 export function EditTaskDrawer() {
   const editorRef = useRef(null);
   const feedbackEditorRef = useRef(null);
+  const assigneeFeedbackEditorRef = useRef(null);
   const originalDataRef = useRef(null);
   const [submitting, setSubmitting] = useState(false);
   const { edit, openEditTask, closeEditTask } = useTaskDrawerStore();
@@ -124,6 +125,7 @@ export function EditTaskDrawer() {
       setTimeout(() => {
         editorRef.current?.setContent(task?.description || '');
         feedbackEditorRef.current?.setContent(task?.final_feedback || '');
+        assigneeFeedbackEditorRef.current?.setContent(latestLog?.feedback || '');
         const logs = task?.assigned_user_update_logs || [];
         const latestLog = logs[logs.length - 1];
         setAssigneeFeedback(latestLog?.feedback || '');
@@ -353,12 +355,11 @@ export function EditTaskDrawer() {
                 ) : null
               ))}
               <RichTextEditorWithCreator
+                ref={assigneeFeedbackEditorRef}
                 placeholder='Feedback dari penerima tugas'
-                minRows={4}
-                autosize
-                mt='xs'
-                value={assigneeFeedback}
-                onChange={(e) => setAssigneeFeedback(e.target.value)}
+                content={assigneeFeedback}
+                height={200}
+                onChange={content => setAssigneeFeedback(content)}
                 readOnly={!canEditAssigneeFeedback}
               />
               {canEditAssigneeFeedback && (
