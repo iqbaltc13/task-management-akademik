@@ -233,7 +233,7 @@ class TaskController extends Controller
     {
         $request->validate(['feedback' => 'nullable|string']);
 
-        $latestLog = $task->assignedUserUpdateLogs()->orderByDesc('id')->first();
+        $latestLog = $task->assignedUserUpdateLogs()->reorder('id', 'desc')->first();
 
         \Log::info('assignee-feedback debug', [
             'auth_id' => auth()->id(),
