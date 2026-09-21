@@ -190,6 +190,14 @@ class TaskController extends Controller
 
         $latestLog = $task->assignedUserUpdateLogs()->orderByDesc('id')->first();
 
+        \Log::info('assignee-feedback debug', [
+            'auth_id' => auth()->id(),
+            'auth_id_type' => gettype(auth()->id()),
+            'latest_log_new_assigned' => $latestLog?->new_assigned_to_user_id,
+            'latest_log_id' => $latestLog?->id,
+            'match' => $latestLog ? ((string) $latestLog->new_assigned_to_user_id === (string) auth()->id()) : null,
+        ]);
+
         if (! $latestLog || (string) $latestLog->new_assigned_to_user_id !== (string) auth()->id()) {
             abort(403, 'Hanya penerima tugas saat ini yang bisa mengisi feedback ini.');
         }
