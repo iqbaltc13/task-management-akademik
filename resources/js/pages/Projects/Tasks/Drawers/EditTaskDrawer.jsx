@@ -372,17 +372,7 @@ export function EditTaskDrawer() {
                   </div>
                 );
               })}
-              {canEditAssigneeFeedback && (
-                <Button
-                  size="xs"
-                  variant="light"
-                  mt="xs"
-                  loading={savingFeedback}
-                  onClick={handleSaveAssigneeFeedback}
-                >
-                  Simpan Feedback
-                </Button>
-              )}
+             
 
               <Text
                 fz='sm'
