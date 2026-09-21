@@ -21,7 +21,7 @@ export function ProjectCard({ project }) {
           <Group justify="space-between">
             <Title
               fz={24}
-              onClick={() => redirectTo("projects.tasks", project.id)}
+              onClick={() => redirectTo("projects.tasks.table", project.id)}
               className={classes.link}
             >
               {project.favorite && (

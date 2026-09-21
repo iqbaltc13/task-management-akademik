@@ -72,6 +72,51 @@ class TaskController extends Controller
             ],
         ]);
     }
+    public function table(Request $request, Project $project): Response
+    {
+        $this->authorize('viewAny', [Task::class, $project]);
+ 
+        return Inertia::render('Projects/Tasks/TableIndex', [
+            'project' => $project,
+            'usersWithAccessToProject' => PermissionService::usersWithAccessToProject($project),
+            'filters' => $request->only([
+                'search', 'sort', 'direction', 'created_by_user_id', 'assigned_to_user_id', 'created_from', 'created_to', 'page', 'per_page',
+            ]),
+        ]);
+    }
+ 
+    /**
+     * Endpoint JSON server-side: sort, search, filter, dan pagination semuanya
+     * diproses di backend. Dipanggil lewat axios, bukan Inertia page visit.
+     */
+    public function tableData(Request $request, Project $project): JsonResponse
+    {
+        $this->authorize('viewAny', [Task::class, $project]);
+ 
+        $allowedSorts = ['number', 'name', 'code', 'created_at', 'due_on'];
+        $sort = in_array($request->input('sort'), $allowedSorts, true) ? $request->input('sort') : 'created_at';
+        $direction = $request->input('direction') === 'asc' ? 'asc' : 'desc';
+ 
+        $tasks = Task::query()
+            ->select('tasks.*')
+            ->selectRaw("ROW_NUMBER() OVER (ORDER BY {$sort} {$direction}) as row_number")
+            ->where('project_id', $project->id)
+            ->with([
+                'createdByUser:id,name',
+                'assignedToUser:id,name',
+                'taskGroup:id,name',
+            ])
+            ->searchByQueryString()
+            ->when($request->filled('created_by_user_id'), fn ($query) => $query->where('created_by_user_id', $request->created_by_user_id))
+            ->when($request->filled('assigned_to_user_id'), fn ($query) => $query->where('assigned_to_user_id', $request->assigned_to_user_id))
+            ->when($request->filled('created_from'), fn ($query) => $query->whereDate('created_at', '>=', $request->created_from))
+            ->when($request->filled('created_to'), fn ($query) => $query->whereDate('created_at', '<=', $request->created_to))
+            ->when($request->has('archived'), fn ($query) => $query->onlyArchived())
+            ->orderBy($sort, $direction)
+            ->paginate($request->input('per_page', 15));
+ 
+        return response()->json($tasks);
+    }
 
     public function store(StoreTaskRequest $request, Project $project): RedirectResponse
     {
