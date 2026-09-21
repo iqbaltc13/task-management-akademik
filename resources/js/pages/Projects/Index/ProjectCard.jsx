@@ -12,7 +12,7 @@ export default function ProjectCard({ item }) {
 
   return (
     <Link
-      href={route("projects.tasks", item.id)}
+      href={route("projects.tasks.table", item.id)}
       className={classes.link}
       onClick={stopOnIgnoreLink}
     >
