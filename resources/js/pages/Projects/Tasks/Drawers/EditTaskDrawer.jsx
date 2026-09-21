@@ -122,13 +122,11 @@ export function EditTaskDrawer() {
       };
       setData(initialData);
       originalDataRef.current = initialData;
-      setTimeout(() => {
+     setTimeout(() => {
         editorRef.current?.setContent(task?.description || '');
         feedbackEditorRef.current?.setContent(task?.final_feedback || '');
-        assigneeFeedbackEditorRef.current?.setContent(latestLog?.feedback || '');
-        const logs = task?.assigned_user_update_logs || [];
-        const latestLog = logs[logs.length - 1];
-        setAssigneeFeedback(latestLog?.feedback || '');
+        assigneeFeedbackEditorRef.current?.setContent(latestAssigneeLog?.feedback || '');
+        setAssigneeFeedback(latestAssigneeLog?.feedback || '');
       }, 300);
     }
   }, [edit.opened, task]);
