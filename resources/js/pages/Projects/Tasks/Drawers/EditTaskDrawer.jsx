@@ -209,6 +209,66 @@ export function EditTaskDrawer() {
     }
   };
 
+  const handlePrintPelayanan = () => {
+    const win = window.open('', '_blank', 'width=400,height=600');
+    if (!win) return;
+
+    const periode = task?.project?.name || dayjs().format('YYYY');
+
+    win.document.write(`
+      <html>
+        <head>
+          <title>Cetak Pelayanan</title>
+          <style>
+            @page { size: 80mm auto; margin: 0; }
+            body {
+              font-family: 'Courier New', monospace;
+              width: 76mm;
+              margin: 0 auto;
+              padding: 8px 4px;
+              font-size: 12px;
+              text-align: center;
+            }
+            .header {
+              font-weight: bold;
+              font-size: 13px;
+              line-height: 1.4;
+            }
+            .divider {
+              border-top: 1px dashed #000;
+              margin: 10px 0;
+            }
+            .nama {
+              font-size: 14px;
+              margin-bottom: 12px;
+            }
+            .code-label {
+              font-size: 10px;
+              color: #555;
+              margin-bottom: 2px;
+            }
+            .code {
+              font-size: 24px;
+              font-weight: bold;
+              letter-spacing: 1px;
+              word-break: break-all;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">Pelayanan Akademik UIN Syekh Wasil Kediri ${periode}</div>
+          <div class="divider"></div>
+          <div class="nama">${task?.name || ''}</div>
+          <div class="code-label">Kode Pelayanan</div>
+          <div class="code">${task?.code || ''}</div>
+        </body>
+      </html>
+    `);
+    win.document.close();
+    win.focus();
+    win.print();
+  };
+
   const pricingTypes = [
     { value: PricingType.HOURLY, label: 'Hourly' },
     { value: PricingType.FIXED, label: 'Fixed' },
@@ -222,27 +282,34 @@ export function EditTaskDrawer() {
       opened={edit.opened}
       onClose={closeEditTask}
       title={
-        <Group
-          ml={25}
-          my='sm'
-          wrap='nowrap'
-        >
-          <Checkbox
-            size='md'
-            radius='xl'
-            color='green'
-            checked={task?.completed_at !== null}
-            onChange={e => complete(task, e.currentTarget.checked)}
-            className={can('complete task') ? classes.checkbox : classes.disabledCheckbox}
-          />
-          <Text
-            fz={rem(27)}
-            fw={600}
-            lh={1.2}
-            td={task?.completed_at !== null ? 'line-through' : null}
+        <Group ml={25} my='sm' wrap='nowrap' justify='space-between' style={{ width: '100%' }}>
+          <Group wrap='nowrap'>
+            <Checkbox
+              size='md'
+              radius='xl'
+              color='green'
+              checked={task?.completed_at !== null}
+              onChange={e => complete(task, e.currentTarget.checked)}
+              className={can('complete task') ? classes.checkbox : classes.disabledCheckbox}
+            />
+            <Text
+              fz={rem(27)}
+              fw={600}
+              lh={1.2}
+              td={task?.completed_at !== null ? 'line-through' : null}
+            >
+              #{task?.number}: {data.name}
+            </Text>
+          </Group>
+
+          <Button
+            variant='light'
+            size='xs'
+            mr='md'
+            onClick={handlePrintPelayanan}
           >
-            #{task?.number}: {data.name}
-          </Text>
+            Cetak Pelayanan
+          </Button>
         </Group>
       }
       position='right'
