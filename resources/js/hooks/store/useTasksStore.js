@@ -17,10 +17,15 @@ const useTasksStore = create((set, get) => ({
   setTasks: (tasks) => set(() => ({ tasks: { ...tasks } })),
   addTask: (task) => {
     return set(produce(state => {
+      if (!state.tasks[task.group_id]) {
+        state.tasks[task.group_id] = [];
+      }
       const index = state.tasks[task.group_id].findIndex((i) => i.id === task.id);
 
       if (index === -1) {
         state.tasks[task.group_id] = [...state.tasks[task.group_id], task];
+      } else {
+        state.tasks[task.group_id][index] = task;
       }
     }));
   },
