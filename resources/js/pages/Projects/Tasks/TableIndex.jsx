@@ -187,16 +187,14 @@ export default function TableIndex() {
     });
   };
 
-  const handleEdit = (task) => {
-    const handleEdit = async (task) => {
-      try {
-        const res = await axios.get(route("projects.tasks.detail-json", [task.project_id, task.id]));
-        addTask(res.data);
-        openEditTask(res.data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
+  const handleEdit = async (task) => {
+    try {
+      const res = await axios.get(route("projects.tasks.detail-json", [task.project_id, task.id]));
+      addTask(res.data);
+      openEditTask(res.data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const userOptions = usersWithAccessToProject.map((u) => ({
