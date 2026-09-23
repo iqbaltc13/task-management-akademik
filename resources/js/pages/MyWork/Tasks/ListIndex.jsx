@@ -75,8 +75,8 @@ function Th({ label, field, params, onSort }) {
 
 export default function ListIndex() {
   const { projects } = usePage().props;
-
-  const [params, setParams] = useState({ ...DEFAULT_PARAMS });
+  const initialType = new URLSearchParams(window.location.search).get("type") || "active";
+  const [params, setParams] = useState({ ...DEFAULT_PARAMS, type: initialType });
   const [searchInput, setSearchInput] = useState("");
   const [page, setPage] = useState(null);
   const [loading, setLoading] = useState(true);
