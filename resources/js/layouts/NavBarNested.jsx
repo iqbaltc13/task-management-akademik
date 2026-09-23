@@ -44,12 +44,36 @@ export default function Sidebar() {
         opened: route().current("my-work.*"),
         visible: can("view tasks") || can("view activities"),
         links: [
-          {
-            label: "Pelayanan",
-            link: route("my-work.tasks.index"),
-            active: route().current("my-work.tasks.*"),
+           {
+            label: "Pelayanan Aktif",
+            link: route("my-work.tasks.list", { type: "active" }),
+            active: route().current("my-work.tasks.list") && route().params.type === "active",
             visible: can("view tasks"),
           },
+          {
+            label: "Pelayanan Selesai",
+            link: route("my-work.tasks.list", { type: "completed" }),
+            active: route().current("my-work.tasks.list") && route().params.type === "completed",
+            visible: can("view tasks"),
+          },
+          {
+            label: "Pelayanan Saya Terima",
+            link: route("my-work.tasks.list", { type: "received" }),
+            active: route().current("my-work.tasks.list") && route().params.type === "received",
+            visible: can("view tasks"),
+          },
+          {
+            label: "Pelayanan Dialihkan",
+            link: route("my-work.tasks.list", { type: "transferred" }),
+            active: route().current("my-work.tasks.list") && route().params.type === "transferred",
+            visible: can("view tasks"),
+          },
+          // {
+          //   label: "Pelayanan",
+          //   link: route("my-work.tasks.index"),
+          //   active: route().current("my-work.tasks.*"),
+          //   visible: can("view tasks"),
+          // },
           {
             label: "Aktivitas",
             link: route("my-work.activity.index"),

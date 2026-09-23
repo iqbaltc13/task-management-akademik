@@ -90,6 +90,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // My Work
     Route::group(['prefix' => 'my-work', 'as' => 'my-work.'], function () {
         Route::get('tasks', [MyWorkTaskController::class, 'index'])->name('tasks.index');
+        Route::get('tasks/list', [MyWorkTaskController::class, 'list'])->name('tasks.list');
+        Route::get('tasks/list/data', [MyWorkTaskController::class, 'listData'])->name('tasks.list.data');
+        Route::get('tasks/list/export/xlsx', [MyWorkTaskController::class, 'listExportXlsx'])->name('tasks.list.export.xlsx');
+        Route::get('tasks/list/export/pdf', [MyWorkTaskController::class, 'listExportPdf'])->name('tasks.list.export.pdf');
         Route::get('activity', [ActivityController::class, 'index'])->name('activity.index');
     });
 
