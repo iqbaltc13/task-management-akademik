@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MyWorkTaskController extends Controller
 {
@@ -122,7 +122,7 @@ class MyWorkTaskController extends Controller
             ]);
     }
 
-    public function listExportXlsx(Request $request): StreamedResponse
+    public function listExportXlsx(Request $request): BinaryFileResponse
     {
         return \Maatwebsite\Excel\Facades\Excel::download(
             new \App\Exports\TaskListExport($this->exportRows($request)),
