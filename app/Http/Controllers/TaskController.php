@@ -74,11 +74,21 @@ class TaskController extends Controller
     }
     public function table(Request $request, Project $project): Response
     {
-        $this->authorize('viewAny', [Task::class, $project]);
- 
+        
+    $this->authorize('viewAny', [Task::class, $project]);
+
+        $jobTitles = JobTitle::select('code', 'name')->orderBy('name')->get();
+        $ownerCompany = OwnerCompany::with('currency')->first();
+
         return Inertia::render('Projects/Tasks/TableIndex', [
             'project' => $project,
             'usersWithAccessToProject' => PermissionService::usersWithAccessToProject($project),
+            'labels' => Label::get(['id', 'name', 'color']),
+            'taskGroups' => $project->taskGroups()->get(),
+            'jobTitles' => $jobTitles,
+            'currency' => [
+                'symbol' => $ownerCompany ? $ownerCompany->currency->symbol : "",
+            ],
             'filters' => $request->only([
                 'search', 'sort', 'direction', 'created_by_user_id', 'assigned_to_user_id', 'created_from', 'created_to', 'page', 'per_page',
             ]),
