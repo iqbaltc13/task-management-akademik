@@ -8,6 +8,8 @@ import { hasRoles } from '@/utils/user';
 import { usePage, router } from '@inertiajs/react';
 import RichTextEditorWithCreator from '@/components/RichTextEditorWithCreator';
 import AssigneeHistoryStepper from './AssigneeHistoryStepper';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
 
 import {
   Breadcrumbs,
@@ -190,7 +192,14 @@ export function EditTaskDrawer() {
         await updateTaskProperty(task, field, value, options);
       }
 
-      router.visit(route('projects.tasks', task.project_id));
+       notifications.show({
+        color: 'green',
+        icon: <IconCheck size={18} />,
+        title: 'Pelayanan diperbarui',
+        message: 'Perubahan berhasil disimpan.',
+      });
+
+      closeEditTask();
     } catch (e) {
       // Alert dengan pesan asli dari backend sudah ditampilkan oleh updateTaskProperty.
       // Berhenti di sini: jangan lanjut ke field berikutnya, jangan redirect.
@@ -204,6 +213,12 @@ export function EditTaskDrawer() {
     setSavingFeedback(true);
     try {
       await updateAssigneeFeedback(task, assigneeFeedback);
+      notifications.show({
+        color: 'green',
+        icon: <IconCheck size={18} />,
+        title: 'Feedback disimpan',
+        message: 'Feedback penerima tugas berhasil disimpan.',
+      });
     } finally {
       setSavingFeedback(false);
     }
