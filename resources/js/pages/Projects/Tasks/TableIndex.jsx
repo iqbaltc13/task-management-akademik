@@ -2,6 +2,11 @@ import { openConfirmModal } from "@/components/ConfirmModal";
 import Layout from "@/layouts/MainLayout";
 import { router, usePage } from "@inertiajs/react";
 import { DatePickerInput } from "@mantine/dates";
+import { CreateTaskDrawer } from "./Drawers/CreateTaskDrawer";
+import { EditTaskDrawer } from "./Drawers/EditTaskDrawer";
+import useTaskDrawerStore from "@/hooks/store/useTaskDrawerStore";
+import useTasksStore from "@/hooks/store/useTasksStore";
+import { IconPlus } from "@tabler/icons-react"; 
 import {
   ActionIcon,
   Badge,
@@ -82,6 +87,28 @@ export default function TableIndex() {
 
   const requestId = useRef(0);
 
+  const { edit, create, openCreateTask, openEditTask } = useTaskDrawerStore();
+  const { addTask } = useTasksStore();
+
+  const paramsRef = useRef(params);
+  useEffect(() => { paramsRef.current = params; }, [params]);
+
+  const prevEditOpened = useRef(edit.opened);
+  useEffect(() => {
+    if (prevEditOpened.current && !edit.opened) {
+      fetchData(paramsRef.current); // drawer edit baru ditutup → refresh baris tabel
+    }
+    prevEditOpened.current = edit.opened;
+  }, [edit.opened]);
+
+  const prevCreateOpened = useRef(create.opened);
+  useEffect(() => {
+    if (prevCreateOpened.current && !create.opened) {
+      fetchData(paramsRef.current); // drawer create baru ditutup → refresh baris tabel
+    }
+    prevCreateOpened.current = create.opened;
+  }, [create.opened]);
+
   // Server-side fetch: satu-satunya sumber data tabel ini.
   const fetchData = async (nextParams) => {
     const thisRequest = ++requestId.current;
@@ -160,7 +187,15 @@ export default function TableIndex() {
   };
 
   const handleEdit = (task) => {
-    router.visit(route("projects.tasks.open", [task.project_id, task.id]));
+    const handleEdit = async (task) => {
+      try {
+        const res = await axios.get(route("projects.tasks.detail-json", [task.project_id, task.id]));
+        addTask(res.data);
+        openEditTask(res.data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
   };
 
   const userOptions = usersWithAccessToProject.map((u) => ({
@@ -228,6 +263,13 @@ export default function TableIndex() {
       <Grid justify="space-between" align="center" mb="lg">
         <Grid.Col span="content">
           <Title order={1}>{project.name}</Title>
+        </Grid.Col>
+        <Grid.Col span="content">
+          {can("create task") && (
+            <Button leftSection={<IconPlus size={16} />} onClick={() => openCreateTask()}>
+              Tambah Pelayanan
+            </Button>
+          )}
         </Grid.Col>
       </Grid>
 
@@ -325,6 +367,19 @@ export default function TableIndex() {
           />
         </Group>
       )}
+
+      {page && page.last_page > 1 && (
+        <Group justify="flex-end" mt="lg">
+          <Pagination
+            total={page.last_page}
+            value={page.current_page}
+            onChange={(value) => updateParams({ page: value })}
+          />
+        </Group>
+      )}
+
+      {can("create task") && <CreateTaskDrawer />}
+      <EditTaskDrawer />
     </>
   );
 }
