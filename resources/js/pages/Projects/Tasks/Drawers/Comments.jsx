@@ -14,6 +14,8 @@ import {
   Title,
   Tooltip,
 } from "@mantine/core";
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from "react";
 import classes from "./css/Comments.module.css";
 
@@ -50,7 +52,17 @@ export default function Comments({ task }) {
           variant="filled"
           mt="md"
           disabled={comment.length <= 7}
-          onClick={() => saveComment(task, comment, () => editorRef.current.setContent(""))}
+          onClick={() =>
+            saveComment(task, comment, () => {
+              editorRef.current.setContent("");
+              notifications.show({
+                color: 'green',
+                icon: <IconCheck size={18} />,
+                title: 'Komentar ditambahkan',
+                message: 'Komentar berhasil disimpan.',
+              });
+            })
+          }
         >
           Tambah Komentar
         </Button>
