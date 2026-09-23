@@ -239,6 +239,13 @@ class TaskController extends Controller
         return redirect()->back()->success('Permintaan dipulihkan', 'pemulihan permintaan berhasil.');
     }
 
+    public function showJson(Project $project, Task $task): JsonResponse
+    {
+        $this->authorize('update', [$task, $project]);
+
+        return response()->json($task->loadDefault());
+    }
+
     public function updateAssigneeFeedback(Request $request, Project $project, Task $task): JsonResponse
     {
         $request->validate(['feedback' => 'nullable|string']);

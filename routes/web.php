@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::put('{project}/tasks/{task}/assignee-feedback', [TaskController::class, 'updateAssigneeFeedback'])
         ->name('tasks.assignee-feedback')
         ->scopeBindings();
+        Route::get('{project}/tasks/{task}/detail-json', [TaskController::class, 'showJson'])->name('tasks.detail-json')->scopeBindings();
         // ATTACHMENTS
         Route::group(['prefix' => '{project}/tasks/{task}', 'as' => 'tasks.'], function () {
             Route::post('attachments/upload', [AttachmentController::class, 'store'])->name('attachments.upload');
