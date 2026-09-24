@@ -37,7 +37,12 @@ export default function Footer() {
         <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={50}>
           {/* Kolom 1: Logo + deskripsi */}
           <Stack align="center" ta="center" gap="xs">
-            <img src="/images/logo.png" alt="Logo" width={100} />
+            <img
+            src="https://akademik.iainkediri.ac.id/assets/uploads/setting/a72bc10b40b86bd77122c05ca88e9ff9.png"
+            alt="Logo"
+            width={81}
+            height={100}
+            />
             <Title order={4} c="white" mt="sm">Tentang Kami</Title>
             <Text size="sm" c="dimmed">
               Menghasilkan Sarjana berkualitas dan professional dalam bidang
