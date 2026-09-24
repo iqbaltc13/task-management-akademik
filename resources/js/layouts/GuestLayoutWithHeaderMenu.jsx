@@ -59,22 +59,26 @@ export default function GuestLayoutWithHeaderMenu({ title, children }) {
     </UnstyledButton>
   ));
 
-  return (
+    return (
     <>
       <Head title={title} />
       <FlashNotification />
-      <header className={classes.header}>
-        <Group justify="space-between" h="100%">
-          <Text fw={700}>Worklane Akademik</Text>
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <Link href="/" className={classes.link}>Home</Link>
-          </Group>
-          <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
-        </Group>
-      </header>
 
-      <main>{children}</main>
-      <Footer />
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <header className={classes.header}>
+          <Group justify="space-between" h="100%">
+            <Text fw={700}>Worklane Akademik</Text>
+            <Group h="100%" gap={0} visibleFrom="sm">
+              <Link href="/" className={classes.link}>Home</Link>
+            </Group>
+            <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
+          </Group>
+        </header>
+
+        <main style={{ flex: 1 }}>{children}</main>
+
+        <Footer />
+      </div>
     </>
   );
 }
