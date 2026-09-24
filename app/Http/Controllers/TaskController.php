@@ -16,7 +16,7 @@ use App\Models\OwnerCompany;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskGroup;
-use App\Models\TaskGroupUpdateLog;   // ← tambahkan ini
+use App\Models\TaskGroupUpdateLog;  
 use App\Models\JobTitle;
 use App\Services\PermissionService;
 use Illuminate\Http\JsonResponse;
@@ -24,6 +24,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\MasterJenisPelayanan;
 
 class TaskController extends Controller
 {
@@ -67,6 +68,7 @@ class TaskController extends Controller
             'jobTitles' => $jobTitles,
             'groupedTasks' => $groupedTasks,
             'openedTask' => $task ? $task->loadDefault() : null,
+            'masterJenisPelayanans' => MasterJenisPelayanan::select('code', 'name')->orderBy('name')->get(),
             'currency' => [
                 'symbol' => $ownerCompany? $ownerCompany->currency->symbol : "",
             ],
@@ -86,6 +88,7 @@ class TaskController extends Controller
             'labels' => Label::get(['id', 'name', 'color']),
             'taskGroups' => $project->taskGroups()->get(),
             'jobTitles' => $jobTitles,
+            'masterJenisPelayanans' => MasterJenisPelayanan::select('code', 'name')->orderBy('name')->get(),
             'currency' => [
                 'symbol' => $ownerCompany ? $ownerCompany->currency->symbol : "",
             ],

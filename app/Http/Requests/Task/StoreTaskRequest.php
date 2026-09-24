@@ -44,6 +44,7 @@ class StoreTaskRequest extends FormRequest
             'job_title' => ['required', 'string','exists:job_titles,code'],
             'identity_number' => ['required', 'string'],
             'final_feedback' => ['nullable'],
+            'code_jenis_pelayanan' => ['required', 'string','exists:master_jenis_pelayanans,code'],
         ];
     }
 }

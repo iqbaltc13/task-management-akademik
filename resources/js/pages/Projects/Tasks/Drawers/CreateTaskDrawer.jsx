@@ -47,6 +47,7 @@ export function CreateTaskDrawer() {
     taskGroups,
     labels,
     jobTitles,
+    masterJenisPelayanans,
     project,
     currency,
     auth: { user },
@@ -55,6 +56,7 @@ export function CreateTaskDrawer() {
   const initial = {
     code: generateServiceCode(),
     group_id: create.group_id ? create.group_id.toString() : '',
+    code_jenis_pelayanan: '',   
     assigned_to_user_id: '',
     name: '',
     email: '',
@@ -202,6 +204,22 @@ export function CreateTaskDrawer() {
               label: job.name,
             }))}
             error={form.errors.job_title}
+          />
+
+          <Select
+            label='Jenis Pelayanan'
+            placeholder='Pilih jenis pelayanan'
+            required
+            searchable
+            mt='xl'
+            clearable
+            value={form.data.code_jenis_pelayanan}
+            onChange={value => updateValue('code_jenis_pelayanan', value)}
+            data={masterJenisPelayanans.map(i => ({
+              value: i.code,
+              label: i.name,
+            }))}
+            error={form.errors.code_jenis_pelayanan}
           />
 
           <TextInput

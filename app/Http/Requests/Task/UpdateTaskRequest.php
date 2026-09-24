@@ -42,6 +42,7 @@ class UpdateTaskRequest extends FormRequest
             'identity_number' => ['sometimes', 'string'],
             'job_title' => ['sometimes', 'exists:job_titles,code'],
             'final_feedback' => ['nullable'],
+            'code_jenis_pelayanan' => ['sometimes', 'required', 'exists:master_jenis_pelayanans,code'], 
         ];
     }
 }

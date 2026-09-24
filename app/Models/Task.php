@@ -26,6 +26,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
 use Illuminate\Support\Carbon;
 use App\Models\TaskGroupUpdateLog;
+use App\Models\MasterJenisPelayanan;
+
+
 
 class Task extends Model implements AuditableContract, Sortable
 {
@@ -94,6 +97,7 @@ class Task extends Model implements AuditableContract, Sortable
         'timeLogs.user:id,name',
         'assignedUserUpdateLogs.newAssignedUser:id,name',   // ← tambahkan
         'assignedUserUpdateLogs.oldAssignedUser:id,name',
+        'jenisPelayanan:code,name',
     
     ];
 
@@ -193,6 +197,11 @@ class Task extends Model implements AuditableContract, Sortable
     public function assignedUserUpdateLogs(): HasMany
     {
         return $this->hasMany(TaskAssignedUserUpdateLog::class)->orderBy('id');
+    }
+    
+    public function jenisPelayanan(): BelongsTo
+    {
+        return $this->belongsTo(MasterJenisPelayanan::class, 'code_jenis_pelayanan', 'code');
     }
 
     public function isFixedPrice(): bool

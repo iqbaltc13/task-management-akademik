@@ -48,6 +48,7 @@ export function EditTaskDrawer() {
     usersWithAccessToProject,
     taskGroups,
     labels,
+    masterJenisPelayanans,
     openedTask,
     currency,
     auth: { user },
@@ -74,6 +75,7 @@ export function EditTaskDrawer() {
     code: '',
     group_id: '',
     assigned_to_user_id: '',
+    code_jenis_pelayanan: '',   // ← tambahkan
     name: '',
     email: '',
     identity_number: '',
@@ -104,6 +106,7 @@ export function EditTaskDrawer() {
         code: task?.code || '',
         group_id: task?.group_id || '',
         assigned_to_user_id: task?.assigned_to_user_id || '',
+        code_jenis_pelayanan: task?.code_jenis_pelayanan || '',   // ← tambahkan
         name: task?.name || '',
         email: task?.email || '',
         identity_number: task?.identity_number || '', 
@@ -148,6 +151,7 @@ export function EditTaskDrawer() {
   const EDITABLE_FIELDS = [
     'group_id',
     'assigned_to_user_id',
+    'code_jenis_pelayanan',   // ← tambahkan  
     'name',
     'email',
     'identity_number',
@@ -398,6 +402,23 @@ export function EditTaskDrawer() {
                   value: job.code, // 🔑 HARUS code
                   label: job.name,
                 }))}
+                readOnly={!canEditTask}
+              />
+
+              <Select
+                label='Jenis Pelayanan'
+                placeholder='Pilih jenis pelayanan'
+                required
+                mt="xl"
+                searchable
+                clearable
+                value={data.code_jenis_pelayanan}
+                onChange={value => updateValue('code_jenis_pelayanan', value)}
+                data={masterJenisPelayanans.map(i => ({
+                  value: i.code,
+                  label: i.name,
+                }))}
+                error={!data.code_jenis_pelayanan}
                 readOnly={!canEditTask}
               />
 
