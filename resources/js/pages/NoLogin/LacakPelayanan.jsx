@@ -52,11 +52,23 @@ export default function LacakLayanan() {
           error={error}
         />
 
-        <Group justify="flex-end" mt="md">
-          <Button size="md" loading={loading} onClick={handleLacak}>
-            Lacak
-          </Button>
-        </Group>
+       <Group justify="space-between" mt="md">
+        <Button
+          component="a"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSePKPUvVEeUnEPJWDeaF5gZzkB4t-NZ4GlesY-37As6FkmAwg/viewform?fbzx=3382822052776950239"
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="light"
+          color="blue"
+          size="lg"
+        >
+          Isi Survei Kepuasan Layanan
+        </Button>
+
+        <Button size="lg" px={40} loading={loading} onClick={handleLacak}>
+          Lacak
+        </Button>
+      </Group>
 
         {tracking && (
           <Stack mt={40} gap="lg">
