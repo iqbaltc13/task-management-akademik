@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import FlashNotification from "@/components/FlashNotification";
 import { Head } from "@inertiajs/react";
+import Footer from "@/components/Footer";
 import {
   IconBook,
   IconChartPie3,
@@ -73,6 +74,7 @@ export default function GuestLayoutWithHeaderMenu({ title, children }) {
       </header>
 
       <main>{children}</main>
+      <Footer />
     </>
   );
 }
