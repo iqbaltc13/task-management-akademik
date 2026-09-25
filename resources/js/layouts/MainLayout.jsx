@@ -20,6 +20,10 @@ export default function MainLayout({ children, title }) {
     setNotifications(notifications);
   }, []);
 
+  useEffect(() => {
+    setNotifications(notifications);
+  }, [notifications]);
+
   return (
     <AppShell
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: false } }}
