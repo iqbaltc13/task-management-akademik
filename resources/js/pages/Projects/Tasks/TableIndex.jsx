@@ -367,15 +367,7 @@ export default function TableIndex() {
         </Group>
       )}
 
-      {page && page.last_page > 1 && (
-        <Group justify="flex-end" mt="lg">
-          <Pagination
-            total={page.last_page}
-            value={page.current_page}
-            onChange={(value) => updateParams({ page: value })}
-          />
-        </Group>
-      )}
+     
 
       {can("create task") && <CreateTaskDrawer />}
       <EditTaskDrawer />
