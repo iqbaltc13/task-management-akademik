@@ -63,7 +63,7 @@ const ClientsIndex = () => {
         </Table>
       </Table.ScrollContainer>
 
-      <Pagination current={items.meta.current_page} pages={items.meta.last_page} />
+      < current={items.meta.current_page} pages={items.meta.last_page} />
     </>
   );
 };
