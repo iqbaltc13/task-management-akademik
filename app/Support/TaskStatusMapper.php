@@ -4,12 +4,10 @@ namespace App\Support;
 
 class TaskStatusMapper
 {
-    public static function map(?string $groupName): ?string
+    public static function map(?string $name): ?string
     {
-        if (! $groupName) {
-            return null;
-        }
+        $key = strtolower(trim($name ?? ''));
 
-        return config('task_status.map.'.strtolower(trim($groupName)));
+        return config('task.map')[$key] ?? null;
     }
 }
