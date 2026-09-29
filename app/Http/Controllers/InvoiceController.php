@@ -12,6 +12,7 @@ use App\Models\Currency;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Services\InvoiceService;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -59,9 +60,19 @@ class InvoiceController extends Controller
 
     public function store(StoreInvoiceRequest $request)
     {
-        $invoice = (new CreateInvoice)->create($request->validated());
+        DB::beginTransaction();
 
-        InvoiceService::generate($invoice);
+        try {
+            $invoice = (new CreateInvoice)->create($request->validated());
+
+            InvoiceService::generate($invoice);
+
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            throw $e;
+        }
 
         return redirect()->route('invoices.index')->success('Invoice created', 'A new invoice was successfully created.');
     }
@@ -89,9 +100,19 @@ class InvoiceController extends Controller
 
     public function update(Invoice $invoice, UpdateInvoiceRequest $request)
     {
-        $invoice = (new UpdateInvoice)->update($invoice, $request->validated());
+        DB::beginTransaction();
 
-        InvoiceService::generate($invoice);
+        try {
+            $invoice = (new UpdateInvoice)->update($invoice, $request->validated());
+
+            InvoiceService::generate($invoice);
+
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            throw $e;
+        }
 
         return redirect()->route('invoices.index')->success('Invoice updated', 'The invoice was successfully updated.');
     }

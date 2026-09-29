@@ -25,6 +25,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\MasterJenisPelayanan;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -175,30 +177,42 @@ class TaskController extends Controller
     public function move(Request $request, Project $project): JsonResponse
     {
         $this->authorize('reorder', [Task::class, $project]);
-        $tasks = Task::whereIn('id', $request->ids)->get();
-        Task::setNewOrder($request->ids);
-        Task::whereIn('id', $request->ids)->update(['group_id' => $request->to_group_id]);
 
-        $oldGroup = TaskGroup::find($request->from_group_id);
-        $newGroup = TaskGroup::find($request->to_group_id);
+        DB::beginTransaction();
 
-        foreach ($tasks as $task) {
-            $task->activities()->create([
-                'project_id' => $task->project_id,
-                'user_id' => auth()->id(),
-                'title' => 'Grup permintaan diperbarui',
-                'subtitle' => $oldGroup
-                    ? "Dari \"{$oldGroup->name}\" menjadi \"{$newGroup->name}\" oleh ".auth()->user()->name
-                    : "Diatur ke \"{$newGroup->name}\" oleh ".auth()->user()->name,
-            ]);
+        try {
+            $tasks = Task::whereIn('id', $request->ids)->get();
+            Task::setNewOrder($request->ids);
+            Task::whereIn('id', $request->ids)->update(['group_id' => $request->to_group_id]);
 
-            TaskGroupUpdateLog::create([
-                'task_id'      => $task->id,
-                'old_group_id' => $request->from_group_id,
-                'new_group_id' => $request->to_group_id,
-                'user_id'      => auth()->id(),
-            ]);
+            $oldGroup = TaskGroup::find($request->from_group_id);
+            $newGroup = TaskGroup::find($request->to_group_id);
+
+            foreach ($tasks as $task) {
+                $task->activities()->create([
+                    'project_id' => $task->project_id,
+                    'user_id' => auth()->id(),
+                    'title' => 'Grup permintaan diperbarui',
+                    'subtitle' => $oldGroup
+                        ? "Dari \"{$oldGroup->name}\" menjadi \"{$newGroup->name}\" oleh ".auth()->user()->name
+                        : "Diatur ke \"{$newGroup->name}\" oleh ".auth()->user()->name,
+                ]);
+
+                TaskGroupUpdateLog::create([
+                    'task_id'      => $task->id,
+                    'old_group_id' => $request->from_group_id,
+                    'new_group_id' => $request->to_group_id,
+                    'user_id'      => auth()->id(),
+                ]);
+            }
+
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            throw $e;
         }
+
         TaskGroupChanged::dispatch(
             $project->id,
             $request->from_group_id,

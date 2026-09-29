@@ -3,6 +3,8 @@
 namespace App\Actions\Client;
 
 use App\Services\UserService;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UpdateClient
@@ -23,10 +25,22 @@ class UpdateClient
             $newData['password'] = Hash::make($data['password']);
         }
 
-        if (! empty($data['companies'])) {
-            $user->clientCompanies()->sync($data['companies']);
-        }
+        DB::beginTransaction();
 
-        return $user->update($newData);
+        try {
+            if (! empty($data['companies'])) {
+                $user->clientCompanies()->sync($data['companies']);
+            }
+
+            $result = $user->update($newData);
+
+            DB::commit();
+
+            return $result;
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            throw $e;
+        }
     }
 }

@@ -1,0 +1,342 @@
+diff --git a/app/Actions/Client/UpdateClient.php b/app/Actions/Client/UpdateClient.php
+index 8b7fd030..76fc81bb 100755
+--- a/app/Actions/Client/UpdateClient.php
++++ b/app/Actions/Client/UpdateClient.php
+@@ -3,6 +3,8 @@
+ namespace App\Actions\Client;
+ 
+ use App\Services\UserService;
++use Illuminate\Database\QueryException;
++use Illuminate\Support\Facades\DB;
+ use Illuminate\Support\Facades\Hash;
+ 
+ class UpdateClient
+@@ -23,10 +25,22 @@ class UpdateClient
+             $newData['password'] = Hash::make($data['password']);
+         }
+ 
+-        if (! empty($data['companies'])) {
+-            $user->clientCompanies()->sync($data['companies']);
+-        }
++        DB::beginTransaction();
++
++        try {
++            if (! empty($data['companies'])) {
++                $user->clientCompanies()->sync($data['companies']);
++            }
++
++            $result = $user->update($newData);
+ 
+-        return $user->update($newData);
++            DB::commit();
++
++            return $result;
++        } catch (QueryException $e) {
++            DB::rollback();
++
++            throw $e;
++        }
+     }
+ }
+diff --git a/app/Actions/ClientCompany/UpdateClientCompany.php b/app/Actions/ClientCompany/UpdateClientCompany.php
+index 23c26a84..11e4e896 100755
+--- a/app/Actions/ClientCompany/UpdateClientCompany.php
++++ b/app/Actions/ClientCompany/UpdateClientCompany.php
+@@ -3,16 +3,30 @@
+ namespace App\Actions\ClientCompany;
+ 
+ use App\Models\ClientCompany;
++use Illuminate\Database\QueryException;
+ use Illuminate\Support\Arr;
++use Illuminate\Support\Facades\DB;
+ 
+ class UpdateClientCompany
+ {
+     public function update(ClientCompany $clientCompany, array $data): bool
+     {
+-        if (! empty($data['clients'])) {
+-            $clientCompany->clients()->sync($data['clients']);
+-        }
++        DB::beginTransaction();
++
++        try {
++            if (! empty($data['clients'])) {
++                $clientCompany->clients()->sync($data['clients']);
++            }
++
++            $result = $clientCompany->update(Arr::except($data, ['clients']));
+ 
+-        return $clientCompany->update(Arr::except($data, ['clients']));
++            DB::commit();
++
++            return $result;
++        } catch (QueryException $e) {
++            DB::rollback();
++
++            throw $e;
++        }
+     }
+ }
+diff --git a/app/Actions/Task/UpdateTask.php b/app/Actions/Task/UpdateTask.php
+index f1ad9542..639b077b 100755
+--- a/app/Actions/Task/UpdateTask.php
++++ b/app/Actions/Task/UpdateTask.php
+@@ -5,6 +5,8 @@ namespace App\Actions\Task;
+ use App\Enums\PricingType;
+ use App\Events\Task\TaskUpdated;
+ use App\Models\Task;
++use Illuminate\Database\QueryException;
++use Illuminate\Support\Facades\DB;
+ 
+ class UpdateTask
+ {
+@@ -12,31 +14,41 @@ class UpdateTask
+     {
+         $updateField = key($data);
+ 
+-        if ($updateField === 'pricing_type' && $data['pricing_type'] === PricingType::HOURLY->value) {
+-            $task->update([
+-                'pricing_type' => PricingType::HOURLY,
+-                'fixed_price' => null,
+-            ]);
+-        }
++        DB::beginTransaction();
+ 
+-        if ($updateField === 'fixed_price' && isset($data['fixed_price'])) {
+-            $data['fixed_price'] = (int) $data['fixed_price'];
+-        }
++        try {
++            if ($updateField === 'pricing_type' && $data['pricing_type'] === PricingType::HOURLY->value) {
++                $task->update([
++                    'pricing_type' => PricingType::HOURLY,
++                    'fixed_price' => null,
++                ]);
++            }
++
++            if ($updateField === 'fixed_price' && isset($data['fixed_price'])) {
++                $data['fixed_price'] = (int) $data['fixed_price'];
++            }
+ 
+-        if (! in_array($updateField, ['subscribed_users', 'labels'])) {
+-            $task->update($data);
++            if (! in_array($updateField, ['subscribed_users', 'labels'])) {
++                $task->update($data);
+ 
+-            if ($updateField === 'group_id') {
+-                $task->update(['order_column' => 0]);
++                if ($updateField === 'group_id') {
++                    $task->update(['order_column' => 0]);
++                }
++            }
++
++            // if ($updateField === 'subscribed_users') {
++            //     $task->subscribedUsers()->sync($data['subscribed_users']);
++            // }
++
++            if ($updateField === 'labels') {
++                $task->labels()->sync($data['labels']);
+             }
+-        }
+ 
+-        // if ($updateField === 'subscribed_users') {
+-        //     $task->subscribedUsers()->sync($data['subscribed_users']);
+-        // }
++            DB::commit();
++        } catch (QueryException $e) {
++            DB::rollback();
+ 
+-        if ($updateField === 'labels') {
+-            $task->labels()->sync($data['labels']);
++            throw $e;
+         }
+ 
+         TaskUpdated::dispatch($task, $updateField);
+diff --git a/app/Http/Controllers/InvoiceController.php b/app/Http/Controllers/InvoiceController.php
+index bc01a73d..6a6deb54 100755
+--- a/app/Http/Controllers/InvoiceController.php
++++ b/app/Http/Controllers/InvoiceController.php
+@@ -12,6 +12,7 @@ use App\Models\Currency;
+ use App\Models\Invoice;
+ use App\Models\Project;
+ use App\Services\InvoiceService;
++use Illuminate\Database\QueryException;
+ use Illuminate\Http\Request;
+ use Illuminate\Support\Facades\DB;
+ use Illuminate\Support\Facades\File;
+@@ -59,9 +60,19 @@ class InvoiceController extends Controller
+ 
+     public function store(StoreInvoiceRequest $request)
+     {
+-        $invoice = (new CreateInvoice)->create($request->validated());
++        DB::beginTransaction();
+ 
+-        InvoiceService::generate($invoice);
++        try {
++            $invoice = (new CreateInvoice)->create($request->validated());
++
++            InvoiceService::generate($invoice);
++
++            DB::commit();
++        } catch (QueryException $e) {
++            DB::rollback();
++
++            throw $e;
++        }
+ 
+         return redirect()->route('invoices.index')->success('Invoice created', 'A new invoice was successfully created.');
+     }
+@@ -89,9 +100,19 @@ class InvoiceController extends Controller
+ 
+     public function update(Invoice $invoice, UpdateInvoiceRequest $request)
+     {
+-        $invoice = (new UpdateInvoice)->update($invoice, $request->validated());
++        DB::beginTransaction();
+ 
+-        InvoiceService::generate($invoice);
++        try {
++            $invoice = (new UpdateInvoice)->update($invoice, $request->validated());
++
++            InvoiceService::generate($invoice);
++
++            DB::commit();
++        } catch (QueryException $e) {
++            DB::rollback();
++
++            throw $e;
++        }
+ 
+         return redirect()->route('invoices.index')->success('Invoice updated', 'The invoice was successfully updated.');
+     }
+diff --git a/app/Http/Controllers/Settings/RoleController.php b/app/Http/Controllers/Settings/RoleController.php
+index 53e4dd97..963d9b4b 100755
+--- a/app/Http/Controllers/Settings/RoleController.php
++++ b/app/Http/Controllers/Settings/RoleController.php
+@@ -8,6 +8,7 @@ use App\Http\Requests\Role\UpdateRoleRequest;
+ use App\Http\Resources\Role\RoleResource;
+ use App\Models\Role;
+ use App\Services\PermissionService;
++use Illuminate\Database\QueryException;
+ use Illuminate\Http\Request;
+ use Illuminate\Support\Facades\DB;
+ use Inertia\Inertia;
+@@ -42,8 +43,18 @@ class RoleController extends Controller
+ 
+     public function store(StoreRoleRequest $request)
+     {
+-        $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
+-        $role->syncPermissions($request->permissions);
++        DB::beginTransaction();
++
++        try {
++            $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
++            $role->syncPermissions($request->permissions);
++
++            DB::commit();
++        } catch (QueryException $e) {
++            DB::rollback();
++
++            throw $e;
++        }
+ 
+         return redirect()->route('settings.roles.index')->success('Role created', 'A new role was successfully created.');
+     }
+@@ -58,8 +69,18 @@ class RoleController extends Controller
+ 
+     public function update(Role $role, UpdateRoleRequest $request)
+     {
+-        $role->update(['name' => $request->name]);
+-        $role->syncPermissions($request->permissions);
++        DB::beginTransaction();
++
++        try {
++            $role->update(['name' => $request->name]);
++            $role->syncPermissions($request->permissions);
++
++            DB::commit();
++        } catch (QueryException $e) {
++            DB::rollback();
++
++            throw $e;
++        }
+ 
+         return redirect()->route('settings.roles.index')->success('Role updated', 'The role was successfully updated.');
+     }
+diff --git a/app/Http/Controllers/TaskController.php b/app/Http/Controllers/TaskController.php
+index dda55d0b..6b5a182d 100755
+--- a/app/Http/Controllers/TaskController.php
++++ b/app/Http/Controllers/TaskController.php
+@@ -25,6 +25,8 @@ use Illuminate\Http\Request;
+ use Inertia\Inertia;
+ use Inertia\Response;
+ use App\Models\MasterJenisPelayanan;
++use Illuminate\Database\QueryException;
++use Illuminate\Support\Facades\DB;
+ 
+ class TaskController extends Controller
+ {
+@@ -175,30 +177,42 @@ class TaskController extends Controller
+     public function move(Request $request, Project $project): JsonResponse
+     {
+         $this->authorize('reorder', [Task::class, $project]);
+-        $tasks = Task::whereIn('id', $request->ids)->get();
+-        Task::setNewOrder($request->ids);
+-        Task::whereIn('id', $request->ids)->update(['group_id' => $request->to_group_id]);
+-
+-        $oldGroup = TaskGroup::find($request->from_group_id);
+-        $newGroup = TaskGroup::find($request->to_group_id);
+-
+-        foreach ($tasks as $task) {
+-            $task->activities()->create([
+-                'project_id' => $task->project_id,
+-                'user_id' => auth()->id(),
+-                'title' => 'Grup permintaan diperbarui',
+-                'subtitle' => $oldGroup
+-                    ? "Dari \"{$oldGroup->name}\" menjadi \"{$newGroup->name}\" oleh ".auth()->user()->name
+-                    : "Diatur ke \"{$newGroup->name}\" oleh ".auth()->user()->name,
+-            ]);
+-
+-            TaskGroupUpdateLog::create([
+-                'task_id'      => $task->id,
+-                'old_group_id' => $request->from_group_id,
+-                'new_group_id' => $request->to_group_id,
+-                'user_id'      => auth()->id(),
+-            ]);
++
++        DB::beginTransaction();
++
++        try {
++            $tasks = Task::whereIn('id', $request->ids)->get();
++            Task::setNewOrder($request->ids);
++            Task::whereIn('id', $request->ids)->update(['group_id' => $request->to_group_id]);
++
++            $oldGroup = TaskGroup::find($request->from_group_id);
++            $newGroup = TaskGroup::find($request->to_group_id);
++
++            foreach ($tasks as $task) {
++                $task->activities()->create([
++                    'project_id' => $task->project_id,
++                    'user_id' => auth()->id(),
++                    'title' => 'Grup permintaan diperbarui',
++                    'subtitle' => $oldGroup
++                        ? "Dari \"{$oldGroup->name}\" menjadi \"{$newGroup->name}\" oleh ".auth()->user()->name
++                        : "Diatur ke \"{$newGroup->name}\" oleh ".auth()->user()->name,
++                ]);
++
++                TaskGroupUpdateLog::create([
++                    'task_id'      => $task->id,
++                    'old_group_id' => $request->from_group_id,
++                    'new_group_id' => $request->to_group_id,
++                    'user_id'      => auth()->id(),
++                ]);
++            }
++
++            DB::commit();
++        } catch (QueryException $e) {
++            DB::rollback();
++
++            throw $e;
+         }
++
+         TaskGroupChanged::dispatch(
+             $project->id,
+             $request->from_group_id,

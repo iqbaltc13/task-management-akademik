@@ -8,6 +8,7 @@ use App\Http\Requests\Role\UpdateRoleRequest;
 use App\Http\Resources\Role\RoleResource;
 use App\Models\Role;
 use App\Services\PermissionService;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -42,8 +43,18 @@ class RoleController extends Controller
 
     public function store(StoreRoleRequest $request)
     {
-        $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
-        $role->syncPermissions($request->permissions);
+        DB::beginTransaction();
+
+        try {
+            $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
+            $role->syncPermissions($request->permissions);
+
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            throw $e;
+        }
 
         return redirect()->route('settings.roles.index')->success('Role created', 'A new role was successfully created.');
     }
@@ -58,8 +69,18 @@ class RoleController extends Controller
 
     public function update(Role $role, UpdateRoleRequest $request)
     {
-        $role->update(['name' => $request->name]);
-        $role->syncPermissions($request->permissions);
+        DB::beginTransaction();
+
+        try {
+            $role->update(['name' => $request->name]);
+            $role->syncPermissions($request->permissions);
+
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            throw $e;
+        }
 
         return redirect()->route('settings.roles.index')->success('Role updated', 'The role was successfully updated.');
     }
