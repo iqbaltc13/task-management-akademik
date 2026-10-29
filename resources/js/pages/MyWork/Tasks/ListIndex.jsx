@@ -232,7 +232,7 @@ export default function ListIndex() {
             <Table.Thead>
               <Table.Tr>
                 <Table.Th style={{ width: 60 }}>No</Table.Th>
-                <Th label="Nama Pemohon" field="name" params={params} onSort={handleSort} />
+                <Th label="Nama Pemohon | Pemohon Sebagai" field="name" params={params} onSort={handleSort} />
                 <Th label="Nomor Pelayanan" field="code" params={params} onSort={handleSort} />
                 <Table.Th>Penerima Pelayanan</Table.Th>
                 <Table.Th>Penerima Tugas</Table.Th>
