@@ -51,9 +51,12 @@ class MyWorkTaskController extends Controller
         $user = Auth::user();
 
         return Inertia::render('MyWork/Tasks/ListIndex', [
-            'projects' => PermissionService::projectsThatUserCanAccess($user)
-                ->map(fn ($p) => ['id' => $p->id, 'name' => $p->name])
-                ->values(),
+        'projects' => PermissionService::projectsThatUserCanAccess($user)
+            ->map(fn ($p) => [
+                'id' => data_get($p, 'id'),
+                'name' => data_get($p, 'name'),
+            ])
+            ->values(),
         ]);
     }
 
