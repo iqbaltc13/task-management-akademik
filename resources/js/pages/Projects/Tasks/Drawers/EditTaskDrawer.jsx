@@ -267,7 +267,7 @@ export function EditTaskDrawer() {
               margin-bottom: 2px;
             }
             .code {
-              font-size: 24px;
+              font-size: 22px;
               font-weight: bold;
               letter-spacing: 1px;
               word-break: break-all;
