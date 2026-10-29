@@ -178,6 +178,17 @@ export function CreateTaskDrawer() {
             error={form.errors.name}
           />
 
+          <TextInput
+            label='NIM / Nomor Identitas lain'
+            placeholder='NIM / Nomor Identitas lain Pemohon'
+            required
+             mt='xl'
+            data-autofocus
+            value={form.data.identity_number}
+            onChange={e => updateValue('identity_number', e.target.value)}
+            error={form.errors.identity_number}
+          />
+
            <TextInput
             mt='xl'
             type='email'
@@ -222,16 +233,7 @@ export function CreateTaskDrawer() {
             error={form.errors.code_jenis_pelayanan}
           />
 
-          <TextInput
-            label='NIM / Nomor Identitas lain'
-            placeholder='NIM / Nomor Identitas lain Pemohon'
-            required
-             mt='xl'
-            data-autofocus
-            value={form.data.identity_number}
-            onChange={e => updateValue('identity_number', e.target.value)}
-            error={form.errors.identity_number}
-          />
+          
 
           <TextInput
             label='Link File Kebutuhan Pelayanan'

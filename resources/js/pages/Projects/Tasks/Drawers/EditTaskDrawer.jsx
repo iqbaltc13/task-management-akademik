@@ -382,6 +382,16 @@ export function EditTaskDrawer() {
               />
 
               <TextInput
+                label='NIM / Nomor Identitas lain'
+                placeholder='NIM / Nomor Identitas lain Pemohon'
+                mt="xl"
+                value={data.identity_number}
+                onChange={e => updateValue('identity_number', e.target.value)}
+                error={!data.identity_number}
+                readOnly={!canEditTask}
+              />
+
+              <TextInput
                 label='Email Pemohon'
                 placeholder='Email Pemohon'
                 type='email'
@@ -422,15 +432,7 @@ export function EditTaskDrawer() {
                 readOnly={!canEditTask}
               />
 
-              <TextInput
-                label='NIM / Nomor Identitas lain'
-                placeholder='NIM / Nomor Identitas lain Pemohon'
-                mt="xl"
-                value={data.identity_number}
-                onChange={e => updateValue('identity_number', e.target.value)}
-                error={!data.identity_number}
-                readOnly={!canEditTask}
-              />
+              
 
               
 
