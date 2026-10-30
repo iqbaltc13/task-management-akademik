@@ -70,7 +70,7 @@ export default function Footer() {
           {/* Kolom 3: Kontak Kami */}
           <Stack align="center" gap="xs">
             <Title order={4} c="white">Kontak Kami</Title>
-            <Text size="sm" c="dimmed">Sunan Ampel</Text>
+            <Text size="sm" c="dimmed">WhatsApp CS Akademik : 08561689282</Text>
             <Text size="sm" c="dimmed">akademik@uinkediri.ac.id</Text>
             <Text size="sm" c="dimmed">0354 - 689282</Text>
           </Stack>
