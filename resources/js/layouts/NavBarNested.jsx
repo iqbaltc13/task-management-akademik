@@ -148,6 +148,12 @@ export default function Sidebar() {
             visible: can("view owner company"),
           },
           {
+            label: "Master Jenis Pelayanan",
+            link: route("settings.jenis-pelayanans.index"),
+            active: route().current("settings.jenis-pelayanans.*"),
+            visible: can("view jenis pelayanans"),
+          },
+          {
             label: "Peran",
             link: route("settings.roles.index"),
             active: route().current("settings.roles.*"),
