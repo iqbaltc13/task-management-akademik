@@ -5,6 +5,7 @@ namespace App\Actions\Task;
 use App\Enums\PricingType;
 use App\Events\Task\AttachmentsUploaded;
 use App\Events\Task\TaskCreated;
+use App\Models\MasterJenisPelayanan;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\UploadedFile;
@@ -26,7 +27,15 @@ class CreateTask
                 $data['fixed_price'] = (int) ($data['fixed_price'] * 100);
             }
 
+            // due_on = tanggal dibuat + jumlah_hari jenis pelayanan.
+            // Jika jumlah_hari kosong (mis. "Lainnya"), pakai due_on pilihan penginput.
+            $jenis = MasterJenisPelayanan::where('code', $data['code_jenis_pelayanan'])->first();
+            $dueOn = ($jenis && $jenis->jumlah_hari !== null)
+                ? now()->addDays($jenis->jumlah_hari)->toDateString()
+                : ($data['due_on'] ?? null);
+
             $task = $project->tasks()->create([
+                'code_jenis_pelayanan' => $data['code_jenis_pelayanan'],
                 'code' => $data['code'],
                 'email' => $data['email'],
                 'link_file_requirement' => $data['link_file_requirement'],
@@ -38,7 +47,7 @@ class CreateTask
                 'name' => $data['name'],
                 'number' => $project->tasks()->withArchived()->count() + 1,
                 'description' => $data['description'],
-                'due_on' => $data['due_on'],
+                'due_on' => $dueOn,
                 'estimation' => $data['estimation'],
                 'pricing_type' => $data['pricing_type'],
                 'fixed_price' => $data['fixed_price'],

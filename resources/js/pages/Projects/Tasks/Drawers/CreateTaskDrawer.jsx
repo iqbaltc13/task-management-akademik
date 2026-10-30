@@ -21,6 +21,7 @@ import {
   rem,
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
+import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import LabelsDropdown from './LabelsDropdown';
 import classes from './css/TaskDrawer.module.css';
@@ -84,6 +85,24 @@ export function CreateTaskDrawer() {
       ...initial,
     }
   );
+
+  // Jenis pelayanan terpilih + apakah batas waktu dihitung otomatis (jumlah_hari terisi).
+  const selectedJenis = masterJenisPelayanans.find(i => i.code === form.data.code_jenis_pelayanan);
+  const hasJumlahHari = j => j && j.jumlah_hari !== null && j.jumlah_hari !== undefined;
+  const isAutoDue = hasJumlahHari(selectedJenis);
+
+  const handleJenisChange = value => {
+    const jenis = masterJenisPelayanans.find(i => i.code === value);
+    let dueOn = form.data.due_on;
+
+    if (hasJumlahHari(jenis)) {
+      dueOn = dayjs().add(jenis.jumlah_hari, 'day').toDate(); // dibuat hari ini + jumlah_hari
+    } else if (isAutoDue) {
+      dueOn = ''; // sebelumnya otomatis, sekarang manual: penginput memilih sendiri
+    }
+
+    updateValue({ ...form.data, code_jenis_pelayanan: value || '', due_on: dueOn });
+  };
 
   function handleDelete(id) {
     setComments((prev) => prev.filter((c) => c.id !== id));
@@ -225,7 +244,7 @@ export function CreateTaskDrawer() {
             mt='xl'
             clearable
             value={form.data.code_jenis_pelayanan}
-            onChange={value => updateValue('code_jenis_pelayanan', value)}
+            onChange={handleJenisChange}
             data={masterJenisPelayanans.map(i => ({
               value: i.code,
               label: i.name,
@@ -356,15 +375,25 @@ export function CreateTaskDrawer() {
           />
 
           <DateInput
-            clearable
+            clearable={!isAutoDue}
             locale="id"
             valueFormat='DD MMM YYYY'
-            minDate={new Date()}
+            minDate={isAutoDue ? undefined : new Date()}
             mt='md'
             label='Batas Waktu'
-            placeholder='Pilih batas waktu'
+            placeholder={selectedJenis ? 'Pilih batas waktu' : 'Pilih jenis pelayanan dahulu'}
+            description={
+              isAutoDue
+                ? `Otomatis: hari ini + ${selectedJenis.jumlah_hari} hari`
+                : selectedJenis
+                  ? 'Pilih batas waktu secara manual'
+                  : undefined
+            }
+            required={!!selectedJenis && !isAutoDue}
+            disabled={!selectedJenis || isAutoDue}
             value={form.data.due_on}
             onChange={value => updateValue('due_on', value)}
+            error={form.errors.due_on}
           />
 
           <LabelsDropdown

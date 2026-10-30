@@ -142,6 +142,21 @@ export function EditTaskDrawer() {
     setData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Jenis pelayanan terpilih + apakah batas waktu dihitung otomatis (jumlah_hari terisi).
+  const selectedJenis = masterJenisPelayanans.find(i => i.code === data.code_jenis_pelayanan);
+  const hasJumlahHari = j => j && j.jumlah_hari !== null && j.jumlah_hari !== undefined;
+  const isAutoDue = hasJumlahHari(selectedJenis);
+
+  const handleJenisChange = value => {
+    updateValue('code_jenis_pelayanan', value || '');
+
+    const jenis = masterJenisPelayanans.find(i => i.code === value);
+    if (hasJumlahHari(jenis)) {
+      // tanggal pelayanan dibuat + jumlah_hari (backend menghitung ulang dengan rumus yang sama)
+      updateValue('due_on', dayjs(task?.created_at).add(jenis.jumlah_hari, 'day').toDate());
+    }
+  };
+
   const isDueOnEqual = (a, b) => {
     const aStr = a ? dayjs(a).format('YYYY-MM-DD') : '';
     const bStr = b ? dayjs(b).format('YYYY-MM-DD') : '';
@@ -172,7 +187,8 @@ export function EditTaskDrawer() {
     const original = originalDataRef.current || {};
 
     const changedFields = EDITABLE_FIELDS.filter(field => {
-      if (field === 'due_on') return !isDueOnEqual(data.due_on, original.due_on);
+      // due_on otomatis dihitung backend saat jenis pelayanan berubah, jadi tidak dikirim terpisah
+      if (field === 'due_on') return !isAutoDue && !isDueOnEqual(data.due_on, original.due_on);
       if (field === 'labels') return JSON.stringify(data.labels) !== JSON.stringify(original.labels);
       return data[field] !== original[field];
     });
@@ -423,7 +439,7 @@ export function EditTaskDrawer() {
                 searchable
                 clearable
                 value={data.code_jenis_pelayanan}
-                onChange={value => updateValue('code_jenis_pelayanan', value)}
+                onChange={handleJenisChange}
                 data={masterJenisPelayanans.map(i => ({
                   value: i.code,
                   label: i.name,
@@ -575,13 +591,19 @@ export function EditTaskDrawer() {
               />
 
               <DateInput
-                clearable
+                clearable={!isAutoDue}
                 locale="id"
                 valueFormat='DD MMM YYYY'
-                minDate={new Date()}
+                minDate={isAutoDue ? undefined : new Date()}
                 mt='md'
                 label='Batas Waktu'
                 placeholder='Pilih batas waktu'
+                description={
+                  isAutoDue
+                    ? `Otomatis: tanggal dibuat + ${selectedJenis.jumlah_hari} hari`
+                    : undefined
+                }
+                disabled={isAutoDue}
                 value={data.due_on}
                 onChange={value => updateValue('due_on', value)}
                 readOnly={!canEditTask}

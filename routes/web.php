@@ -13,6 +13,7 @@ use App\Http\Controllers\MyWork\MyWorkTaskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Settings\LabelController;
+use App\Http\Controllers\Settings\MasterJenisPelayananController;
 use App\Http\Controllers\Settings\OwnerCompanyController;
 use App\Http\Controllers\Settings\RoleController;
 use App\Http\Controllers\Task\AttachmentController;
@@ -137,6 +138,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::resource('labels', LabelController::class)->except(['show']);
         Route::post('labels/{labelId}/restore', [LabelController::class, 'restore'])->name('labels.restore');
+
+        Route::resource('jenis-pelayanans', MasterJenisPelayananController::class)
+            ->except(['show'])
+            ->parameters(['jenis-pelayanans' => 'jenisPelayanan']);
+        Route::post('jenis-pelayanans/{jenisPelayananId}/restore', [MasterJenisPelayananController::class, 'restore'])->name('jenis-pelayanans.restore');
     });
 
     // Account

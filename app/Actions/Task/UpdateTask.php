@@ -4,6 +4,7 @@ namespace App\Actions\Task;
 
 use App\Enums\PricingType;
 use App\Events\Task\TaskUpdated;
+use App\Models\MasterJenisPelayanan;
 use App\Models\Task;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,16 @@ class UpdateTask
 
                 if ($updateField === 'group_id') {
                     $task->update(['order_column' => 0]);
+                }
+
+                if ($updateField === 'code_jenis_pelayanan') {
+                    $jenis = MasterJenisPelayanan::where('code', $data['code_jenis_pelayanan'])->first();
+
+                    if ($jenis && $jenis->jumlah_hari !== null) {
+                        $task->update([
+                            'due_on' => $task->created_at->copy()->addDays($jenis->jumlah_hari)->toDateString(),
+                        ]);
+                    }
                 }
             }
 

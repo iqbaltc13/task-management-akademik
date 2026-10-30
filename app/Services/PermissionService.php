@@ -60,6 +60,28 @@ class PermissionService
                     'title' => 'Kembalikan label',
                 ],
             ],
+            'Jenis Pelayanan' => [
+                [
+                    'name' => 'view jenis pelayanans',
+                    'title' => 'Lihat semua jenis pelayanan',
+                ],
+                [
+                    'name' => 'create jenis pelayanan',
+                    'title' => 'Buat jenis pelayanan',
+                ],
+                [
+                    'name' => 'edit jenis pelayanan',
+                    'title' => 'Edit jenis pelayanan',
+                ],
+                [
+                    'name' => 'archive jenis pelayanan',
+                    'title' => 'Arsipkan jenis pelayanan',
+                ],
+                [
+                    'name' => 'restore jenis pelayanan',
+                    'title' => 'Kembalikan jenis pelayanan',
+                ],
+            ],
             'Peran' => [
                 [
                     'name' => 'view roles',

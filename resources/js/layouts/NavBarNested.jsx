@@ -139,7 +139,7 @@ export default function Sidebar() {
         icon: IconSettings,
         active: route().current("settings.*"),
         opened: route().current("settings.*"),
-        visible: can("view owner company") || can("view roles") || can("view labels"),
+        visible: can("view owner company") || can("view roles") || can("view labels") || can("view jenis pelayanans"),
         links: [
           {
             label: "Instansi",
@@ -158,6 +158,12 @@ export default function Sidebar() {
             link: route("settings.labels.index"),
             active: route().current("settings.labels.*"),
             visible: can("view labels"),
+          },
+          {
+            label: "Jenis Pelayanan",
+            link: route("settings.jenis-pelayanans.index"),
+            active: route().current("settings.jenis-pelayanans.*"),
+            visible: can("view jenis pelayanans"),
           },
         ],
       },

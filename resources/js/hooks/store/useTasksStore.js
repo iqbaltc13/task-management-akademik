@@ -59,6 +59,10 @@ const useTasksStore = create((set, get) => ({
           state.tasks[task.group_id][index][property] = options || value;
         }
 
+        if (property === 'code_jenis_pelayanan' && res.data?.due_on !== undefined) {
+          state.tasks[task.group_id][index].due_on = res.data.due_on;
+        }
+
         if (property === 'assigned_to_user_id' && res.data?.assigned_user_update_logs) {
           state.tasks[task.group_id][index].assigned_user_update_logs = res.data.assigned_user_update_logs;
         }

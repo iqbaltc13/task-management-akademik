@@ -70,7 +70,7 @@ class TaskController extends Controller
             'jobTitles' => $jobTitles,
             'groupedTasks' => $groupedTasks,
             'openedTask' => $task ? $task->loadDefault() : null,
-            'masterJenisPelayanans' => MasterJenisPelayanan::select('code', 'name')->orderBy('name')->get(),
+            'masterJenisPelayanans' => MasterJenisPelayanan::select('code', 'name', 'jumlah_hari')->orderBy('name')->get(),
             'currency' => [
                 'symbol' => $ownerCompany? $ownerCompany->currency->symbol : "",
             ],
@@ -90,7 +90,7 @@ class TaskController extends Controller
             'labels' => Label::get(['id', 'name', 'color']),
             'taskGroups' => $project->taskGroups()->get(),
             'jobTitles' => $jobTitles,
-            'masterJenisPelayanans' => MasterJenisPelayanan::select('code', 'name')->orderBy('name')->get(),
+            'masterJenisPelayanans' => MasterJenisPelayanan::select('code', 'name', 'jumlah_hari')->orderBy('name')->get(),
             'currency' => [
                 'symbol' => $ownerCompany ? $ownerCompany->currency->symbol : "",
             ],
@@ -151,6 +151,7 @@ class TaskController extends Controller
         (new UpdateTask)->update($task, $request->validated());
 
         return response()->json([
+            'due_on' => $task->due_on?->toDateString(),
             'assigned_user_update_logs' => $task->assignedUserUpdateLogs()
                 ->with(['newAssignedUser:id,name', 'oldAssignedUser:id,name'])
                 ->get(),
