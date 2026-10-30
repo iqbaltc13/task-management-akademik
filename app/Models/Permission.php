@@ -10,5 +10,5 @@ use App\Traits\Uuids;
 
 class Permission extends SpatiePermission implements AuditableContract
 {
-    use Auditable, Uuids;
+    use Auditable;
 }
