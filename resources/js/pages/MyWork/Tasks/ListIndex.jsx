@@ -51,6 +51,7 @@ const DEFAULT_PARAMS = {
   sort: "created_at",
   direction: "desc",
   project_id: "",
+  job_title: "",
   created_from: "",
   created_to: "",
   page: 1,
@@ -74,7 +75,7 @@ function Th({ label, field, params, onSort }) {
 }
 
 export default function ListIndex() {
-  const { projects } = usePage().props;
+  const { projects, jobTitles } = usePage().props;
   const initialType = new URLSearchParams(window.location.search).get("type") || "active";
   const [params, setParams] = useState({ ...DEFAULT_PARAMS, type: initialType });
   const [searchInput, setSearchInput] = useState("");
@@ -134,6 +135,11 @@ export default function ListIndex() {
     window.location.href = url.toString();
   };
 
+  const jobTitleOptions = (jobTitles || []).map((j) => ({
+    value: j.code.toString(),
+    label: j.name,
+  }));
+
   const projectOptions = (projects || []).map((p) => ({ value: p.id.toString(), label: p.name }));
 
   const dateRangeValue = [
@@ -148,7 +154,15 @@ export default function ListIndex() {
     return (
       <Table.Tr key={task.id}>
         <Table.Td>{task.row_number}</Table.Td>
-        <Table.Td>{task.name}</Table.Td>
+        <Table.Td>
+          <Text fz="sm">
+            {task.name}
+            {task.job_title_master?.name ? " |" : ""}
+          </Text>
+          {task.job_title_master?.name && (
+            <Text fz="xs" c="dimmed">{task.job_title_master.name}</Text>
+          )}
+        </Table.Td>
         <Table.Td>{task.code}</Table.Td>
         <Table.Td>{task.created_by_user?.name || "-"}</Table.Td>
         <Table.Td>{task.assigned_to_user?.name || "-"}</Table.Td>
@@ -189,7 +203,7 @@ export default function ListIndex() {
       </Tabs>
 
       <Grid align="flex-end" mb="lg" gutter="md">
-        <Grid.Col span={{ base: 12, sm: 5 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
           <TextInput
             label="Cari"
             placeholder="Cari nama, nomor pelayanan, identitas..."
@@ -199,7 +213,7 @@ export default function ListIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 4 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
           <Select
             label="Periode Pelayanan"
             placeholder="Semua periode"
@@ -211,7 +225,19 @@ export default function ListIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 3 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
+          <Select
+            label="Pemohon Sebagai"
+            placeholder="Semua pemohon"
+            searchable
+            clearable
+            data={jobTitleOptions}
+            value={params.job_title || null}
+            onChange={(value) => updateParams({ job_title: value || "", page: 1 })}
+          />
+        </Grid.Col>
+
+        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
           <DatePickerInput
             type="range"
             label="Tanggal Masuk"

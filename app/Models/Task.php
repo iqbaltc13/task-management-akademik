@@ -139,6 +139,30 @@ class Task extends Model implements AuditableContract, Sortable
         return $this->belongsTo(Project::class);
     }
 
+    /**
+     * "Pemohon sebagai" (tasks.job_title menyimpan kode job_titles).
+     * Nama relasi sengaja bukan jobTitle(): kunci JSON-nya (job_title) akan menimpa kolom job_title.
+     */
+    public function jobTitleMaster(): BelongsTo
+    {
+        return $this->belongsTo(JobTitle::class, 'job_title', 'code');
+    }
+
+    /**
+     * Pencarian bawaan (nama, nomor, kode, identitas) + nama "pemohon sebagai".
+     */
+    public function scopeSearchWithJobTitle(Builder $query, ?string $search): Builder
+    {
+        if (blank($search)) {
+            return $query;
+        }
+
+        return $query->where(function (Builder $q) use ($search) {
+            $q->searchByQueryString()
+                ->orWhereHas('jobTitleMaster', fn (Builder $job) => $job->where('name', 'like', '%'.$search.'%'));
+        });
+    }
+
     public function taskGroup(): BelongsTo
     {
         return $this->belongsTo(TaskGroup::class, 'group_id');

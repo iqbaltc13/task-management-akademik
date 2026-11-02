@@ -52,6 +52,7 @@ const DEFAULT_PARAMS = {
   direction: "desc",
   created_by_user_id: "",
   assigned_to_user_id: "",
+  job_title: "",
   created_from: "",
   created_to: "",
   page: 1,
@@ -79,7 +80,7 @@ function Th({ label, field, params, onSort }) {
 }
 
 export default function TableIndex() {
-  const { project, usersWithAccessToProject, filters } = usePage().props;
+  const { project, usersWithAccessToProject, jobTitles, filters } = usePage().props;
 
   const [params, setParams] = useState({ ...DEFAULT_PARAMS, ...filters });
   const [searchInput, setSearchInput] = useState(filters.search || "");
@@ -197,6 +198,11 @@ export default function TableIndex() {
     }
   };
 
+  const jobTitleOptions = (jobTitles || []).map((j) => ({
+    value: j.code.toString(),
+    label: j.name,
+  }));
+
   const userOptions = usersWithAccessToProject.map((u) => ({
     value: u.id.toString(),
     label: u.name,
@@ -214,7 +220,15 @@ export default function TableIndex() {
     return (
       <Table.Tr key={task.id}>
         <Table.Td>{task.row_number}</Table.Td>
-        <Table.Td>{task.name}</Table.Td>
+        <Table.Td>
+          <Text fz="sm">
+            {task.name}
+            {task.job_title_master?.name ? " |" : ""}
+          </Text>
+          {task.job_title_master?.name && (
+            <Text fz="xs" c="dimmed">{task.job_title_master.name}</Text>
+          )}
+        </Table.Td>
         <Table.Td>{task.code}</Table.Td>
         <Table.Td>{task.created_by_user?.name || "-"}</Table.Td>
         <Table.Td>{task.assigned_to_user?.name || "-"}</Table.Td>
@@ -273,7 +287,7 @@ export default function TableIndex() {
       </Grid>
 
       <Grid align="flex-end" mb="lg" gutter="md">
-        <Grid.Col span={{ base: 12, sm: 4 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
           <TextInput
             label="Cari"
             placeholder="Cari nama, nomor pelayanan, identitas..."
@@ -283,7 +297,19 @@ export default function TableIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 3 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 2 }}>
+          <Select
+            label="Pemohon Sebagai"
+            placeholder="Semua pemohon"
+            searchable
+            clearable
+            data={jobTitleOptions}
+            value={params.job_title || null}
+            onChange={(value) => updateParams({ job_title: value || "", page: 1 })}
+          />
+        </Grid.Col>
+
+        <Grid.Col span={{ base: 12, sm: 6, lg: 2 }}>
           <Select
             label="Penerima Pelayanan"
             placeholder="Semua pembuat"
@@ -295,7 +321,7 @@ export default function TableIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 3 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
           <Select
             label="Penerima Tugas"
             placeholder="Semua penerima tugas"
@@ -307,7 +333,7 @@ export default function TableIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 2 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 2 }}>
           <DatePickerInput
             type="range"
             label="Tanggal Masuk"

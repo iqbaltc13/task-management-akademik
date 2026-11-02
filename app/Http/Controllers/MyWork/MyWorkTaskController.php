@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MyWork;
 
 use App\Http\Controllers\Controller;
+use App\Models\JobTitle;
 use App\Models\Project;
 use App\Models\Task;
 use App\Services\PermissionService;
@@ -57,6 +58,7 @@ class MyWorkTaskController extends Controller
                 'name' => data_get($p, 'name'),
             ])
             ->values(),
+            'jobTitles' => JobTitle::select('code', 'name')->orderBy('name')->get(),
         ]);
     }
 
@@ -76,8 +78,10 @@ class MyWorkTaskController extends Controller
                 'assignedToUser:id,name',
                 'taskGroup:id,name',
                 'project:id,name',
+                'jobTitleMaster:code,name',
             ])
-            ->searchByQueryString()
+            ->searchWithJobTitle($request->input('search'))
+            ->when($request->filled('job_title'), fn ($q) => $q->where('job_title', $request->job_title))
             ->when($request->filled('project_id'), fn ($q) => $q->where('project_id', $request->project_id))
             ->when($request->filled('created_from'), fn ($q) => $q->whereDate('created_at', '>=', $request->created_from))
             ->when($request->filled('created_to'), fn ($q) => $q->whereDate('created_at', '<=', $request->created_to));

@@ -120,8 +120,10 @@ class TaskController extends Controller
                 'createdByUser:id,name',
                 'assignedToUser:id,name',
                 'taskGroup:id,name',
+                'jobTitleMaster:code,name',
             ])
-            ->searchByQueryString()
+            ->searchWithJobTitle($request->input('search'))
+            ->when($request->filled('job_title'), fn ($query) => $query->where('job_title', $request->job_title))
             ->when($request->filled('created_by_user_id'), fn ($query) => $query->where('created_by_user_id', $request->created_by_user_id))
             ->when($request->filled('assigned_to_user_id'), fn ($query) => $query->where('assigned_to_user_id', $request->assigned_to_user_id))
             ->when($request->filled('created_from'), fn ($query) => $query->whereDate('created_at', '>=', $request->created_from))
