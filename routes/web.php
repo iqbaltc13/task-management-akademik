@@ -22,8 +22,13 @@ use App\Http\Controllers\Task\GroupController;
 use App\Http\Controllers\Task\TimeLogController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\NoLogin\NoLoginController; 
+use App\Http\Controllers\NoLogin\NoLoginController;
+use App\Http\Controllers\Settings\MasterJabatanController;
+use App\Http\Controllers\Settings\MasterStoController;
+use App\Http\Controllers\Settings\MasterSubUnitController;
+use App\Http\Controllers\Settings\MasterUnitController; 
 use Illuminate\Support\Facades\Route;
+
 
 Route::redirect('/', 'dashboard');
 Route::get('no-login/create-permintaan', [NoLoginController::class, 'createPermintaan'])->name('mintaan');
@@ -138,6 +143,24 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::resource('labels', LabelController::class)->except(['show']);
         Route::post('labels/{labelId}/restore', [LabelController::class, 'restore'])->name('labels.restore');
+
+                // Struktur Organisasi
+        Route::resource('master-units', MasterUnitController::class)
+            ->parameters(['master-units' => 'master_unit'])
+            ->except(['show']);
+        Route::post('master-units/{id}/restore', [MasterUnitController::class, 'restore'])->name('master-units.restore');
+        Route::resource('master-sub-units', MasterSubUnitController::class)
+            ->parameters(['master-sub-units' => 'master_sub_unit'])
+            ->except(['show']);
+        Route::post('master-sub-units/{id}/restore', [MasterSubUnitController::class, 'restore'])->name('master-sub-units.restore');
+        Route::resource('master-jabatans', MasterJabatanController::class)
+            ->parameters(['master-jabatans' => 'master_jabatan'])
+            ->except(['show']);
+        Route::post('master-jabatans/{id}/restore', [MasterJabatanController::class, 'restore'])->name('master-jabatans.restore');
+        Route::resource('master-stos', MasterStoController::class)
+            ->parameters(['master-stos' => 'master_sto'])
+            ->except(['show']);
+        Route::post('master-stos/{id}/restore', [MasterStoController::class, 'restore'])->name('master-stos.restore');
 
         Route::resource('jenis-pelayanans', MasterJenisPelayananController::class)
             ->except(['show'])

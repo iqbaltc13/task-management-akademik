@@ -139,7 +139,14 @@ export default function Sidebar() {
         icon: IconSettings,
         active: route().current("settings.*"),
         opened: route().current("settings.*"),
-        visible: can("view owner company") || can("view roles") || can("view labels") || can("view jenis pelayanans"),
+        visible:
+                can("view owner company") ||
+                can("view roles") ||
+                can("view labels") ||
+                can("view master stos") ||
+                can("view master units") ||
+                can("view master sub units") ||
+                can("view master jabatans"),
         links: [
           {
             label: "Instansi",
@@ -159,6 +166,30 @@ export default function Sidebar() {
             link: route("settings.labels.index"),
             active: route().current("settings.labels.*"),
             visible: can("view labels"),
+          },
+                    {
+            label: "Struktur Organisasi",
+            link: route("settings.master-stos.index"),
+            active: route().current("settings.master-stos.*"),
+            visible: can("view master stos"),
+          },
+          {
+            label: "Unit",
+            link: route("settings.master-units.index"),
+            active: route().current("settings.master-units.*"),
+            visible: can("view master units"),
+          },
+          {
+            label: "Sub Unit",
+            link: route("settings.master-sub-units.index"),
+            active: route().current("settings.master-sub-units.*"),
+            visible: can("view master sub units"),
+          },
+          {
+            label: "Jabatan",
+            link: route("settings.master-jabatans.index"),
+            active: route().current("settings.master-jabatans.*"),
+            visible: can("view master jabatans"),
           },
           {
             label: "Jenis Pelayanan",

@@ -82,6 +82,34 @@ class PermissionService
                     'title' => 'Kembalikan jenis pelayanan',
                 ],
             ],
+                        'Master Unit' => [
+                ['name' => 'view master units', 'title' => 'Lihat semua unit'],
+                ['name' => 'create master unit', 'title' => 'Buat unit'],
+                ['name' => 'edit master unit', 'title' => 'Edit unit'],
+                ['name' => 'archive master unit', 'title' => 'Arsipkan unit'],
+                ['name' => 'restore master unit', 'title' => 'Kembalikan unit'],
+            ],
+            'Master Sub Unit' => [
+                ['name' => 'view master sub units', 'title' => 'Lihat semua sub unit'],
+                ['name' => 'create master sub unit', 'title' => 'Buat sub unit'],
+                ['name' => 'edit master sub unit', 'title' => 'Edit sub unit'],
+                ['name' => 'archive master sub unit', 'title' => 'Arsipkan sub unit'],
+                ['name' => 'restore master sub unit', 'title' => 'Kembalikan sub unit'],
+            ],
+            'Master Jabatan' => [
+                ['name' => 'view master jabatans', 'title' => 'Lihat semua jabatan'],
+                ['name' => 'create master jabatan', 'title' => 'Buat jabatan'],
+                ['name' => 'edit master jabatan', 'title' => 'Edit jabatan'],
+                ['name' => 'archive master jabatan', 'title' => 'Arsipkan jabatan'],
+                ['name' => 'restore master jabatan', 'title' => 'Kembalikan jabatan'],
+            ],
+            'Struktur Organisasi' => [
+                ['name' => 'view master stos', 'title' => 'Lihat semua struktur organisasi'],
+                ['name' => 'create master sto', 'title' => 'Buat struktur organisasi'],
+                ['name' => 'edit master sto', 'title' => 'Edit struktur organisasi'],
+                ['name' => 'archive master sto', 'title' => 'Arsipkan struktur organisasi'],
+                ['name' => 'restore master sto', 'title' => 'Kembalikan struktur organisasi'],
+            ],
             'Peran' => [
                 [
                     'name' => 'view roles',
@@ -104,6 +132,7 @@ class PermissionService
                     'title' => 'Kembalikan peran',
                 ],
             ],
+            
             'Institusi' => [
                 [
                     'name' => 'view owner company',
