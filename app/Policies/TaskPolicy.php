@@ -33,7 +33,8 @@ class TaskPolicy
             return false;
         }
 
-        if ($user->hasPermissionTo('edit task')) {
+        // hanya administrator, penerima pelayanan (pembuat), dan penerima tugas
+        if ($user->hasRole('admin')) {
             return true;
         }
 

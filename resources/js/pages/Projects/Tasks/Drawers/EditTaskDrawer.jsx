@@ -4,7 +4,7 @@ import useTaskDrawerStore from '@/hooks/store/useTaskDrawerStore';
 import useTasksStore from '@/hooks/store/useTasksStore';
 import useWebSockets from '@/hooks/useWebSockets';
 import { date } from '@/utils/datetime';
-import { hasRoles } from '@/utils/user';
+import { canEditTaskItem, hasRoles } from '@/utils/user';
 import { usePage, router } from '@inertiajs/react';
 import RichTextEditorWithCreator from '@/components/RichTextEditorWithCreator';
 import AssigneeHistoryStepper from './AssigneeHistoryStepper';
@@ -61,10 +61,8 @@ export function EditTaskDrawer() {
 
   const task = findTask(edit.task.id);
 
-  const canEditTask =
-    can('edit task') ||
-    (task && user?.id === task.created_by_user_id) ||
-    (task && user?.id === task.assigned_to_user_id);
+  // hanya administrator, penerima pelayanan (pembuat), dan penerima tugas yang boleh mengedit
+  const canEditTask = canEditTaskItem(user, task);
 
   const assignedUserLogs = task?.assigned_user_update_logs || [];
   const latestAssigneeLog = assignedUserLogs[assignedUserLogs.length - 1];

@@ -7,6 +7,7 @@ import { EditTaskDrawer } from "./Drawers/EditTaskDrawer";
 import useTaskDrawerStore from "@/hooks/store/useTaskDrawerStore";
 import useTasksStore from "@/hooks/store/useTasksStore";
 import { IconPlus } from "@tabler/icons-react"; 
+import { canEditTaskItem } from "@/utils/user";
 import {
   ActionIcon,
   Badge,
@@ -80,7 +81,7 @@ function Th({ label, field, params, onSort }) {
 }
 
 export default function TableIndex() {
-  const { project, usersWithAccessToProject, jobTitles, filters } = usePage().props;
+  const { project, usersWithAccessToProject, jobTitles, filters, auth: { user } } = usePage().props;
 
   const [params, setParams] = useState({ ...DEFAULT_PARAMS, ...filters });
   const [searchInput, setSearchInput] = useState(filters.search || "");
@@ -217,6 +218,9 @@ export default function TableIndex() {
     const statusName = task.task_group?.name || "-";
     const statusColor = STATUS_COLORS[statusName.toLowerCase()] || "gray";
 
+    const showEdit = canEditTaskItem(user, task);
+    const showDelete = can("archive task");
+
     return (
       <Table.Tr key={task.id}>
         <Table.Td>{task.row_number}</Table.Td>
@@ -240,6 +244,7 @@ export default function TableIndex() {
         <Table.Td>{dayjs(task.created_at).format("DD-MM-YYYY")}</Table.Td>
         <Table.Td>{task.due_on ? dayjs(task.due_on).format("DD-MM-YYYY") : "-"}</Table.Td>
         <Table.Td>
+          {(showEdit || showDelete) && (
           <Menu withArrow position="bottom-end" shadow="md">
             <Menu.Target>
               <ActionIcon variant="subtle" color="gray">
@@ -247,7 +252,7 @@ export default function TableIndex() {
               </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
-              {can("edit task") && (
+              {showEdit && (
                 <Menu.Item
                   leftSection={<IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
                   onClick={() => handleEdit(task)}
@@ -255,7 +260,7 @@ export default function TableIndex() {
                   Edit
                 </Menu.Item>
               )}
-              {can("archive task") && (
+              {showDelete && (
                 <Menu.Item
                   color="red"
                   leftSection={<IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
@@ -266,6 +271,7 @@ export default function TableIndex() {
               )}
             </Menu.Dropdown>
           </Menu>
+          )}
         </Table.Td>
       </Table.Tr>
     );

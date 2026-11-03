@@ -1,7 +1,8 @@
 import Layout from "@/layouts/MainLayout";
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { DatePickerInput } from "@mantine/dates";
 import {
+  ActionIcon,
   Badge,
   Button,
   Center,
@@ -15,6 +16,7 @@ import {
   Text,
   TextInput,
   Title,
+  Tooltip,
   UnstyledButton,
   rem,
 } from "@mantine/core";
@@ -22,10 +24,12 @@ import {
   IconArrowsSort,
   IconFileSpreadsheet,
   IconFileTypePdf,
+  IconPencil,
   IconSearch,
   IconSortAscending,
   IconSortDescending,
 } from "@tabler/icons-react";
+import { canEditTaskItem } from "@/utils/user";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
@@ -75,7 +79,7 @@ function Th({ label, field, params, onSort }) {
 }
 
 export default function ListIndex() {
-  const { projects, jobTitles } = usePage().props;
+  const { projects, jobTitles, auth: { user } } = usePage().props;
   const initialType = new URLSearchParams(window.location.search).get("type") || "active";
   const [params, setParams] = useState({ ...DEFAULT_PARAMS, type: initialType });
   const [searchInput, setSearchInput] = useState("");
@@ -147,6 +151,12 @@ export default function ListIndex() {
     params.created_to ? new Date(params.created_to) : null,
   ];
 
+  // Pelayanan lintas periode: drawer edit butuh data per periode (status, pengguna),
+  // jadi Edit membuka pelayanan tersebut di halaman periodenya.
+  const handleEdit = (task) => {
+    router.visit(route("projects.tasks.open", [task.project_id, task.id]));
+  };
+
   const rows = (page?.data || []).map((task) => {
     const statusName = task.task_group?.name || "-";
     const statusColor = STATUS_COLORS[statusName.toLowerCase()] || "gray";
@@ -172,6 +182,15 @@ export default function ListIndex() {
         <Table.Td>{dayjs(task.created_at).format("DD-MM-YYYY")}</Table.Td>
         <Table.Td>{task.due_on ? dayjs(task.due_on).format("DD-MM-YYYY") : "-"}</Table.Td>
         <Table.Td>{task.project?.name || "-"}</Table.Td>
+        <Table.Td>
+          {canEditTaskItem(user, task) && (
+            <Tooltip label="Edit" withArrow>
+              <ActionIcon variant="subtle" color="blue" onClick={() => handleEdit(task)}>
+                <IconPencil style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
+              </ActionIcon>
+            </Tooltip>
+          )}
+        </Table.Td>
       </Table.Tr>
     );
   });
@@ -266,12 +285,13 @@ export default function ListIndex() {
                 <Th label="Tanggal Masuk" field="created_at" params={params} onSort={handleSort} />
                 <Th label="Batas Waktu" field="due_on" params={params} onSort={handleSort} />
                 <Table.Th>Periode Pelayanan</Table.Th>
+                <Table.Th style={{ width: 70 }}>Aksi</Table.Th>
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
               {rows.length ? rows : (
                 <Table.Tr>
-                  <Table.Td colSpan={9}>
+                  <Table.Td colSpan={10}>
                     <Center py="xl">
                       <Text c="dimmed">{loading ? " " : "Tidak ada pelayanan yang ditemukan."}</Text>
                     </Center>

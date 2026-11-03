@@ -21,5 +21,20 @@ export const shortName = (name) => {
 };
 
 export const hasRoles = (user, roles) => {
-  return user.roles.find((i) => roles.includes(i.name)) !== undefined;
+  // auth.user.roles berupa daftar nama ("admin"), sedangkan user lain berupa objek ({ name })
+  return (user.roles || []).some((i) => roles.includes(typeof i === "string" ? i : i?.name));
+};
+
+/**
+ * Yang boleh mengedit sebuah pelayanan: administrator, penerima pelayanan (pembuat),
+ * dan penerima tugas (yang ditugaskan).
+ */
+export const canEditTaskItem = (user, task) => {
+  if (!user || !task) return false;
+
+  return (
+    hasRoles(user, ["admin"]) ||
+    user.id === task.created_by_user_id ||
+    user.id === task.assigned_to_user_id
+  );
 };
