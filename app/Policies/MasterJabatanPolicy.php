@@ -4,63 +4,31 @@ namespace App\Policies;
 
 use App\Models\MasterJabatan;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class MasterJabatanPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('view master jabatans');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, MasterJabatan $masterJabatan): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('create master jabatan');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, MasterJabatan $masterJabatan): bool
+    public function update(User $user, MasterJabatan $model): bool
     {
-        //
+        return $user->hasPermissionTo('edit master jabatan');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, MasterJabatan $masterJabatan): bool
+    public function delete(User $user, MasterJabatan $model): bool
     {
-        //
+        return $user->hasPermissionTo('archive master jabatan');
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, MasterJabatan $masterJabatan): bool
+    public function restore(User $user, MasterJabatan $model): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, MasterJabatan $masterJabatan): bool
-    {
-        //
+        return $user->hasPermissionTo('restore master jabatan');
     }
 }
