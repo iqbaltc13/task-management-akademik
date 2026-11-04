@@ -26,7 +26,7 @@ class UserController extends Controller
                 User::searchByQueryString()
                     ->sortByQueryString()
                     ->withoutRole('client')
-                    ->with('roles:id,name')
+                    ->with(['roles:id,name', 'sto:code,name'])
                     ->when($request->has('archived'), fn ($query) => $query->onlyArchived())
                     ->paginate(12)
             ),

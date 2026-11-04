@@ -27,6 +27,7 @@ class UpdateUserRequest extends FormRequest
             'job_title' => 'required|string',
             'job_sub_title' => 'nullable|string|nullable',
             'name' => 'required|string',
+                        'code_sto' => ['required', 'string', Rule::exists('master_stos', 'code')->whereNull('archived_at')],
             'phone' => 'string|nullable',
             'rate' => 'nullable|numeric|min:0',
             'email' => ['required', 'email:rfc,dns', Rule::unique('users')->ignore($this->route('user')->id)],
