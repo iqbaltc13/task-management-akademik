@@ -6,22 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    public function __construct()
+    {
+        $this->table_name = 'master_jabatans';
+        $this->schema = Schema::connection($this->getConnection());
+    }
+
     public function up(): void
     {
-        Schema::create('_master_jabatans_', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        $this->schema->create($this->table_name, function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('code', 255)->unique();
+            $table->string('name', 255);
+
+            $table->dateTime('archived_at')->nullable();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
+
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('_master_jabatans_');
+        $this->schema->dropIfExists($this->table_name);
     }
 };
