@@ -16,7 +16,7 @@ return new class extends Migration
     {
         $this->schema->create($this->table_name, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code', 255)->unique();
+            $table->string('code', 255);
             $table->string('code_parent', 255)->nullable();
             $table->string('name', 255);
             $table->unsignedBigInteger('id_unit')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->index('id_sub_unit');
             $table->index('id_jabatan');
             $table->index('level');
-
+            $table->unique('code'); 
             $table->foreign('code_parent')->references('code')->on('master_stos')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('id_unit')->references('id')->on('master_units')->restrictOnDelete();
