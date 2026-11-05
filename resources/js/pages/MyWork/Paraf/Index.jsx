@@ -306,6 +306,7 @@ export default function ParafIndex() {
               <DetailRow label="Tanggal Masuk">{formatDate(detail.created_at)}</DetailRow>
               <DetailRow label="Batas Waktu">{formatDate(detail.due_on)}</DetailRow>
               <DetailRow label="Deskripsi">{htmlToText(detail.description)}</DetailRow>
+              <DetailRow label="Diparaf Oleh">{detail.approved_by_user?.name}</DetailRow>
 
               <Divider my="xs" />
 

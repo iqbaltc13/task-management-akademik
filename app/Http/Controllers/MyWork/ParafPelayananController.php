@@ -50,6 +50,7 @@ class ParafPelayananController extends Controller
             'taskGroup:id,name',
             'project:id,name',
             'jenisPelayanan:code,name',
+            'approvedByUser:id,name',
         ]));
     }
 
@@ -59,7 +60,10 @@ class ParafPelayananController extends Controller
         $this->ensureSubordinateTask($user, $task);
 
         if (! $task->is_approved) {
-            $task->update(['is_approved' => true]);
+            $task->update([
+                'is_approved' => true,
+                'approved_by' => $user->id,
+            ]);
         }
 
         return response()->json(['is_approved' => true]);

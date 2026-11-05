@@ -174,6 +174,11 @@ class Task extends Model implements AuditableContract, Sortable
         return $this->belongsTo(User::class, 'created_by_user_id');
     }
 
+    public function approvedByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
     public function assignedToUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to_user_id');
