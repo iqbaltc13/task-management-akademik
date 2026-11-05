@@ -7,9 +7,11 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use App\Models\MasterSto;
 use Lacodix\LaravelModelFilter\Traits\IsSearchable;
 use Lacodix\LaravelModelFilter\Traits\IsSortable;
 use Laravel\Sanctum\HasApiTokens;
@@ -99,6 +101,11 @@ class User extends Authenticatable implements AuditableContract, CanResetPasswor
         return $this->belongsToMany(Task::class, 'subscribe_task');
     }
 
+    public function sto(): BelongsTo
+    {
+        return $this->belongsTo(MasterSto::class, 'code_sto', 'code');
+    }
+    
     public function hasProjectAccess(Project $project): bool
     {
         $users = PermissionService::usersWithAccessToProject($project);

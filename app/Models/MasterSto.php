@@ -59,6 +59,29 @@ class MasterSto extends Model
         return $this->belongsTo(MasterJabatan::class, 'id_jabatan');
     }
 
+        public function users()
+    {
+        return $this->hasMany(User::class, 'code_sto', 'code');
+    }
+
+    /**
+     * Opsi untuk select "Struktur Organisasi" (dipakai form pengguna).
+     * Value = code STO.
+     */
+    public static function dropdownValues(): array
+    {
+        return self::with('unit:id,name')
+            ->orderBy('level')
+            ->orderBy('code')
+            ->get(['code', 'name', 'level', 'id_unit'])
+            ->map(fn ($i) => [
+                'value' => $i->code,
+                'label' => $i->code.' - '.$i->name.($i->unit ? ' ('.$i->unit->name.')' : ''),
+            ])
+            ->values()
+            ->toArray();
+    }
+
     /**
      * Semua kode turunan (anak, cucu, dst.), termasuk yang diarsipkan.
      * Dipakai untuk mencegah induk memilih turunannya sendiri (siklus).
