@@ -26,17 +26,16 @@ class ProjectPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+        public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create project');
+        return $user->hasPermissionTo('create project') && $user->canManageProjects();
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
     public function update(User $user, Project $project): bool
     {
-        return $user->hasPermissionTo('edit project') && $user->hasProjectAccess($project);
+        return $user->hasPermissionTo('edit project')
+            && $user->canManageProjects()
+            && $user->hasProjectAccess($project);
     }
 
     /**

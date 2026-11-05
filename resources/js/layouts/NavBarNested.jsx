@@ -18,7 +18,7 @@ import UserButton from "./UserButton";
 import classes from "./css/NavBarNested.module.css";
 
 export default function Sidebar() {
-  const { version } = usePage().props;
+  const { version, auth } = usePage().props;
   const { items, setItems } = useNavigationStore();
 
   useEffect(() => {
@@ -67,6 +67,12 @@ export default function Sidebar() {
             link: route("my-work.tasks.list", { type: "transferred" }),
             active: route().current("my-work.tasks.list") && route().params.type === "transferred",
             visible: can("view tasks"),
+          },
+                    {
+            label: "Paraf Pelayanan",
+            link: route("my-work.paraf.index"),
+            active: route().current("my-work.paraf.*"),
+            visible: !!auth?.user?.is_pimpinan,
           },
           // {
           //   label: "Pelayanan",

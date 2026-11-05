@@ -52,6 +52,7 @@ class HandleInertiaRequests extends Middleware
                         'avatar' => $user->avatar,
                         'job_title' => $user->job_title,
                         'roles' => $user->getRoleNames(),
+                        'is_pimpinan' => $user->isPimpinan(),
                         'permissions' => $user->getAllPermissions()->pluck('name'),
                     ];
                 },

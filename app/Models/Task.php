@@ -76,6 +76,7 @@ class Task extends Model implements AuditableContract, Sortable
         'estimation' => 'float',
         'fixed_price' => 'integer',
         'pricing_type' => PricingType::class,
+        'is_approved' => 'boolean'
     ];
 
     protected $appends = [

@@ -27,7 +27,9 @@ use App\Http\Controllers\Settings\MasterJabatanController;
 use App\Http\Controllers\Settings\MasterStoController;
 use App\Http\Controllers\Settings\MasterSubUnitController;
 use App\Http\Controllers\Settings\MasterUnitController; 
+use App\Http\Controllers\MyWork\ParafPelayananController;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::redirect('/', 'dashboard');
@@ -101,6 +103,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('tasks/list/export/xlsx', [MyWorkTaskController::class, 'listExportXlsx'])->name('tasks.list.export.xlsx');
         Route::get('tasks/list/export/pdf', [MyWorkTaskController::class, 'listExportPdf'])->name('tasks.list.export.pdf');
         Route::get('activity', [ActivityController::class, 'index'])->name('activity.index');
+        Route::get('paraf', [ParafPelayananController::class, 'index'])->name('paraf.index');
+        Route::get('paraf/data', [ParafPelayananController::class, 'data'])->name('paraf.data');
+        Route::get('paraf/{task}', [ParafPelayananController::class, 'show'])->name('paraf.show');
+        Route::post('paraf/{task}', [ParafPelayananController::class, 'approve'])->name('paraf.approve');
     });
 
     // Clients

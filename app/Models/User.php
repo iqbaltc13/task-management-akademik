@@ -22,6 +22,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
+use Illuminate\Support\Collection;
 
 class User extends Authenticatable implements AuditableContract, CanResetPasswordContract
 {
@@ -71,6 +72,34 @@ class User extends Authenticatable implements AuditableContract, CanResetPasswor
     public function getFirstName(): string
     {
         return Str::beforeLast($this->name, ' ');
+    }
+
+    public function isPimpinan(): bool
+    {
+        return (bool) $this->sto?->is_pimpinan;
+    }
+
+    /**
+     * Yang boleh menambah/mengedit Periode Pelayanan: pimpinan (dan admin sistem).
+     */
+    public function canManageProjects(): bool
+    {
+        return $this->isAdmin() || $this->isPimpinan();
+    }
+
+    /**
+     * ID user yang berada satu level di bawah user ini di struktur organisasi,
+     * yaitu user dengan STO yang code_parent-nya adalah STO user ini.
+     */
+    public function directSubordinateIds(): Collection
+    {
+        if (! $this->code_sto) {
+            return collect();
+        }
+
+        return static::query()
+            ->whereIn('code_sto', MasterSto::where('code_parent', $this->code_sto)->select('code'))
+            ->pluck('id');
     }
 
     public function isAdmin(): bool
