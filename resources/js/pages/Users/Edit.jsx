@@ -21,17 +21,18 @@ import {
   Text,
   TextInput,
   Title,
+  Select,
 } from "@mantine/core";
 
 const UserEdit = () => {
-  const { item } = usePage().props;
+  
+  const { item, stos } = usePage().props;
   const { getDropdownValues } = useRoles();
 
   const [form, submit, updateValue] = useForm("post", route("users.update", item.id), {
     _method: "put",
     avatar: null,
-    job_title: item.job_title,
-    job_sub_title: item.job_sub_title || "",
+    code_sto: item.code_sto ?? null,
     name: item.name,
     phone: item.phone || "",
     rate: item.rate / 100,
@@ -39,6 +40,7 @@ const UserEdit = () => {
     password: "",
     password_confirmation: "",
     roles: item.roles,
+    nip: item.nip || ""
   });
 
   return (
@@ -100,25 +102,26 @@ const UserEdit = () => {
             error={form.errors.name}
           />
 
-          <TextInput
-            label="Bagian"
-            placeholder="Bagian"
+                    <TextInput
+            label="NIP / Nomor Identitas"
+            placeholder="NIP atau nomor identitas"
+            mt="md"
+            value={form.data.nip}
+            onChange={(e) => updateValue("nip", e.target.value)}
+            error={form.errors.nip}
+          />
+          <Select
+            label="Struktur Organisasi"
+            placeholder="Pilih struktur organisasi"
             required
+            searchable
             mt="md"
-            value={form.data.job_title}
-            onChange={(e) => updateValue("job_title", e.target.value)}
-            error={form.errors.job_title}
+            data={stos}
+            nothingFoundMessage="Struktur organisasi tidak ditemukan"
+            value={form.data.code_sto}
+            onChange={(value) => updateValue("code_sto", value)}
+            error={form.errors.code_sto}
           />
-
-          <TextInput
-            label="Sub Bagian "
-            placeholder="Sub Bagian "
-            mt="md"
-            value={form.data.job_sub_title}
-            onChange={(e) => updateValue("job_sub_title", e.target.value)}
-            error={form.errors.job_sub_title}
-          />
-          
           <Divider mt="xl" mb="md" label="Login credentials" labelPosition="center" />
 
           <MultiSelect

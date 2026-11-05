@@ -22,8 +22,13 @@ export default function TableRow({ item }) {
             <Text fz="sm" fw={500}>
               {item.name}
             </Text>
+            {item.nip && (
+              <Text fz="xs" c="dimmed">
+                NIP: {item.nip}
+              </Text>
+            )}
             <Text fz="xs" c="dimmed">
-              {item.job_title}
+               {item.sto_name ?? item.job_title}
             </Text>
           </div>
         </Group>

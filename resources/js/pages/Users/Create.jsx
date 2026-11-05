@@ -6,6 +6,7 @@ import ContainerBox from "@/layouts/ContainerBox";
 import Layout from "@/layouts/MainLayout";
 import { redirectTo } from "@/utils/route";
 import { getInitials } from "@/utils/user";
+import { usePage } from "@inertiajs/react";
 import {
   Anchor,
   Avatar,
@@ -20,15 +21,15 @@ import {
   Text,
   TextInput,
   Title,
+  Select,
 } from "@mantine/core";
 
 const UserCreate = () => {
   const { getDropdownValues } = useRoles();
-
+   const { stos } = usePage().props;
   const [form, submit, updateValue] = useForm("post", route("users.store"), {
     avatar: null,
-    job_title: "",
-    job_sub_title: "",
+    
     name: "",
     phone: "",
     rate: 0,
@@ -37,6 +38,7 @@ const UserCreate = () => {
     password_confirmation: "",
     roles: [],
     nip: "",
+    code_sto: null,
    });
 
   return (
@@ -95,7 +97,9 @@ const UserCreate = () => {
             onChange={(e) => updateValue("name", e.target.value)}
             error={form.errors.name}
           />
-                    <TextInput
+
+          
+          <TextInput
             label="NIP / Nomor Identitas"
             placeholder="NIP atau nomor identitas"
             mt="md"
@@ -103,25 +107,18 @@ const UserCreate = () => {
             onChange={(e) => updateValue("nip", e.target.value)}
             error={form.errors.nip}
           />
-          <TextInput
-            label="Bagian"
-            placeholder="Bagian"
+          <Select
+            label="Struktur Organisasi"
+            placeholder="Pilih struktur organisasi"
             required
+            searchable
             mt="md"
-            value={form.data.job_title}
-            onChange={(e) => updateValue("job_title", e.target.value)}
-            error={form.errors.job_title}
+            data={stos}
+            nothingFoundMessage="Struktur organisasi tidak ditemukan"
+            value={form.data.code_sto}
+            onChange={(value) => updateValue("code_sto", value)}
+            error={form.errors.code_sto}
           />
-
-          <TextInput
-            label="Sub Bagian"
-            placeholder="Sub Bagian"
-            mt="md"
-            value={form.data.job_sub_title}
-            onChange={(e) => updateValue("job_sub_title", e.target.value)}
-            error={form.errors.job_sub_title}
-          />
-
           <MultiSelect
             label="Peran"
             placeholder="Pilih peran"
