@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\MasterSto;
 
 class UserController extends Controller
 {
@@ -35,7 +36,7 @@ class UserController extends Controller
 
     public function create()
     {
-        return Inertia::render('Users/Create');
+        return Inertia::render('Users/Create', ['stos' => MasterSto::dropdownValues()]);
     }
 
     public function store(StoreUserRequest $request)
@@ -47,7 +48,10 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return Inertia::render('Users/Edit', ['item' => new UserResource($user)]);
+        return Inertia::render('Users/Edit', [
+            'item' => new UserResource($user),
+            'stos' => MasterSto::dropdownValues(),
+        ]);
     }
 
     public function update(User $user, UpdateUserRequest $request)
