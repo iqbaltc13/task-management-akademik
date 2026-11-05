@@ -33,6 +33,7 @@ class UpdateUserRequest extends FormRequest
             'password' => 'nullable|min:8|confirmed',
             'roles' => 'required|array|min:1',
             'avatar' => [File::image(), 'nullable'],
+            'nip' => ['nullable', 'string', 'max:50', Rule::unique('users', 'nip')->ignore($this->route('user')->id)],
         ];
     }
 }

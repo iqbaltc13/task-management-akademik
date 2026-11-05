@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'rate' => $this->rate,
             'roles' => $this->roles->map->only('name')->flatten()->toArray(),
+            'nip' => $this->nip,
         ];
     }
 }

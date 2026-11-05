@@ -33,6 +33,7 @@ class StoreUserRequest extends FormRequest
             'password' => 'required|min:8|confirmed',
             'roles' => 'required|array|min:1',
             'avatar' => [File::image(), 'nullable'],
+            'nip' => ['nullable', 'string', 'max:50', Rule::unique('users', 'nip')],
         ];
     }
 }

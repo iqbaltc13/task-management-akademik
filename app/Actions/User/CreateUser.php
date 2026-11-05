@@ -19,6 +19,7 @@ class CreateUser
                 'phone' => $data['phone'],
                 'rate' => $data['rate'] * 100,
                 'email' => $data['email'],
+                'nip' => $data['nip'] ?? null,
                 'password' => Hash::make($data['password']),
             ]);
 

@@ -36,7 +36,8 @@ const UserCreate = () => {
     password: "",
     password_confirmation: "",
     roles: [],
-  });
+    nip: "",
+   });
 
   return (
     <>
@@ -94,7 +95,14 @@ const UserCreate = () => {
             onChange={(e) => updateValue("name", e.target.value)}
             error={form.errors.name}
           />
-
+                    <TextInput
+            label="NIP / Nomor Identitas"
+            placeholder="NIP atau nomor identitas"
+            mt="md"
+            value={form.data.nip}
+            onChange={(e) => updateValue("nip", e.target.value)}
+            error={form.errors.nip}
+          />
           <TextInput
             label="Bagian"
             placeholder="Bagian"

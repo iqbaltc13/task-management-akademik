@@ -14,6 +14,7 @@ class UpdateUser
             'job_title' => $data['job_title'],
             'phone' => $data['phone'],
             'rate' => $data['rate'] * 100,
+            'nip' => $data['nip'] ?? null,
             'email' => $data['email'],
         ];
 
