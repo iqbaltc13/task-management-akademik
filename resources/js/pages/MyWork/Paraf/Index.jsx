@@ -21,6 +21,8 @@ import {
 import {
   IconArrowsSort,
   IconCheck,
+  IconFileSpreadsheet,   // <-- tambah
+  IconFileTypePdf,       // <-- tambah
   IconSearch,
   IconSortAscending,
   IconSortDescending,
@@ -29,15 +31,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { notifications } from "@mantine/notifications";
-import {
-  IconArrowsSort,
-  IconCheck,
-  IconFileSpreadsheet,   // <-- tambah
-  IconFileTypePdf,       // <-- tambah
-  IconSearch,
-  IconSortAscending,
-  IconSortDescending,
-} from "@tabler/icons-react";
+
 
 const STATUS_COLORS = {
   diajukan: "grape",
@@ -252,7 +246,7 @@ export default function ParafIndex() {
 
   return (
     <>
-            <Grid justify="space-between" align="center" mb="lg">
+      <Grid justify="space-between" align="center" mb="lg">
         <Grid.Col span="content">
           <Title order={1}>Paraf Pelayanan</Title>
         </Grid.Col>
