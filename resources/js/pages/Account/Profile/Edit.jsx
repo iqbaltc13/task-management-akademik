@@ -83,15 +83,7 @@ const ProfileIndex = () => {
             error={form.errors.name}
           />
 
-          <TextInput
-            label="Job title"
-            placeholder="e.g. Frontend Developer"
-            required
-            mt="md"
-            value={form.data.job_title}
-            onChange={(e) => updateValue("job_title", e.target.value)}
-            error={form.errors.job_title}
-          />
+          
 
           <TextInput
             label="Phone"
