@@ -106,6 +106,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('paraf', [ParafPelayananController::class, 'index'])->name('paraf.index');
         Route::get('paraf/data', [ParafPelayananController::class, 'data'])->name('paraf.data');
         Route::get('paraf/{task}', [ParafPelayananController::class, 'show'])->name('paraf.show');
+        Route::get('paraf/export/xlsx', [ParafPelayananController::class, 'exportXlsx'])->name('paraf.export.xlsx');
+        Route::get('paraf/export/pdf', [ParafPelayananController::class, 'exportPdf'])->name('paraf.export.pdf');
         Route::post('paraf/{task}', [ParafPelayananController::class, 'approve'])->name('paraf.approve');
     });
 

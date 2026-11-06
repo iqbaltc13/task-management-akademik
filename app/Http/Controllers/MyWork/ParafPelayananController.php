@@ -10,6 +10,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Exports\ParafListExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ParafPelayananController extends Controller
 {
@@ -28,11 +33,7 @@ class ParafPelayananController extends Controller
         $sort = in_array($request->input('sort'), $allowedSorts, true) ? $request->input('sort') : 'created_at';
         $direction = $request->input('direction') === 'asc' ? 'asc' : 'desc';
 
-        $tasks = $this->scopedQuery($user)
-            ->searchByQueryString()
-            ->when($request->input('status') === 'pending', fn ($q) => $q->where('is_approved', false))
-            ->when($request->input('status') === 'approved', fn ($q) => $q->where('is_approved', true))
-            ->withoutGlobalScope('ordered')
+        $tasks = $this->filteredQuery($request, $user)
             ->orderBy($sort, $direction)
             ->paginate($request->input('per_page', 15));
 
@@ -67,6 +68,53 @@ class ParafPelayananController extends Controller
         }
 
         return response()->json(['is_approved' => true]);
+    }
+
+        public function exportXlsx(Request $request): BinaryFileResponse
+    {
+        $user = $this->pimpinan();
+
+        return Excel::download(
+            new ParafListExport($this->exportRows($request, $user)),
+            'paraf-pelayanan-'.now()->format('Ymd-His').'.xlsx'
+        );
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $user = $this->pimpinan();
+
+        $pdf = Pdf::loadView('exports.paraf-list-pdf', ['rows' => $this->exportRows($request, $user)])
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download('paraf-pelayanan-'.now()->format('Ymd-His').'.pdf');
+    }
+
+    private function filteredQuery(Request $request, User $user): Builder
+    {
+        return $this->scopedQuery($user)
+            ->searchByQueryString()
+            ->when($request->input('status') === 'pending', fn ($q) => $q->where('is_approved', false))
+            ->when($request->input('status') === 'approved', fn ($q) => $q->where('is_approved', true))
+            ->withoutGlobalScope('ordered');
+    }
+
+    private function exportRows(Request $request, User $user): Collection
+    {
+        return $this->filteredQuery($request, $user)
+            ->with('approvedByUser:id,name')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(fn (Task $task) => [
+                'Nama Pemohon' => $task->name,
+                'Nomor Pelayanan' => $task->code,
+                'Penerima Pelayanan' => $task->createdByUser?->name ?? '-',
+                'Penerima Tugas' => $task->assignedToUser?->name ?? '-',
+                'Status' => $task->taskGroup?->name ?? '-',
+                'Tanggal Masuk' => $task->created_at?->format('d-m-Y'),
+                'Status Paraf' => $task->is_approved ? 'Sudah diparaf' : 'Belum diparaf',
+                'Diparaf Oleh' => $task->approvedByUser?->name ?? '-',
+            ]);
     }
 
     private function pimpinan(): User

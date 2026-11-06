@@ -29,6 +29,15 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { notifications } from "@mantine/notifications";
+import {
+  IconArrowsSort,
+  IconCheck,
+  IconFileSpreadsheet,   // <-- tambah
+  IconFileTypePdf,       // <-- tambah
+  IconSearch,
+  IconSortAscending,
+  IconSortDescending,
+} from "@tabler/icons-react";
 
 const STATUS_COLORS = {
   diajukan: "grape",
@@ -147,6 +156,16 @@ export default function ParafIndex() {
     updateParams({ sort: field, direction, page: 1 });
   };
 
+  const handleExport = (format) => {
+    const url = new URL(route(`my-work.paraf.export.${format}`));
+    ["status", "search", "sort", "direction"].forEach((key) => {
+      if (params[key] !== "" && params[key] !== null && params[key] !== undefined) {
+        url.searchParams.set(key, params[key]);
+      }
+    });
+    window.location.href = url.toString();
+  };
+
   const openDetail = async (task) => {
     setModalOpen(true);
     setDetail(null);
@@ -233,9 +252,29 @@ export default function ParafIndex() {
 
   return (
     <>
-      <Title order={1} mb="lg">
-        Paraf Pelayanan
-      </Title>
+            <Grid justify="space-between" align="center" mb="lg">
+        <Grid.Col span="content">
+          <Title order={1}>Paraf Pelayanan</Title>
+        </Grid.Col>
+        <Grid.Col span="content">
+          <Group gap="xs">
+            <Button
+              variant="light"
+              leftSection={<IconFileSpreadsheet size={16} />}
+              onClick={() => handleExport("xlsx")}
+            >
+              Cetak Excel
+            </Button>
+            <Button
+              variant="light"
+              leftSection={<IconFileTypePdf size={16} />}
+              onClick={() => handleExport("pdf")}
+            >
+              Cetak PDF
+            </Button>
+          </Group>
+        </Grid.Col>
+      </Grid>
 
       <Tabs value={params.status} onChange={(value) => updateParams({ status: value, page: 1 })} mb="lg">
         <Tabs.List>
