@@ -11,7 +11,7 @@ class UpdateAuthUser
     {
         $newData = [
             'name' => $data['name'],
-            'job_title' => $data['job_title'],
+            //'job_title' => $data['job_title'],
             'phone' => $data['phone'],
             'email' => $data['email'],
         ];

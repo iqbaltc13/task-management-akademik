@@ -24,8 +24,8 @@ class UpdateAuthUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'job_title' => 'required|string',
-            'job_sub_title' => 'nullable|string',
+            'job_title' => 'nullable|string',
+            'job_sub_title' => 'nullable|string|nullable',
             'name' => 'required|string',
             'phone' => 'string|nullable',
             'email' => ['required', 'email:rfc,dns', Rule::unique('users')->ignore(auth()->id())],

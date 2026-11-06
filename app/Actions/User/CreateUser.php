@@ -17,7 +17,7 @@ class CreateUser
             $user = User::create([
                 'name' => $data['name'],
                 'code_sto' => $data['code_sto'],
-                'job_title' => MasterSto::where('code', $data['code_sto'])->value('name'),
+               // 'job_title' => MasterSto::where('code', $data['code_sto'])->value('name'),
                 'phone' => $data['phone'],
                 'rate' => $data['rate'] * 100,
                 'email' => $data['email'],
