@@ -24,7 +24,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'job_title' => 'required|string',
+            'job_title' => 'nullable|string',
             'job_sub_title' => 'nullable|string|nullable',
             'name' => 'required|string',
                         'code_sto' => ['required', 'string', Rule::exists('master_stos', 'code')->whereNull('archived_at')],

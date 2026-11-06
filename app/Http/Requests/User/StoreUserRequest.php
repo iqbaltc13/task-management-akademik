@@ -24,9 +24,9 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'job_title' => 'required|string',
+            'job_title' => 'nullable|string',
             'job_sub_title' => 'nullable|string|nullable',
-                        'code_sto' => ['required', 'string', Rule::exists('master_stos', 'code')->whereNull('archived_at')],
+            'code_sto' => ['required', 'string', Rule::exists('master_stos', 'code')->whereNull('archived_at')],
             'name' => 'required|string',
             'phone' => 'string|nullable',
             'rate' => 'nullable|numeric|min:0',
