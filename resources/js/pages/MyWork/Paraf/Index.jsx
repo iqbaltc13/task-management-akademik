@@ -28,6 +28,7 @@ import {
 import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
+import { notifications } from "@mantine/notifications";
 
 const STATUS_COLORS = {
   diajukan: "grape",
@@ -166,15 +167,29 @@ export default function ParafIndex() {
     setDetail(null);
   };
 
-  const approve = async () => {
+    const approve = async () => {
     if (!detail) return;
     setApproving(true);
     try {
       await axios.post(route("my-work.paraf.approve", detail.id));
+
+      notifications.show({
+        title: "Berhasil",
+        message: "Sukses memparaf pelayanan",
+        color: "green",
+        icon: <IconCheck size={16} />,
+      });
+
       closeDetail();
       fetchData(params);
     } catch (e) {
       console.error(e);
+
+      notifications.show({
+        title: "Gagal",
+        message: e.response?.data?.message || "Gagal memparaf pelayanan",
+        color: "red",
+      });
     } finally {
       setApproving(false);
     }
