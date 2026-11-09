@@ -81,11 +81,11 @@ class ProjectController extends Controller
             $project->users()->attach($data['users']);
 
             $project->taskGroups()->createMany([
-                ['name' => 'Diajukan'],
-                ['name' => 'Diproses'],
-                ['name' => 'Tidak Dilanjutakan'],
-                ['name' => 'Ditolak'],
-                ['name' => 'Selesai'],
+                ['code' =>'CREATED', 'name' => 'Diajukan'],
+                ['code' =>'IN_PROGRESS', 'name' => 'Diproses'],
+                ['code' =>'CANCELLED' 'name' => 'Tidak Dilanjutkan'],
+                ['code' =>'REJECTED', 'name' =>'Ditolak'],
+                ['code' =>'DONE', 'name' =>'Selesai'],
                 
             ]);
 
