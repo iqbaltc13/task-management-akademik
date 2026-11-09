@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JobTitle;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use App\Services\PermissionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,6 +52,17 @@ class MyWorkTaskController extends Controller
     {
         $user = Auth::user();
 
+        // Pilihan filter penerima pelayanan / penerima tugas: pengguna yang terlibat
+        // pada pelayanan di periode yang bisa diakses.
+        $tasksInScope = Task::withoutGlobalScope('ordered')
+            ->whereIn('project_id', PermissionService::projectsThatUserCanAccess($user)->pluck('id'));
+
+        $userIds = (clone $tasksInScope)->distinct()->pluck('created_by_user_id')
+            ->merge((clone $tasksInScope)->distinct()->pluck('assigned_to_user_id'))
+            ->filter()
+            ->unique()
+            ->values();
+
         return Inertia::render('MyWork/Tasks/ListIndex', [
         'projects' => PermissionService::projectsThatUserCanAccess($user)
             ->map(fn ($p) => [
@@ -59,6 +71,7 @@ class MyWorkTaskController extends Controller
             ])
             ->values(),
             'jobTitles' => JobTitle::select('code', 'name')->orderBy('name')->get(),
+            'users' => User::whereIn('id', $userIds)->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -82,6 +95,8 @@ class MyWorkTaskController extends Controller
             ])
             ->searchWithJobTitle($request->input('search'))
             ->when($request->filled('job_title'), fn ($q) => $q->where('job_title', $request->job_title))
+            ->when($request->filled('created_by_user_id'), fn ($q) => $q->where('created_by_user_id', $request->created_by_user_id))
+            ->when($request->filled('assigned_to_user_id'), fn ($q) => $q->where('assigned_to_user_id', $request->assigned_to_user_id))
             ->when($request->filled('project_id'), fn ($q) => $q->where('project_id', $request->project_id))
             ->when($request->filled('created_from'), fn ($q) => $q->whereDate('created_at', '>=', $request->created_from))
             ->when($request->filled('created_to'), fn ($q) => $q->whereDate('created_at', '<=', $request->created_to));

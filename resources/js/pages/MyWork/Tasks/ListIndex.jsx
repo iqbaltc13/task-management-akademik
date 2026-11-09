@@ -56,6 +56,8 @@ const DEFAULT_PARAMS = {
   direction: "desc",
   project_id: "",
   job_title: "",
+  created_by_user_id: "",
+  assigned_to_user_id: "",
   created_from: "",
   created_to: "",
   page: 1,
@@ -79,7 +81,7 @@ function Th({ label, field, params, onSort }) {
 }
 
 export default function ListIndex() {
-  const { projects, jobTitles, auth: { user } } = usePage().props;
+  const { projects, jobTitles, users, auth: { user } } = usePage().props;
   const initialType = new URLSearchParams(window.location.search).get("type") || "active";
   const [params, setParams] = useState({ ...DEFAULT_PARAMS, type: initialType });
   const [searchInput, setSearchInput] = useState("");
@@ -142,6 +144,11 @@ export default function ListIndex() {
   const jobTitleOptions = (jobTitles || []).map((j) => ({
     value: j.code.toString(),
     label: j.name,
+  }));
+
+  const userOptions = (users || []).map((u) => ({
+    value: u.id.toString(),
+    label: u.name,
   }));
 
   const projectOptions = (projects || []).map((p) => ({ value: p.id.toString(), label: p.name }));
@@ -222,7 +229,7 @@ export default function ListIndex() {
       </Tabs>
 
       <Grid align="flex-end" mb="lg" gutter="md">
-        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
           <TextInput
             label="Cari"
             placeholder="Cari nama, nomor pelayanan, identitas..."
@@ -232,7 +239,7 @@ export default function ListIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
           <Select
             label="Periode Pelayanan"
             placeholder="Semua periode"
@@ -244,7 +251,7 @@ export default function ListIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
           <Select
             label="Pemohon Sebagai"
             placeholder="Semua pemohon"
@@ -256,7 +263,31 @@ export default function ListIndex() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
+        <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
+          <Select
+            label="Penerima Pelayanan"
+            placeholder="Semua penerima pelayanan"
+            searchable
+            clearable
+            data={userOptions}
+            value={params.created_by_user_id || null}
+            onChange={(value) => updateParams({ created_by_user_id: value || "", page: 1 })}
+          />
+        </Grid.Col>
+
+        <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
+          <Select
+            label="Penerima Tugas"
+            placeholder="Semua penerima tugas"
+            searchable
+            clearable
+            data={userOptions}
+            value={params.assigned_to_user_id || null}
+            onChange={(value) => updateParams({ assigned_to_user_id: value || "", page: 1 })}
+          />
+        </Grid.Col>
+
+        <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
           <DatePickerInput
             type="range"
             label="Tanggal Masuk"
