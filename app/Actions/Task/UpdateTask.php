@@ -6,6 +6,7 @@ use App\Enums\PricingType;
 use App\Events\Task\TaskUpdated;
 use App\Models\MasterJenisPelayanan;
 use App\Models\Task;
+use App\Models\TaskGroup;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +19,8 @@ class UpdateTask
         DB::beginTransaction();
 
         try {
+            $oldGroupId = $task->group_id; // sebelum diubah, untuk mendeteksi perpindahan ke/dari DONE
+
             if ($updateField === 'pricing_type' && $data['pricing_type'] === PricingType::HOURLY->value) {
                 $task->update([
                     'pricing_type' => PricingType::HOURLY,
@@ -34,6 +37,17 @@ class UpdateTask
 
                 if ($updateField === 'group_id') {
                     $task->update(['order_column' => 0]);
+
+                    $wasDone = TaskGroup::isDoneGroup($oldGroupId);
+                    $isDone = TaskGroup::isDoneGroup($data['group_id']);
+
+                    if ($isDone && ! $wasDone) {
+                        // pindah ke DONE: tandai selesai (waktu lama dipertahankan bila sudah terisi)
+                        $task->update(['completed_at' => $task->completed_at ?? now()]);
+                    } elseif ($wasDone && ! $isDone) {
+                        // keluar dari DONE: pelayanan kembali berjalan
+                        $task->update(['completed_at' => null]);
+                    }
                 }
 
                 if ($updateField === 'code_jenis_pelayanan') {

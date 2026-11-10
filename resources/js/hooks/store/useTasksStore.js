@@ -2,6 +2,7 @@ import createTaskAttachmentsSlice from '@/hooks/store/tasks/TaskAttachmentsSlice
 import createTaskCommentsSlice from '@/hooks/store/tasks/TaskCommentsSlice';
 import createTaskTimeLogsSlice from '@/hooks/store/tasks/TaskTimeLogsSlice';
 import createTaskWebSocketUpdatesSlice from '@/hooks/store/tasks/TaskWebSocketUpdatesSlice';
+import useTaskGroupsStore from '@/hooks/store/useTaskGroupsStore';
 import { move, reorder, extractGroupId } from '@/utils/reorder';
 import axios from 'axios';
 import { produce } from "immer";
@@ -55,6 +56,11 @@ const useTasksStore = create((set, get) => ({
           state.tasks[task.group_id] = result[task.group_id];
           state.tasks[value] = result[value];
           state.tasks[value][0][property] = value;
+
+          // pindah ke/dari grup DONE: completed_at dihitung server, samakan di state lokal
+          if (res.data?.completed_at !== undefined) {
+            state.tasks[value][0].completed_at = res.data.completed_at;
+          }
         } else {
           state.tasks[task.group_id][index][property] = options || value;
         }
@@ -122,6 +128,18 @@ const useTasksStore = create((set, get) => ({
     const destinationGroupId = extractGroupId(destination.droppableId);
     
     const result = move(get().tasks, sourceGroupId, destinationGroupId, source.index, destination.index);
+
+    // grup DONE menandai selesai: samakan completed_at di state lokal (server menyimpan yang sebenarnya)
+    const groups = useTaskGroupsStore.getState().groups;
+    const isDoneGroup = (id) => String(groups.find((g) => g.id === id)?.code || '').trim().toUpperCase() === 'DONE';
+    const movedTask = result[destinationGroupId][destination.index];
+    if (movedTask) {
+      if (isDoneGroup(destinationGroupId) && !isDoneGroup(sourceGroupId) && !movedTask.completed_at) {
+        movedTask.completed_at = new Date().toISOString();
+      } else if (isDoneGroup(sourceGroupId) && !isDoneGroup(destinationGroupId)) {
+        movedTask.completed_at = null;
+      }
+    }
 
     const data = {
       ids: result[destinationGroupId].map((i) => i.id),

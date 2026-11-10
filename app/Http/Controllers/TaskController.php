@@ -154,6 +154,7 @@ class TaskController extends Controller
 
         return response()->json([
             'due_on' => $task->due_on?->toDateString(),
+            'completed_at' => $task->completed_at,
             'assigned_user_update_logs' => $task->assignedUserUpdateLogs()
                 ->with(['newAssignedUser:id,name', 'oldAssignedUser:id,name'])
                 ->get(),
@@ -188,6 +189,16 @@ class TaskController extends Controller
             Task::setNewOrder($request->ids);
             Task::whereIn('id', $request->ids)->update(['group_id' => $request->to_group_id]);
 
+            // pindah ke/dari grup DONE -> completed_at ikut diisi/dikosongkan
+            $wasDone = TaskGroup::isDoneGroup($request->from_group_id);
+            $isDone = TaskGroup::isDoneGroup($request->to_group_id);
+
+            if ($isDone && ! $wasDone) {
+                Task::whereIn('id', $request->ids)->whereNull('completed_at')->update(['completed_at' => now()]);
+            } elseif ($wasDone && ! $isDone) {
+                Task::whereIn('id', $request->ids)->update(['completed_at' => null]);
+            }
+
             $oldGroup = TaskGroup::find($request->from_group_id);
             $newGroup = TaskGroup::find($request->to_group_id);
 
@@ -207,6 +218,23 @@ class TaskController extends Controller
                     'new_group_id' => $request->to_group_id,
                     'user_id'      => auth()->id(),
                 ]);
+
+                // mass update tidak memicu TaskObserver, jadi aktivitas selesai dicatat di sini
+                if ($isDone && ! $wasDone && $task->completed_at === null) {
+                    $task->activities()->create([
+                        'project_id' => $task->project_id,
+                        'user_id' => auth()->id(),
+                        'title' => 'Permintaan telah selesai',
+                        'subtitle' => "\"{$task->name}\" diubah menjadi telah selesai oleh ".auth()->user()->name,
+                    ]);
+                } elseif ($wasDone && ! $isDone && $task->completed_at !== null) {
+                    $task->activities()->create([
+                        'project_id' => $task->project_id,
+                        'user_id' => auth()->id(),
+                        'title' => 'Status permintaan diubah menjadi belum selesai',
+                        'subtitle' => "\"{$task->name}\" diubah menjadi belum selesai oleh ".auth()->user()->name,
+                    ]);
+                }
             }
 
             DB::commit();

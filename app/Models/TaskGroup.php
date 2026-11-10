@@ -14,6 +14,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
+use Illuminate\Support\Facades\DB;
 
 class TaskGroup extends Model implements AuditableContract, Sortable
 {
@@ -34,6 +35,20 @@ class TaskGroup extends Model implements AuditableContract, Sortable
         static::addGlobalScope('ordered', function ($query) {
             $query->ordered();
         });
+    }
+
+    /** task_groups.code untuk status selesai; task di grup ini otomatis completed_at terisi. */
+    public const CODE_DONE = 'DONE';
+
+    public static function isDoneGroup(?string $groupId): bool
+    {
+        if (blank($groupId)) {
+            return false;
+        }
+
+        $code = DB::table('task_groups')->where('id', $groupId)->value('code');
+
+        return strtoupper(trim((string) $code)) === self::CODE_DONE;
     }
 
     public function project(): BelongsTo

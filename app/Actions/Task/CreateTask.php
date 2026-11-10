@@ -8,6 +8,7 @@ use App\Events\Task\TaskCreated;
 use App\Models\MasterJenisPelayanan;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskGroup;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +56,7 @@ class CreateTask
                 'identity_number' => $data['identity_number'],
                 'hidden_from_clients' => $data['hidden_from_clients'],
                 'billable' => $data['billable'],
-                'completed_at' => null,
+                'completed_at' => TaskGroup::isDoneGroup($data['group_id']) ? now() : null,
             ]);
 
             $data['subscribed_users'] = $project->users->pluck('id')->toArray();
