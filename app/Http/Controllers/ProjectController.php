@@ -83,7 +83,7 @@ class ProjectController extends Controller
             $project->taskGroups()->createMany([
                 ['code' =>'CREATED', 'name' => 'Diajukan'],
                 ['code' =>'IN_PROGRESS', 'name' => 'Diproses'],
-                ['code' =>'CANCELLED' 'name' => 'Tidak Dilanjutkan'],
+                ['code' =>'CANCELLED' ,'name' => 'Tidak Dilanjutkan'],
                 ['code' =>'REJECTED', 'name' =>'Ditolak'],
                 ['code' =>'DONE', 'name' =>'Selesai'],
                 
