@@ -18,11 +18,20 @@ class TasksSeeder extends Seeder
         $projects = Project::with(['taskGroups'])->get();
         $admin = User::role('admin')->first();
 
+        // TaskObserver mencatat aktivitas atas nama user yang sedang login
+        auth()->setUser($admin);
+
         foreach ($projects as $project) {
             $number = 1;
 
             $project->taskGroups->each(function (TaskGroup $taskGroup, int $key) use ($project, $admin, &$number) {
+                // grup berkode DONE = pelayanan selesai -> completed_at terisi; grup lain -> NULL
+                $isDone = strtoupper(trim((string) $taskGroup->code)) === 'DONE';
+
                 for ($i = 0; $i < random_int(0, 8); $i++) {
+                    // dibuat 0-30 hari lalu, supaya completed_at (di antara dibuat s/d sekarang) tidak mendahului dibuat
+                    $createdAt = now()->subDays(random_int(0, 30))->subMinutes(random_int(0, 1439));
+
                     $task = $taskGroup->tasks()->create([
                         'project_id' => $project->id,
                         'created_by_user_id' => $admin->id,
@@ -42,7 +51,9 @@ class TasksSeeder extends Seeder
                         'estimation' => 0,
                         'hidden_from_clients' => false,
                         'billable' => true,
-                        'completed_at' => fake()->randomElement([now(), null, null, null]),
+                        'created_at' => $createdAt,
+                        'updated_at' => $createdAt,
+                        'completed_at' => $isDone ? fake()->dateTimeBetween($createdAt, 'now') : null,
                     ]);
 
                     Label::inRandomOrder()

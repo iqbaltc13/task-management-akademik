@@ -7,6 +7,7 @@ use App\Models\MasterJenisPelayanan;
 use App\Models\Task;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class DemoTaskSeeder extends Seeder
@@ -65,6 +66,13 @@ class DemoTaskSeeder extends Seeder
 
         $jobTitleCodes = JobTitle::pluck('code')->all();
 
+        // grup berkode DONE = pelayanan selesai -> completed_at terisi; grup lain -> NULL
+        $doneGroupIds = DB::table('task_groups')
+            ->whereIn('id', $this->groupIds)
+            ->whereRaw('UPPER(TRIM(code)) = ?', ['DONE'])
+            ->pluck('id')
+            ->all();
+
         $originalUser = Auth::user();
 
         for ($i = 0; $i < $count; $i++) {
@@ -76,6 +84,9 @@ class DemoTaskSeeder extends Seeder
             // login sebagai "pembuat" supaya auth()->user() di TaskObserver tidak null,
             // dan TaskAssignedUserUpdateLog/TaskGroupUpdateLog tercatat via Observer otomatis
             Auth::loginUsingId($createdBy);
+
+            // dibuat 0-30 hari lalu, supaya completed_at (di antara dibuat s/d sekarang) tidak mendahului dibuat
+            $createdAt = now()->subDays(rand(0, 30))->subMinutes(rand(0, 1439));
 
             Task::create([
                 'project_id' => $this->projectId,
@@ -89,6 +100,11 @@ class DemoTaskSeeder extends Seeder
                 'description' => 'Permintaan pelayanan untuk '.$pemohon['name'],
                 'due_on' => now()->addDays(rand(3, 14)),
                 'job_title' => $jobTitleCodes ? $jobTitleCodes[array_rand($jobTitleCodes)] : null,
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
+                'completed_at' => in_array($groupId, $doneGroupIds, true)
+                    ? fake()->dateTimeBetween($createdAt, 'now')
+                    : null,
             ]);
         }
 
