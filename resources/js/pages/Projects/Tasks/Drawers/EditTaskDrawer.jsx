@@ -48,11 +48,11 @@ export function EditTaskDrawer() {
   const { openedTask, auth: { user } } = pageProps;
   // halaman lintas periode (Pelayanan Saya) memberi data per periode lewat edit.context
   const {
-    usersWithAccessToProject,
-    taskGroups,
-    labels,
-    masterJenisPelayanans,
-    jobTitles,
+    usersWithAccessToProject = [],
+    taskGroups = [],
+    labels = [],
+    masterJenisPelayanans = [],
+    jobTitles = [],
     currency,
   } = { ...pageProps, ...(edit.context || {}) };
   

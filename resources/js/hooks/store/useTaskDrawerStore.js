@@ -51,7 +51,8 @@ const useTaskDrawerStore = create((set, get) => ({
     return set(produce(state => {
       state.edit.opened = false;
       state.edit.inPlace = false;
-      state.edit.context = null;
+      // context sengaja TIDAK dikosongkan: drawer masih dirender selama animasi tutup dan
+      // masih membaca data ini. Nilainya diganti otomatis saat openEditTask berikutnya.
     }));
   },
 }));
