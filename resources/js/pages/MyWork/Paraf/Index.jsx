@@ -15,6 +15,7 @@ import {
   Text,
   TextInput,
   Title,
+  Select,
   UnstyledButton,
   rem,
 } from "@mantine/core";
