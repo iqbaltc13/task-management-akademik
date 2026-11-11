@@ -295,6 +295,20 @@ class TaskController extends Controller
         return response()->json($task->loadDefault());
     }
 
+    /**
+     * Task + data per periode yang dibutuhkan drawer edit (dipakai halaman lintas periode).
+     */
+    public function editData(Project $project, Task $task): JsonResponse
+    {
+        $this->authorize('update', [$task, $project]);
+
+        return response()->json([
+            'task' => $task->loadDefault(),
+            'usersWithAccessToProject' => PermissionService::usersWithAccessToProject($project),
+            'taskGroups' => $project->taskGroups()->get(),
+        ]);
+    }
+
     public function updateAssigneeFeedback(Request $request, Project $project, Task $task): JsonResponse
     {
         $request->validate(['feedback' => 'nullable|string']);

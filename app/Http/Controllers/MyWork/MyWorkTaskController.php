@@ -4,6 +4,9 @@ namespace App\Http\Controllers\MyWork;
 
 use App\Http\Controllers\Controller;
 use App\Models\JobTitle;
+use App\Models\Label;
+use App\Models\MasterJenisPelayanan;
+use App\Models\OwnerCompany;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -72,6 +75,12 @@ class MyWorkTaskController extends Controller
             ->values(),
             'jobTitles' => JobTitle::select('code', 'name')->orderBy('name')->get(),
             'users' => User::whereIn('id', $userIds)->orderBy('name')->get(['id', 'name']),
+            // dipakai drawer edit yang dibuka dari halaman ini
+            'labels' => Label::get(['id', 'name', 'color']),
+            'masterJenisPelayanans' => MasterJenisPelayanan::select('code', 'name', 'jumlah_hari')->orderBy('name')->get(),
+            'currency' => [
+                'symbol' => OwnerCompany::with('currency')->first()?->currency?->symbol ?? '',
+            ],
         ]);
     }
 

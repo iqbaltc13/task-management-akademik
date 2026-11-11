@@ -1,5 +1,5 @@
 import Layout from "@/layouts/MainLayout";
-import { router, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import { DatePickerInput } from "@mantine/dates";
 import {
   ActionIcon,
@@ -29,6 +29,9 @@ import {
   IconSortAscending,
   IconSortDescending,
 } from "@tabler/icons-react";
+import { EditTaskDrawer } from "@/pages/Projects/Tasks/Drawers/EditTaskDrawer";
+import useTaskDrawerStore from "@/hooks/store/useTaskDrawerStore";
+import useTasksStore from "@/hooks/store/useTasksStore";
 import { canEditTaskItem } from "@/utils/user";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -88,6 +91,21 @@ export default function ListIndex() {
   const [page, setPage] = useState(null);
   const [loading, setLoading] = useState(true);
   const requestId = useRef(0);
+
+  const { edit, openEditTask } = useTaskDrawerStore();
+  const { addTask } = useTasksStore();
+
+  const paramsRef = useRef(params);
+  useEffect(() => { paramsRef.current = params; }, [params]);
+
+  // drawer edit baru ditutup -> muat ulang baris tabel
+  const prevEditOpened = useRef(edit.opened);
+  useEffect(() => {
+    if (prevEditOpened.current && !edit.opened) {
+      fetchData(paramsRef.current);
+    }
+    prevEditOpened.current = edit.opened;
+  }, [edit.opened]);
 
   const fetchData = async (nextParams) => {
     const thisRequest = ++requestId.current;
@@ -158,10 +176,18 @@ export default function ListIndex() {
     params.created_to ? new Date(params.created_to) : null,
   ];
 
-  // Pelayanan lintas periode: drawer edit butuh data per periode (status, pengguna),
-  // jadi Edit membuka pelayanan tersebut di halaman periodenya.
-  const handleEdit = (task) => {
-    router.visit(route("projects.tasks.open", [task.project_id, task.id]));
+  // Pelayanan lintas periode: status & pengguna yang dipilih di drawer berbeda per periode,
+  // jadi datanya diambil per pelayanan, lalu drawer dibuka di halaman ini (tanpa pindah halaman).
+  const handleEdit = async (task) => {
+    try {
+      const res = await axios.get(route("projects.tasks.edit-data", [task.project_id, task.id]));
+      const { task: detail, usersWithAccessToProject, taskGroups } = res.data;
+
+      addTask(detail);
+      openEditTask(detail, { inPlace: true, context: { usersWithAccessToProject, taskGroups } });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const rows = (page?.data || []).map((task) => {
@@ -343,6 +369,8 @@ export default function ListIndex() {
           />
         </Group>
       )}
+
+      <EditTaskDrawer />
     </>
   );
 }

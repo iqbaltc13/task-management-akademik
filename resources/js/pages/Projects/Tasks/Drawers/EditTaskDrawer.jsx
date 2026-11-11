@@ -44,16 +44,17 @@ export function EditTaskDrawer() {
   const { initTaskWebSocket } = useWebSockets();
   const { findTask, updateTaskProperty, complete, deleteAttachment, uploadAttachments } =
     useTasksStore();
+  const pageProps = usePage().props;
+  const { openedTask, auth: { user } } = pageProps;
+  // halaman lintas periode (Pelayanan Saya) memberi data per periode lewat edit.context
   const {
     usersWithAccessToProject,
     taskGroups,
     labels,
     masterJenisPelayanans,
-    openedTask,
+    jobTitles,
     currency,
-    auth: { user },
-  } = usePage().props;
-  const { jobTitles } = usePage().props;
+  } = { ...pageProps, ...(edit.context || {}) };
   
   useEffect(() => {
     if (openedTask) setTimeout(() => openEditTask(openedTask), 50);
