@@ -47,6 +47,15 @@ const TABS = [
   { value: "all", label: "Semua" },
 ];
 
+const GROUP_OPTIONS = [
+  { value: "CREATED", label: "Diajukan" },
+  { value: "IN_PROGRESS", label: "Diproses" },
+  { value: "CANCELLED", label: "Tidak Dilanjutkan" },
+  { value: "REJECTED", label: "Ditolak" },
+  { value: "DONE", label: "Selesai" },
+  { value: "OVERDUE", label: "Overdue" },
+];
+
 const DEFAULT_PARAMS = {
   status: "pending",
   search: "",
@@ -54,6 +63,7 @@ const DEFAULT_PARAMS = {
   direction: "desc",
   page: 1,
   per_page: 15,
+  group_code: "",
 };
 
 // Deskripsi pelayanan berupa HTML (rich text); tampilkan sebagai teks biasa agar aman.
@@ -152,7 +162,7 @@ export default function ParafIndex() {
 
   const handleExport = (format) => {
     const url = new URL(route(`my-work.paraf.export.${format}`));
-    ["status", "search", "sort", "direction"].forEach((key) => {
+    ["status", "search", "sort", "direction", "group_code"].forEach((key) => {
       if (params[key] !== "" && params[key] !== null && params[key] !== undefined) {
         url.searchParams.set(key, params[key]);
       }
@@ -290,7 +300,20 @@ export default function ParafIndex() {
             onChange={(e) => setSearchInput(e.currentTarget.value)}
           />
         </Grid.Col>
+
+          <Grid.Col span={{ base: 12, sm: 3 }}>
+          <Select
+            label="Status Pelayanan"
+            placeholder="Semua status"
+            clearable
+            data={GROUP_OPTIONS}
+            value={params.group_code || null}
+            onChange={(value) => updateParams({ group_code: value || "", page: 1 })}
+          />
+        </Grid.Col>
       </Grid>
+
+      
 
       <div style={{ position: "relative" }}>
         <LoadingOverlay visible={loading} zIndex={5} overlayProps={{ radius: "sm", blur: 1 }} />
