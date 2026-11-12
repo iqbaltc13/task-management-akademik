@@ -90,12 +90,28 @@ class ParafPelayananController extends Controller
         return $pdf->download('paraf-pelayanan-'.now()->format('Ymd-His').'.pdf');
     }
 
-    private function filteredQuery(Request $request, User $user): Builder
+private function filteredQuery(Request $request, User $user): Builder
     {
+        $groupCode = $request->input('group_code');
+
         return $this->scopedQuery($user)
             ->searchByQueryString()
             ->when($request->input('status') === 'pending', fn ($q) => $q->where('is_approved', false))
             ->when($request->input('status') === 'approved', fn ($q) => $q->where('is_approved', true))
+            // Filter status pelayanan: task_groups.code (tasks.group_id = task_groups.id)
+            ->when(
+                filled($groupCode) && $groupCode !== 'OVERDUE',
+                fn ($q) => $q->whereHas('taskGroup', fn ($g) => $g->where('code', $groupCode))
+            )
+            // Overdue: belum selesai tetapi lewat batas, atau selesai tetapi melewati batas
+            ->when($groupCode === 'OVERDUE', function ($q) {
+                $q->whereNotNull('tasks.due_on')->where(function ($w) {
+                    $w->where(fn ($x) => $x->whereNull('tasks.completed_at')
+                        ->whereDate('tasks.due_on', '<', now()->toDateString()))
+                      ->orWhere(fn ($x) => $x->whereNotNull('tasks.completed_at')
+                        ->whereRaw('DATE(tasks.completed_at) > tasks.due_on'));
+                });
+            })
             ->withoutGlobalScope('ordered');
     }
 

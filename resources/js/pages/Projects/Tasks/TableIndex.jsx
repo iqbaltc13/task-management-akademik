@@ -193,7 +193,7 @@ export default function TableIndex() {
     try {
       const res = await axios.get(route("projects.tasks.detail-json", [task.project_id, task.id]));
       addTask(res.data);
-      openEditTask(res.data);
+      openEditTask(res.data, { inPlace: true });
     } catch (e) {
       console.error(e);
     }
