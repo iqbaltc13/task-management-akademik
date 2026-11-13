@@ -113,13 +113,13 @@ export default function LacakLayanan() {
             </Stepper>
 
             <div>
-              <Text fw={500} size="sm" mb={4}>Keterangan</Text>
+              <Text fw={500} size="lg" mb={4}>Keterangan</Text>
               {tracking.final_feedback ? (
                 <TypographyStylesProvider p={0} fz="sm" c="dimmed">
                   <div dangerouslySetInnerHTML={{ __html: tracking.final_feedback }} />
                 </TypographyStylesProvider>
               ) : (
-                <Text size="sm" c="dimmed">
+                <Text size="md" c="dimmed">
                   Belum ada keterangan untuk permintaan ini.
                 </Text>
               )}
