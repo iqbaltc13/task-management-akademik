@@ -125,7 +125,7 @@ export default function LacakLayanan() {
                 </TypographyStylesProvider>
               ) : (
                 <Text size="md" c="dimmed">
-                  Belum ada keterangan untuk permintaan ini.
+                  Belum ada hasil untuk pelayanan ini.
                 </Text>
               )}
             </div>
