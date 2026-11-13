@@ -73,12 +73,18 @@ class NoLoginController extends Controller
                 }
             }
  
+            $groupCode = strtoupper(trim((string) $task->taskGroup?->code));
+            $needsMoreTime = in_array($groupCode, ['CREATED', 'IN_PROGRESS'], true)
+                && $task->due_on !== null
+                && $task->due_on->lt(today());
+
             return response()->json([
                 'code' => $task->code,
                 'status' => TaskStatusMapper::map($task->taskGroup?->name),
                 'final_feedback' => $task->final_feedback,
                 'link_file_result' => $task->link_file_result,
                 'dates' => $dates,
+                'needs_more_time' => $needsMoreTime,
             ]);
         }
  

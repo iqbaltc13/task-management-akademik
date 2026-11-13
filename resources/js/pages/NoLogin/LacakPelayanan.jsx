@@ -113,7 +113,12 @@ export default function LacakLayanan() {
             </Stepper>
 
             <div>
-              <Text fw={500} size="lg" mb={4}>Keterangan</Text>
+              {tracking.needs_more_time && (
+                <Text size="md" c="orange" fw={500} mb="md">
+                  Mohon maaf proses pelayanan Anda membutuhkan waktu tambahan, silahkan menghubungi CS Akademik untuk keterangan lebih lanjut.
+                </Text>
+              )}
+              <Text fw={500} size="lg" mb={4}>Hasil Pelayanan</Text>
               {tracking.final_feedback ? (
                 <TypographyStylesProvider p={0} fz="sm" c="dimmed">
                   <div dangerouslySetInnerHTML={{ __html: tracking.final_feedback }} />
