@@ -9,6 +9,7 @@ import {
   IconLayoutList,
   IconListDetails,
   IconReportAnalytics,
+  IconSearch,
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
@@ -111,6 +112,13 @@ export default function Sidebar() {
       //   ],
       // },
 
+      {
+        label: "Lacak Pelayanan",
+        icon: IconSearch,
+        link: route("lacak-pelayanan"),
+        active: route().current("lacak-pelayanan"),
+        visible: true,
+      },
       {
         label: "Pengguna",
         icon: IconUsers,

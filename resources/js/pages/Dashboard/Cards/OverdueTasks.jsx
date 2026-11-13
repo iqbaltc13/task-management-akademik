@@ -36,7 +36,7 @@ export default function OverdueTasks({ tasks }) {
                     <Text
                       fz={13}
                       fw={600}
-                      onClick={() => redirectTo("projects.tasks.open", [task.project_id, task.id])}
+                      onClick={() => redirectTo("projects.tasks.table.open", [task.project_id, task.id])}
                       className={classes.link}
                     >
                       {task.name}

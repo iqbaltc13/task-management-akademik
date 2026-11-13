@@ -34,7 +34,7 @@ export default function RecentComments({ comments }) {
                 key={comment.id}
                 className={classes.item}
                 onClick={() =>
-                  redirectTo("projects.tasks.open", [comment.task.project_id, comment.task_id])
+                  redirectTo("projects.tasks.table.open", [comment.task.project_id, comment.task_id])
                 }
               >
                 <Group justify="space-between">

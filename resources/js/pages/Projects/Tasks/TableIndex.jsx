@@ -81,7 +81,7 @@ function Th({ label, field, params, onSort }) {
 }
 
 export default function TableIndex() {
-  const { project, usersWithAccessToProject, jobTitles, filters, auth: { user } } = usePage().props;
+  const { project, usersWithAccessToProject, jobTitles, filters, openedTask, auth: { user } } = usePage().props;
 
   const [params, setParams] = useState({ ...DEFAULT_PARAMS, ...filters });
   const [searchInput, setSearchInput] = useState(filters.search || "");
@@ -92,6 +92,11 @@ export default function TableIndex() {
 
   const { edit, create, openCreateTask, openEditTask } = useTaskDrawerStore();
   const { addTask } = useTasksStore();
+
+  // dibuka dari dashboard: task dimasukkan ke store, drawer membuka dirinya sendiri (lihat EditTaskDrawer)
+  useEffect(() => {
+    if (openedTask) addTask(openedTask);
+  }, []);
 
   const paramsRef = useRef(params);
   useEffect(() => { paramsRef.current = params; }, [params]);

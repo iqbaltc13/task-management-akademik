@@ -76,7 +76,7 @@ class TaskController extends Controller
             ],
         ]);
     }
-    public function table(Request $request, Project $project): Response
+    public function table(Request $request, Project $project, ?Task $task = null): Response
     {
         
     $this->authorize('viewAny', [Task::class, $project]);
@@ -86,6 +86,7 @@ class TaskController extends Controller
 
         return Inertia::render('Projects/Tasks/TableIndex', [
             'project' => $project,
+            'openedTask' => $task ? $task->loadDefault() : null,
             'usersWithAccessToProject' => PermissionService::usersWithAccessToProject($project),
             'labels' => Label::get(['id', 'name', 'color']),
             'taskGroups' => $project->taskGroups()->get(),

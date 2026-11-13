@@ -57,7 +57,11 @@ export function EditTaskDrawer() {
   } = { ...pageProps, ...(edit.context || {}) };
   
   useEffect(() => {
-    if (openedTask) setTimeout(() => openEditTask(openedTask), 50);
+    if (openedTask) {
+      // di halaman tabel pelayanan, alamat tidak diganti ke halaman kanban
+      const inPlace = !!route().current('projects.tasks.table*');
+      setTimeout(() => openEditTask(openedTask, { inPlace }), 50);
+    }
   }, []);
 
   const task = findTask(edit.task.id);
