@@ -35,7 +35,7 @@ class SendAndDeleteFileBackupDatabase extends Command
     {
         parent::__construct();
         $this->disk =  Storage::build(['driver' => 'local','root' => public_path('backup_db')]);
-        $this->telegram_service = new TelegramService();
+        //$this->telegram_service = new TelegramService();
     }
 
     /**
