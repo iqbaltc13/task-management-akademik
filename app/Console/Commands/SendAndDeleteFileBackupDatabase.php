@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use File;
 use App\Mail\SendMail;
 use Illuminate\Support\Facades\Mail;
-//use App\Services\TelegramService;
+use App\Services\TelegramService;
 
 
 class SendAndDeleteFileBackupDatabase extends Command
@@ -35,7 +35,7 @@ class SendAndDeleteFileBackupDatabase extends Command
     {
         parent::__construct();
         $this->disk =  Storage::build(['driver' => 'local','root' => public_path('backup_db')]);
-        //$this->telegram_service = new TelegramService();
+        $this->telegram_service = new TelegramService();
     }
 
     /**
