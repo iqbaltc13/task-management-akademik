@@ -30,7 +30,7 @@ use App\Models\MasterJenisPelayanan;
 
 
 
-class Task extends Model implements AuditableContract, Sortable
+class Task extends Model implements Sortable
 {
     use Archivable, HasFactory, HasFilters, IsSearchable, SortableTrait, Uuids;
     public $incrementing = false;
