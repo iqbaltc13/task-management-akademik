@@ -291,6 +291,26 @@ export function EditTaskDrawer() {
               letter-spacing: 1px;
               word-break: break-all;
             }
+            .track-text {
+              font-size: 11px;
+              line-height: 1.4;
+              margin-top: 4px;
+            }
+            .track-link {
+              display: block;
+              font-size: 13px;
+              font-weight: bold;
+              color: #0645ad;
+              text-decoration: underline;
+              margin: 6px 0 8px;
+              word-break: break-all;
+            }
+            .qr {
+              display: block;
+              width: 36mm;
+              height: auto;
+              margin: 0 auto 4px;
+            }
           </style>
         </head>
         <body>
@@ -299,13 +319,32 @@ export function EditTaskDrawer() {
           <div class="nama">${task?.name || ''}</div>
           <div class="code-label">Kode Pelayanan</div>
           <div class="code">${task?.code || ''}</div>
-          <div class="code-label">Untuk melacak pelayanan, silakan kunjungi link berikut <br> https://layanan-akademik.com/no-login/lacak-pelayanan <br> dengan memasukkan nomor kode pelayanan </div>
+          <div class="divider"></div>
+          <div class="track-text">Untuk melacak pelayanan, silakan kunjungi link berikut dengan memasukkan nomor kode pelayanan:</div>
+          <a class="track-link" href="https://bit.ly/cek-layanan-uinkediri">https://bit.ly/cek-layanan-uinkediri</a>
+          <img class="qr" src="https://layanan-akademik.com/images/qr_link_bitly_cetak_nomor_pelayanan.jpeg" alt="QR Code Lacak Pelayanan">
         </body>
       </html>
     `);
     win.document.close();
-    win.focus();
-    win.print();
+
+    // QR code dimuat dari server lain: tunggu selesai dulu, kalau tidak bisa tercetak kosong
+    let printed = false;
+    const doPrint = () => {
+      if (printed) return;
+      printed = true;
+      win.focus();
+      win.print();
+    };
+
+    const qr = win.document.querySelector('img.qr');
+    if (qr && !qr.complete) {
+      qr.onload = doPrint;
+      qr.onerror = doPrint; // QR gagal dimuat: tetap cetak sisanya
+      setTimeout(doPrint, 5000); // pengaman bila tidak ada event sama sekali
+    } else {
+      doPrint();
+    }
   };
 
   const pricingTypes = [
