@@ -8,13 +8,20 @@ const suggestion = {
   users: [],
 
   fetchItems: () => {
-    if (suggestion.projectId === route().params.project && suggestion.users.length > 0) {
+    const projectId = route().params.project;
+
+    if (!projectId) {
       return;
     }
-    axios.get(route('dropdown.values'), {params: {projectId: route().params.project, mentionProjectUsers: true}})
+
+    if (suggestion.projectId === projectId && suggestion.users.length > 0) {
+      return;
+    }
+
+    axios.get(route('dropdown.values'), {params: {projectId, mentionProjectUsers: true}})
       .then(({data}) => {
         suggestion.users = data.mentionProjectUsers;
-        suggestion.projectId = route().params.project;
+        suggestion.projectId = projectId;
       })
       .catch((e) => console.error('Failed to fetch users for mention feature', e));
   },
