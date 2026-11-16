@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { TextInput, Button, Stepper, Group, Paper, Title, Text, Stack, TypographyStylesProvider } from '@mantine/core';
+import { TextInput, Button, Stepper,  Paper, Title, Text, Stack, TypographyStylesProvider } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 import axios from 'axios';
 import GuestLayoutWithHeaderMenu from '@/layouts/GuestLayoutWithHeaderMenu';
 import { date } from '@/utils/datetime';
 
 const STATUS_STEPS = ['diterima', 'diproses', 'selesai'];
+const SURVEY_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSePKPUvVEeUnEPJWDeaF5gZzkB4t-NZ4GlesY-37As6FkmAwg/viewform?fbzx=3382822052776950239';
 
 export default function LacakLayanan() {
   const [nomor, setNomor] = useState('');
@@ -15,6 +17,11 @@ export default function LacakLayanan() {
 
   const handleLacak = async () => {
     if (!nomor) return;
+
+    // Harus dipanggil langsung di dalam klik (sebelum await),
+    // kalau tidak, browser akan memblokir tab baru sebagai popup.
+    window.open(SURVEY_URL, '_blank', 'noopener,noreferrer');
+
     setLoading(true);
     setError(null);
     try {
@@ -52,24 +59,9 @@ export default function LacakLayanan() {
           error={error}
         />
 
-       <Group justify="space-between" mt="md">
-        <Button
-          component="a"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSePKPUvVEeUnEPJWDeaF5gZzkB4t-NZ4GlesY-37As6FkmAwg/viewform?fbzx=3382822052776950239"
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="light"
-          color="blue"
-          size="lg"
-        >
-          Isi Survei Kepuasan Layanan
+       <Button size="lg" fullWidth mt="md" loading={loading} onClick={handleLacak}>
+          Lacak dan Isi Survei Kepuasan Layanan
         </Button>
-
-        <Button size="lg" px={40} loading={loading} onClick={handleLacak}>
-          Lacak
-        </Button>
-      </Group>
-
         {tracking && (
           <Stack mt={40} gap="lg">
             <Stepper active={activeStep} allowNextStepsSelect={false} color={isDitolak ? 'red' : 'blue'}>
