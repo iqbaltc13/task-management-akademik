@@ -286,7 +286,7 @@ export function EditTaskDrawer() {
               margin-bottom: 2px;
             }
             .code {
-              font-size: 22px;
+              font-size: 20px;
               font-weight: bold;
               letter-spacing: 1px;
               word-break: break-all;
@@ -299,6 +299,7 @@ export function EditTaskDrawer() {
           <div class="nama">${task?.name || ''}</div>
           <div class="code-label">Kode Pelayanan</div>
           <div class="code">${task?.code || ''}</div>
+          <div class="code-label">Untuk melacak pelayanan, silakan kunjungi link berikut <br> https://layanan-akademik.com/no-login/lacak-pelayanan <br> dengan memasukkan nomor kode pelayanan </div>
         </body>
       </html>
     `);
