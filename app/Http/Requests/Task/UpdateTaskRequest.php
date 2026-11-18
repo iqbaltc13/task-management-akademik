@@ -25,7 +25,7 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'name' => ['string:255'],
-            'email' => ['email', 'string:255'],
+            'email' => ['nullable', 'email', 'max:255'],
             'link_file_requirement' => ['nullable', 'string:255'],
             'link_file_result' => ['nullable', 'string:255'],
             'group_id' => ['exists:task_groups,id'],

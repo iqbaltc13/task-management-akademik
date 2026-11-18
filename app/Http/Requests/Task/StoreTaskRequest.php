@@ -27,7 +27,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'name' => ['required', 'string:255'],
             'code' => ['required', 'string:255'],
-            'email' => [ 'email', 'string:255'],
+            'email' => ['nullable', 'email', 'max:255'],
             'link_file_requirement' => ['nullable', 'string:255'],
             'link_file_result' => ['nullable', 'string:255'],
             'group_id' => ['required', 'exists:task_groups,id'],

@@ -38,7 +38,7 @@ class CreateTask
             $task = $project->tasks()->create([
                 'code_jenis_pelayanan' => $data['code_jenis_pelayanan'],
                 'code' => $data['code'],
-                'email' => $data['email'],
+                'email' => $data['email'] ?? null,
                 'link_file_requirement' => $data['link_file_requirement'],
                 'link_file_result' => $data['link_file_result'],
                 'final_feedback' => $data['final_feedback'],

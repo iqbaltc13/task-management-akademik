@@ -208,10 +208,11 @@ export function CreateTaskDrawer() {
             error={form.errors.identity_number}
           />
 
-           <TextInput
+            <TextInput
             mt='xl'
             type='email'
             label='Email Pemohon'
+            description='Opsional. Jika diisi, pemohon menerima email saat status pelayanan berubah.'
             placeholder='Email Pemohon'
             value={form.data.email}
             onChange={e => updateValue('email', e.target.value)}
