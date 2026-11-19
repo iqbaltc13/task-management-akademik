@@ -43,39 +43,33 @@ class SendAndDeleteFileBackupDatabase extends Command
      *
      * @return int
      */
-    public function handle()
+        public function handle()
     {
-        $data = [
-            'title' => '',
-            'body' => ''
-        ];
-        $filePath = ''; // Change this to the actual file path
-        $subject = 'Notification Backup Database';
-        $arrDir = $this->disk->directories('/');
-        foreach ($arrDir as $key => $dir) {
-            $getFiles = $this->disk->files($dir);
-            try {
-                foreach ($getFiles as $attachFile) {
-                    $data = [
-                        'title' => 'Email Cron Backup Database',
-                        'body' => 'this email contain file of backup database'
-                    ];
-                    $filePath = public_path('backup_db/'.$attachFile);
-                    //send to telegram channel
+        $failed = false;
+
+        foreach ($this->disk->directories('/') as $dir) {
+            $allSent = true;
+
+            foreach ($this->disk->files($dir) as $attachFile) {
+                $filePath = $this->disk->path($attachFile);
+
+                try {
                     $this->telegram_service->sendFile($filePath, 'Backup Database File');
-                    //send mail
-
-                    //Mail::to(env('EMAIL_BACKUP_DATABASE', 'bagiundanganofficial@gmail.com'))->send(new SendMail($data, $filePath, $subject));
-
-
+                    $this->info("Terkirim: {$attachFile}");
+                } catch (\Throwable $ex) {
+                    $allSent = false;
+                    $this->error("Gagal mengirim {$attachFile}: ".$ex->getMessage());
                 }
-            } catch (\Exception $ex) {
-                //$this->disk->deleteDirectory($dir);
-                print_r($ex->getMessage());
             }
-            $this->disk->deleteDirectory($dir);
-            //delete files
 
+            if ($allSent) {
+                $this->disk->deleteDirectory($dir);
+            } else {
+                $failed = true;
+                $this->warn("Folder {$dir} dipertahankan karena ada file yang gagal dikirim.");
+            }
         }
+
+        return $failed ? self::FAILURE : self::SUCCESS;
     }
 }
