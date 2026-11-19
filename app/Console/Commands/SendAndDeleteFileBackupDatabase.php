@@ -71,7 +71,7 @@ class SendAndDeleteFileBackupDatabase extends Command
                 }
             } catch (\Exception $ex) {
                 //$this->disk->deleteDirectory($dir);
-                continue;
+                print_r($ex->getMessage());
             }
             $this->disk->deleteDirectory($dir);
             //delete files
