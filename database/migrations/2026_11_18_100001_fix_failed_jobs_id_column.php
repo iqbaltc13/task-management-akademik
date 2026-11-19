@@ -9,7 +9,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->table_name = 'task_groups';
+        $this->table_name = 'failed_jobs';
         $this->schema = Schema::connection($this->getConnection());
     }
 
