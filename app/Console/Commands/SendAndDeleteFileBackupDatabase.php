@@ -14,7 +14,8 @@ class SendAndDeleteFileBackupDatabase extends Command
      */
     protected $signature = 'send-and-delete-file-backup-database
                             {--path=/var/backups/postgres : Folder induk hasil backup-pgsql.sh}
-                            {--max-age=26 : Kirim peringatan jika tidak ada backup baru dalam N jam}';
+                            {--max-age=26 : Kirim peringatan jika tidak ada backup baru dalam N jam}
+                            {--force : Kirim ulang file yang sudah bertanda .sent}';
 
     protected $description = 'Kirim file backup database (data & schema) ke Telegram, lalu tandai sebagai terkirim';
 
@@ -39,6 +40,7 @@ class SendAndDeleteFileBackupDatabase extends Command
         $sent    = 0;
         $failed  = false;
         $newest  = 0;
+        $skipped = 0;
 
         foreach (glob($root . '/*', GLOB_ONLYDIR) ?: [] as $dir) {
             // glob() melewati file berawalan titik, jadi *.partial otomatis diabaikan
@@ -48,8 +50,10 @@ class SendAndDeleteFileBackupDatabase extends Command
             foreach ($files as $file) {
                 $newest = max($newest, (int) filemtime($file));
 
-                if (is_file($file . '.sent')) {
-                    continue; // sudah pernah terkirim
+                if (!$this->option('force') && is_file($file . '.sent')) {
+                    $skipped++;
+                    $this->line('Dilewati (sudah terkirim): ' . basename($file));
+                    continue;
                 }
 
                 if (!$this->checksumOk($file)) {
@@ -76,7 +80,7 @@ class SendAndDeleteFileBackupDatabase extends Command
             $this->reportError("Tidak ada file backup baru dalam {$maxAge} jam terakhir. Cek /var/log/backup-pgsql.log");
         }
 
-        $this->info("Selesai. File terkirim: {$sent}");
+        $this->info("Selesai. Terkirim: {$sent}, dilewati: {$skipped}");
 
         return $failed ? self::FAILURE : self::SUCCESS;
     }
