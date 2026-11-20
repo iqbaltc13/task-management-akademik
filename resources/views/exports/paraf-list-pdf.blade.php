@@ -5,9 +5,9 @@
 <style>
   body { font-family: sans-serif; font-size: 11px; }
   .kop { width: 100%; border-bottom: 2px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
-  .kop table { width: 72%; margin: 0 auto; border: none; }
+  .kop table { width: 60%; margin: 0 auto; border: none; }
   .kop td { border: none; padding: 0; vertical-align: middle; }
-  .kop .logo { width: 60px; padding-right: 16px; text-align: right; }
+  .kop .logo { width: 70px; padding-right: 16px; text-align: right; }
   .kop .logo img { width: 60px; }
   .kop .institusi { text-align: center; }
   .kop .institusi h1 { font-size: 15px; margin: 0; font-weight: bold; }
