@@ -117,9 +117,11 @@ class MyWorkTaskController extends Controller
                     ->whereNull('completed_at'),
             'completed' => $query->where('assigned_to_user_id', $user->id)->whereNotNull('completed_at'),
             'received' => $query->where('created_by_user_id', $user->id),
-            'transferred' => $query
-                ->whereHas('assignedUserUpdateLogs', fn ($q) => $q->where('new_assigned_to_user_id', $user->id))
-                ->where('assigned_to_user_id', '!=', $user->id),
+            'transferred' => $query->where('assigned_to_user_id', '!=', $user->id)
+                ->where(function ($q) use ($user) {
+                    $q->whereHas('assignedUserUpdateLogs', fn ($log) => $log->where('new_assigned_to_user_id', $user->id))
+                        ->orWhere('created_by_user_id', $user->id);
+                }),
             default => $query,
         };
     }
