@@ -111,7 +111,10 @@ class MyWorkTaskController extends Controller
             ->when($request->filled('created_to'), fn ($q) => $q->whereDate('created_at', '<=', $request->created_to));
 
         return match ($type) {
-            'active' => $query->where('assigned_to_user_id', $user->id)->whereNull('completed_at'),
+            'active' => $query->where(function ($q) use ($user) {
+                $q->where('assigned_to_user_id', $user->id)->orWhere('created_by_user_id', $user->id);
+            })
+                    ->whereNull('completed_at'),
             'completed' => $query->where('assigned_to_user_id', $user->id)->whereNotNull('completed_at'),
             'received' => $query->where('created_by_user_id', $user->id),
             'transferred' => $query
