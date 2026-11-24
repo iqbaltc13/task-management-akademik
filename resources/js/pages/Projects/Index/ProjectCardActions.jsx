@@ -51,7 +51,7 @@ export default function ProjectCardActions({ item }) {
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            {/* {can("edit project user access") && (
+            {can("edit project user access") && (
               <Menu.Item
                 leftSection={
                   <IconUsers
@@ -63,9 +63,9 @@ export default function ProjectCardActions({ item }) {
                 onClick={openUserAccess}
                 data-ignore-link
               >
-                Pengguna ditugaskan
+                Pengguna Yang Menerima dan Bisa Ditugaskan
               </Menu.Item>
-            )} */}
+            )}
             {can("edit project") && (
               <Menu.Item
                 leftSection={
