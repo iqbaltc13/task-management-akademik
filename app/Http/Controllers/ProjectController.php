@@ -130,7 +130,7 @@ class ProjectController extends Controller
         try {
             $project->update(Arr::except($data, ['users']));
 
-            //$project->users()->sync($data['users']);
+            $project->users()->sync($data['users']);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
