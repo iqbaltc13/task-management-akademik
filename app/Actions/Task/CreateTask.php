@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Throwable;
+use App\Services\TaskRecipientsService;
 
 class CreateTask
 {
@@ -58,10 +59,12 @@ class CreateTask
                 'billable' => $data['billable'],
                 'completed_at' => TaskGroup::isDoneGroup($data['group_id']) ? now() : null,
             ]);
+            // jika notif dikirim ke semua yang terlibat dalam projek
+            // $data['subscribed_users'] = $project->users->pluck('id')->toArray();
+            // $task->subscribedUsers()->attach($data['subscribed_users']);
 
-            $data['subscribed_users'] = $project->users->pluck('id')->toArray();
-            $task->subscribedUsers()->attach($data['subscribed_users']);
-
+            // Penerima notifikasi: pembuat, penerima tugas, dan atasan keduanya (bukan semua user di periode)
+            $task->subscribedUsers()->sync(TaskRecipientsService::for($task)->pluck('id')->all());
             $task->labels()->attach($data['labels'] ?? []);
 
             if (! empty($data['attachments'])) {

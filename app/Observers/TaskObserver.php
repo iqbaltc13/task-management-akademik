@@ -77,6 +77,11 @@ class TaskObserver
                 'new_assigned_to_user_id' => $task->assigned_to_user_id,
                 'changed_by_user_id' => auth()->id(),
             ]);
+                        // Perbarui penerima notifikasi: penerima tugas baru dan atasannya ikut,
+            // penerima lama tetap (karena pernah menerima tugas), atasan penerima lama dilepas.
+            $task->subscribedUsers()->sync(
+                \App\Services\TaskRecipientsService::for($task)->pluck('id')->all()
+            );
             $task->assigned_at = now();
             $task->saveQuietly();
             
