@@ -38,7 +38,17 @@ const Login = ({ notify }) => {
 
   return (
     <>
-      <Title ta="center" className={classes.title}>
+            <Title order={2} ta="center" className={classes.title}>
+        Sistem Pelayanan Satu Pintu Akademik
+      </Title>
+      <Text c="dimmed" size="sm" ta="center" mt={8}>
+        Layanan akademik terpadu Universitas Islam Negeri Syekh Wasil Kediri.
+        Ajukan, pantau, dan selesaikan permintaan pelayanan akademik Anda dalam satu pintu.
+      </Text>
+
+      <Divider my="lg" />
+
+      <Title order={4} ta="center">
         Selamat Datang, Silakan Masuk
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
