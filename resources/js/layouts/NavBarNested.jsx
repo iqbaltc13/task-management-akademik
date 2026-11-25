@@ -63,6 +63,12 @@ export default function Sidebar() {
             active: route().current("my-work.tasks.list") && route().params.type === "received",
             visible: can("view tasks"),
           },
+           {
+            label: "Pelayanan Ditugaskan ke Saya",
+            link: route("my-work.tasks.list", { type: "assigned" }),
+            active: route().current("my-work.tasks.list") && route().params.type === "assigned",
+            visible: can("view tasks"),
+          },
           {
             label: "Pelayanan Dialihkan",
             link: route("my-work.tasks.list", { type: "transferred" }),

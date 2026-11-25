@@ -49,6 +49,7 @@ const TABS = [
   { value: "active", label: "Pelayanan Aktif" },
   { value: "completed", label: "Pelayanan Selesai" },
   { value: "received", label: "Pelayanan Saya Terima" },
+  { value: "assigned", label: "Pelayanan Ditugaskan ke Saya" },
   { value: "transferred", label: "Pelayanan Dialihkan" },
 ];
 

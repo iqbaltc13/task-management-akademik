@@ -87,9 +87,11 @@ class MyWorkTaskController extends Controller
     private function scopedQuery(Request $request): \Illuminate\Database\Eloquent\Builder
     {
         $user = Auth::user();
-        $type = in_array($request->input('type'), ['active', 'completed', 'received', 'transferred'], true)
+        $type = in_array($request->input('type'), ['active', 'completed', 'received', 'assigned', 'transferred'], true)
             ? $request->input('type')
             : 'active';
+
+        $isAdmin = $user->hasRole('admin');
 
         $accessibleProjectIds = PermissionService::projectsThatUserCanAccess($user)->pluck('id');
 
@@ -111,17 +113,31 @@ class MyWorkTaskController extends Controller
             ->when($request->filled('created_to'), fn ($q) => $q->whereDate('created_at', '<=', $request->created_to));
 
         return match ($type) {
-            'active' => $query->where(function ($q) use ($user) {
-                $q->where('assigned_to_user_id', $user->id)->orWhere('created_by_user_id', $user->id);
-            })
-                    ->whereNull('completed_at'),
-            'completed' => $query->where('assigned_to_user_id', $user->id)->whereNotNull('completed_at'),
+            // Admin: semua pelayanan yang belum selesai
+            'active' => $isAdmin
+                ? $query->whereNull('completed_at')
+                : $query->where(function ($q) use ($user) {
+                    $q->where('assigned_to_user_id', $user->id)->orWhere('created_by_user_id', $user->id);
+                })->whereNull('completed_at'),
+
+            // Admin: semua pelayanan yang sudah selesai
+            'completed' => $isAdmin
+                ? $query->whereNotNull('completed_at')
+                : $query->where('assigned_to_user_id', $user->id)->whereNotNull('completed_at'),
+
             'received' => $query->where('created_by_user_id', $user->id),
-            'transferred' => $query->where('assigned_to_user_id', '!=', $user->id)
-                ->where(function ($q) use ($user) {
-                    $q->whereHas('assignedUserUpdateLogs', fn ($log) => $log->where('new_assigned_to_user_id', $user->id))
-                        ->orWhere('created_by_user_id', $user->id);
-                }),
+
+            // Baru: pelayanan yang ditugaskan ke saya (selesai maupun belum)
+            'assigned' => $query->where('assigned_to_user_id', $user->id),
+
+            // Admin: semua pelayanan yang pernah dialihkan (log pengalihan lebih dari 1 baris)
+            'transferred' => $isAdmin
+                ? $query->whereHas('assignedUserUpdateLogs', fn ($log) => $log->reorder(), '>', 1)
+                : $query->where('assigned_to_user_id', '!=', $user->id)
+                    ->where(function ($q) use ($user) {
+                        $q->whereHas('assignedUserUpdateLogs', fn ($log) => $log->where('new_assigned_to_user_id', $user->id));
+                    }),
+
             default => $query,
         };
     }
